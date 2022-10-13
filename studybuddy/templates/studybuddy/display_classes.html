@@ -1,0 +1,10 @@
+<body>
+    {% if d %}
+    <table>
+        {% for k in d.class_schedules.records %}
+            {{k}}
+            <p></p>
+        {% endfor %}
+    </table>
+    {% endif %}
+</body>
