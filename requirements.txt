@@ -6,3 +6,4 @@ sqlparse==0.4.2
 tzdata==2022.2
 django-allauth==0.51.0
 requests
+psycopg2
