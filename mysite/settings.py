@@ -33,6 +33,7 @@ SITE_ID = 1
 LOGIN_REDIRECT_URL = '/'
 
 INSTALLED_APPS = [
+    'bootstrap5',
     "studybuddy.apps.StudybuddyConfig",
     "django.contrib.admin",
     "django.contrib.auth",

@@ -20,9 +20,9 @@ def logout(request):
     return redirect('/')
 
 def updateClasses():
-    class_mnumonic = requests.get('http://luthers-list.herokuapp.com/api/deptlist?format=json').json()
+    class_mnemonic = requests.get('http://luthers-list.herokuapp.com/api/deptlist?format=json').json()
     #print(class_mnumonic)
-    for cm in class_mnumonic:
+    for cm in class_mnemonic:
         data = requests.get('http://luthers-list.herokuapp.com/api/dept/' + cm['subject'] + '?format=json').json()
         for each in data:
             model = LutherClass()
@@ -38,12 +38,9 @@ def updateClasses():
             #print(model)
             #model.save()
 class ListOfAllClasses(generic.ListView):
-    updateClasses()
+    #updateClasses()
     model = LutherClass
-    template_name = 'polls/display_classes.html'
+    template_name = 'studybuddy/display_classes.html'
     context_object_name = 'list_of_all_classes'
     def get_queryset(self):
         return LutherClass.objects.all()
-
-
-        
