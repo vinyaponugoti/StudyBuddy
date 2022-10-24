@@ -31,7 +31,7 @@ def updateClasses():
                 last_dm = each['subject']
                 last_cn = each['catalog_number']
                 try:
-                    if LutherClass.objects.filter(CourseNumber = each['course_number']):
+                    if LutherClass.objects.filter(CourseNumber = each['course_number']).exists():
                         model = LutherClass.objects.filter(CourseNumber = each['course_number'])[0]
                     else:
                         model = LutherClass()
@@ -45,7 +45,7 @@ def updateClasses():
                     model.AvailableSeats = each['class_capacity']
                     #model.DaysOfTheWeek = each['meetings'][0]['days']
                     model.Semester = each['semester_code']
-                    #print(model)
+                    #print("Updated " + model)
                     model.save()
                 except:
                     pass
