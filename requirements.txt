@@ -7,4 +7,4 @@ tzdata==2022.2
 django-allauth==0.51.0
 requests
 psycopg2
-bootstrap5
+django-bootstrap-v5
