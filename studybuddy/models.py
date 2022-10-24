@@ -29,3 +29,4 @@ class Mnemonics(models.Model):
     course_mnemonics = models.CharField(max_length=5)
 
 
+
