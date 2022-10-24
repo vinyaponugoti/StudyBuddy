@@ -1,0 +1,19 @@
+{# Load the tag library #}
+{% load bootstrap5 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+<html>
+    <head>
+
+    </head>
+
+    <body>
+        <h1>Profile for {{user.username}}</h1>
+    </body>
+</html>
