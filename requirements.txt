@@ -8,3 +8,4 @@ django-allauth==0.51.0
 requests
 psycopg2
 django-bootstrap-v5
+django-celery-beat

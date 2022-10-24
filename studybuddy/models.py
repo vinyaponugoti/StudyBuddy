@@ -18,7 +18,7 @@ class LutherClass(models.Model):
     Semester = models.TextField()
     
     def __str__(self):
-        return self.DeptNnemonic + self.CourseNumber
+        return self.DeptNnemonic + str(self.CourseNumber)
     
 class Class(models.Model):
     course_mnemonic = models.CharField(max_length=5)
