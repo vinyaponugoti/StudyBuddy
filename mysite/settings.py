@@ -66,10 +66,11 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "mysite.urls"
 
+#changes to here and staticfiles_dirs were to allow static images
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / 'templates'],
+        "DIRS": [os.path.join(BASE_DIR, 'studybuddy', 'templates')], #previously [BASE_DIR / 'templates'],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
