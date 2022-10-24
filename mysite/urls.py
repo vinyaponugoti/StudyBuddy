@@ -20,6 +20,7 @@ urlpatterns = [
     path('', include('studybuddy.urls')),
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
-    path('logout/', include('studybuddy.urls'))
+    path('logout/', include('studybuddy.urls')),
+    path('login/', include('studybuddy.urls'))
     
 ]
