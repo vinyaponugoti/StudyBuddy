@@ -20,7 +20,7 @@ def logout(request):
     return redirect('/')
 
 def search(request):
-    return render(request, 'studybuddy/templates/display_classes.html', {})
+    return render(request, 'studybuddy/display_classes.html', {})
 
 class ListOfAllClasses(generic.ListView):
     model = LutherClass
