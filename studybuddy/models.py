@@ -1,9 +1,7 @@
 from django.db import models
 
 # Create your models here.
-class SISClass(models.Model):
-    deptDict = {"CS" : "Computer Science"}
-    
+class LutherClass(models.Model):    
     DeptNnemonic = models.TextField()
     DeptName = models.TextField()
     CourseNumber = models.IntegerField()
@@ -11,12 +9,14 @@ class SISClass(models.Model):
     ClassName = models.TextField()
     SectionName = models.TextField()
     ProfessorName = models.TextField()
+    ProfessorEmail = models.TextField()
     AvailableSeats = models.IntegerField()
     DaysOfTheWeek = models.TextField()
     Semester = models.TextField()
     
     def __str__(self):
-        return self.title
+        return self.DeptNnemonic + self.CourseNumber
+    
 class Class(models.Model):
     course_mnemonic = models.CharField(max_length=5)
     course_number = models.CharField(max_length=5)

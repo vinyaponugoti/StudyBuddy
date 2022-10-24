@@ -2,7 +2,11 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth import logout as log_out
 import requests
+from studybuddy.models import LutherClass
 import json
+import urllib
+from django.views import generic
+from django.utils import timezone
 
 # Create your views here.
 # def index(request):
@@ -15,9 +19,31 @@ def logout(request):
     log_out(request)
     return redirect('/')
 
-def display_classes(request):
-    data = getSISClasses('https://api.devhub.virginia.edu/v1/courses')
-    return render(request, 'studybuddy/display_classes.html', {'d': data})
+def updateClasses():
+    class_mnumonic = requests.get('http://luthers-list.herokuapp.com/api/deptlist?format=json').json()
+    #print(class_mnumonic)
+    for cm in class_mnumonic:
+        data = requests.get('http://luthers-list.herokuapp.com/api/dept/' + cm['subject'] + '?format=json').json()
+        for each in data:
+            model = LutherClass()
+            model.DeptNnemonic = each['subject']
+            model.CourseNumber = each['course_number']
+            model.SectionNumber = each['course_section']
+            model.ClassName = each['description']
+            model.ProfessorName = each['instructor']['name']
+            model.ProfessorEmail = each['instructor']['email']
+            model.AvailableSeats = each['class_capacity']
+            #model.DaysOfTheWeek = each['meetings'][0]['days']
+            model.Semester = each['semester_code']
+            #print(model)
+            model.save()
+class ListOfAllClasses(generic.ListView):
+    updateClasses()
+    model = LutherClass
+    template_name = 'polls/display_classes.html'
+    context_object_name = 'list_of_all_classes'
+    def get_queryset(self):
+        return LutherClass.objects.all()
 
-def getSISClasses(url):
-    return requests.get(url).json()
+
+        

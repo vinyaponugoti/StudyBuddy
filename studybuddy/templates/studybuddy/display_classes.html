@@ -1,10 +1,9 @@
-<body>
-    {% if d %}
-    <table>
-        {% for k in d.class_schedules.records %}
-            {{k}}
-            <p></p>
-        {% endfor %}
-    </table>
-    {% endif %}
-</body>
+{% if list_of_all_classes %}
+    <ul>
+    {% for class in list_of_all_classes %}
+        <li>{{ class.ProfessorName }}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No Classes Listed</p>
+{% endif %}
