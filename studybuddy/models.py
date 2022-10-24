@@ -7,6 +7,7 @@ class LutherClass(models.Model):
     DeptNnemonic = models.TextField()
     DeptName = models.TextField()
     CourseNumber = models.IntegerField()
+    CatalogNumber = models.IntegerField(default = 0)
     SectionNumber = models.IntegerField()
     ClassName = models.TextField()
     SectionName = models.TextField()

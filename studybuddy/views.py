@@ -28,6 +28,7 @@ def updateClasses():
             model = LutherClass()
             model.DeptNnemonic = each['subject']
             model.CourseNumber = each['course_number']
+            model.CatalogNumber = each['catalog_number']
             model.SectionNumber = each['course_section']
             model.ClassName = each['description']
             model.ProfessorName = each['instructor']['name']
@@ -38,7 +39,7 @@ def updateClasses():
             #print(model)
             model.save()
 class ListOfAllClasses(generic.ListView):
-    updateClasses()
+    #updateClasses()
     model = LutherClass
     template_name = 'studybuddy/display_classes.html'
     context_object_name = 'list_of_all_classes'
