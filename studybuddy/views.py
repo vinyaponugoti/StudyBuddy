@@ -19,6 +19,7 @@ def logout(request):
     log_out(request)
     return redirect('/')
 
+
 def search(request):
     return render(request, 'studybuddy/templates/display_classes.html', {})
 
@@ -53,8 +54,8 @@ def updateClasses():
                 except:
                     pass
 
+
 class ListOfAllClasses(generic.ListView):
-    #updateClasses()
     model = LutherClass
     template_name = 'studybuddy/display_classes.html'
     context_object_name = 'list_of_all_classes'
