@@ -38,7 +38,7 @@ def updateClasses():
             #print(model)
             model.save()
 class ListOfAllClasses(generic.ListView):
-    #updateClasses()
+    updateClasses()
     model = LutherClass
     template_name = 'studybuddy/display_classes.html'
     context_object_name = 'list_of_all_classes'

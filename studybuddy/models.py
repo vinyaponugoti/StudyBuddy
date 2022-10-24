@@ -1,19 +1,20 @@
+import datetime
 from django.db import models
-
+from django.utils import timezone
+from django.contrib import admin
 # Create your models here.
-class LutherClass(models.Model):
-    managed = True
-    DeptNnemonic = models.CharField(max_length=50)
-    DeptName = models.CharField(max_length=50)
-    CourseNumber = models.CharField(max_length=50)
-    SectionNumber = models.CharField(max_length=50)
-    ClassName = models.CharField(max_length=50)
-    SectionName = models.CharField(max_length=50)
-    ProfessorName = models.CharField(max_length=50)
-    ProfessorEmail = models.CharField(max_length=50)
-    AvailableSeats = models.CharField(max_length=50)
-    DaysOfTheWeek = models.CharField(max_length=50)
-    Semester = models.CharField(max_length=50)
+class LutherClass(models.Model):    
+    DeptNnemonic = models.TextField()
+    DeptName = models.TextField()
+    CourseNumber = models.IntegerField()
+    SectionNumber = models.IntegerField()
+    ClassName = models.TextField()
+    SectionName = models.TextField()
+    ProfessorName = models.TextField()
+    ProfessorEmail = models.TextField()
+    AvailableSeats = models.IntegerField()
+    DaysOfTheWeek = models.TextField()
+    Semester = models.TextField()
     
     def __str__(self):
         return self.DeptNnemonic + self.CourseNumber
