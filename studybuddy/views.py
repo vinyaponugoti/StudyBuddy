@@ -19,6 +19,9 @@ def logout(request):
     log_out(request)
     return redirect('/')
 
+def search(request):
+    return render(request, 'studybuddy/templates/display_classes.html', {})
+
 def updateClasses():
     class_mnemonic = requests.get('http://luthers-list.herokuapp.com/api/deptlist?format=json').json()
     #print(class_mnumonic)
@@ -49,6 +52,7 @@ def updateClasses():
                     model.save()
                 except:
                     pass
+
 class ListOfAllClasses(generic.ListView):
     #updateClasses()
     model = LutherClass
