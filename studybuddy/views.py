@@ -19,6 +19,9 @@ def logout(request):
     log_out(request)
     return redirect('/')
 
+def search(request):
+    return render(request, 'studybuddy/templates/display_classes.html', {})
+
 class ListOfAllClasses(generic.ListView):
     model = LutherClass
     template_name = 'studybuddy/display_classes.html'
