@@ -36,7 +36,7 @@ def updateClasses():
             #model.DaysOfTheWeek = each['meetings'][0]['days']
             model.Semester = each['semester_code']
             #print(model)
-            #model.save()
+            model.save()
 class ListOfAllClasses(generic.ListView):
     #updateClasses()
     model = LutherClass
