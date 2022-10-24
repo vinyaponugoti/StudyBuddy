@@ -10,6 +10,7 @@
 {% load static %}
 
 
+
 <html>
     <head>
         <div class="container">
@@ -50,46 +51,12 @@
     </head>
 
     <body>
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-6 mx-auto">
-                    <form action="{% url 'editprofiles'%}" method="post" class="form">
-                        {% csrf_token %}
-                        <fieldset>
-                            <meta name="viewport" content="width=device-width, initial-scale=1">
-                        
-                            <h1 style="color: #6795e4;">Study Buddy Profile Information</h1>
-                            
-                            <div class="mb-3">
-                                <label for="name" class="form-label" style="color: #6795e4;">Name:</label>
-                                <!-- <textarea name="name" class="form-control" id="title" rows="1" required="True"></textarea> -->
-                                {{ profile_form.name }}
-                            </div>
-                            <div class="mb-3">
-                                <label for="email" class="form-label" style="color: #6795e4;">Email:</label>
-                                <!-- <textarea name="email" class="form-control" id="text" rows="1" required="True"></textarea> -->
-                                {{ profile_form.email }}
-                            </div>
-                            <div class="mb-3">
-                                <label for="year" class="form-label" style="color: #6795e4;">Year:</label>
-                                <!-- <textarea name="year" class="form-control" id="text" rows="1" required="True"></textarea> -->
-                                {{ profile_form.year }}
-                            </div>
-                            <div class="mb-3">
-                                <label for="major" class="form-label" style="color: #6795e4;">Major:</label>
-                                <!-- <textarea name="major" class="form-control" id="text" rows="1" required="True"></textarea> -->
-                                {{ profile_form.major }}
-                            </div>
-                            <div class="mb-3">
-                                <label for="interests" class="form-label" style="color: #6795e4;">Interests:</label>
-                                <!-- <textarea name="interests" class="form-control" id="text" rows="6" required="True"></textarea> -->
-                                {{ profile_form.interests }}
-                            </div>
-                            <button type="submit" class="btn btn-outline-primary">Submit</button>
-                        </fieldset>
-                    </form>
-                </div>
-            </div>
-        </div>
+        <h1>Edit Profile</h1>
+        <form method ="post">
+            {% csrf_token %}
+            {{form}}
+            <br>
+            <button type="submit" class="btn btn-outline-primary">Submit</button>
+        </form>
     </body>
 </html>
