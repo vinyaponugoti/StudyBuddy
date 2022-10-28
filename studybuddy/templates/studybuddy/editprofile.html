@@ -12,6 +12,7 @@
 
 
 <html>
+    {%if user.is_authenticated%}
     <head>
         <div class="container">
             <nav class="navbar navbar-expand-md navbar-light">
@@ -33,7 +34,7 @@
                 <div class="collapse navbar-collapse" id="toggleMobileMenu">
                     <ul class="navbar-nav ms-auto text-center">
                         <li>
-                            <a class="nav-link" href="#">Home</a>
+                            <a class="nav-link" href="http://project-b13.herokuapp.com/">Home</a>
                         </li>
                         <li>
                             <a class="nav-link" href="#">Planner</a>
@@ -49,6 +50,36 @@
             </nav>
         </div>
     </head>
+    {% else %}
+    <head>
+        <div class="container">
+            <nav class="navbar navbar-expand-md navbar-light">
+                <a href="#" class="navbar-brand">
+                    <img src="{% static '/images/Study_Buddy_Logo.png' %}" alt="StudyBuddy Logo" width="70" height="70"
+                    class="d-inline-block align-top" />
+                    StudyBuddy</a>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#toggleMobileMenu"
+                    aria-controls="toggleMobileMenu"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="toggleMobileMenu">
+                    <ul class="navbar-nav ms-auto text-center">
+                        <li>
+                            <a class="nav-link" href="http://project-b13.herokuapp.com/">Home</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </head>
+    {% endif %}
 
     <body>
         <h1>Edit Profile</h1>

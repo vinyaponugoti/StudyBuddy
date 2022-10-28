@@ -11,56 +11,73 @@
 {# Display django.contrib.messages as Bootstrap alerts #}
 {% bootstrap_messages %}
 
-<head>
-    <div class="container">
-        <nav class="navbar navbar-expand-md navbar-light">
-            <a href="#" class="navbar-brand">
-                <img src="{% static '/images/Study_Buddy_Logo.png' %}" alt="StudyBuddy Logo" width="70" height="70"
-                class="d-inline-block align-top" />
-                StudyBuddy</a>
-            <button
-                class="navbar-toggler"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#toggleMobileMenu"
-                aria-controls="toggleMobileMenu"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-            >
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="toggleMobileMenu">
-                <ul class="navbar-nav ms-auto text-center">
-                    <li>
-                        <a class="nav-link" href="#">Home</a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="#">Planner</a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="http://project-b13.herokuapp.com/editprofile">Profile</a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="#">Chat</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </div>
-</head>
-
-<div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Classes
-  </button>
-    {% if list_of_all_classes %}
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            {% for class in list_of_all_classes %}
-                <a class="dropdown-item" href="#">{{ class.DeptNnemonic }} {{ class.CatalogNumber }}</a>
-            {% endfor %}
-        </ul>
+{%if user.is_authenticated%}
+    <head>
+        <div class="container">
+            <nav class="navbar navbar-expand-md navbar-light">
+                <a href="#" class="navbar-brand">
+                    <img src="{% static '/images/Study_Buddy_Logo.png' %}" alt="StudyBuddy Logo" width="70" height="70"
+                    class="d-inline-block align-top" />
+                    StudyBuddy</a>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#toggleMobileMenu"
+                    aria-controls="toggleMobileMenu"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="toggleMobileMenu">
+                    <ul class="navbar-nav ms-auto text-center">
+                        <li>
+                            <a class="nav-link" href="http://project-b13.herokuapp.com/">Home</a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="#">Planner</a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="http://project-b13.herokuapp.com/editprofile">Profile</a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="#">Chat</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </head>
     {% else %}
-        <p>No Classes Listed</p>
+    <head>
+        <div class="container">
+            <nav class="navbar navbar-expand-md navbar-light">
+                <a href="#" class="navbar-brand">
+                    <img src="{% static '/images/Study_Buddy_Logo.png' %}" alt="StudyBuddy Logo" width="70" height="70"
+                    class="d-inline-block align-top" />
+                    StudyBuddy</a>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#toggleMobileMenu"
+                    aria-controls="toggleMobileMenu"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="toggleMobileMenu">
+                    <ul class="navbar-nav ms-auto text-center">
+                        <li>
+                            <a class="nav-link" href="http://project-b13.herokuapp.com/">Home</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </head>
     {% endif %}
 </div>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
