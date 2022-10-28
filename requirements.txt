@@ -10,3 +10,4 @@ psycopg2
 django-bootstrap-v5
 whitenoise
 django-celery-beat
+channels

@@ -39,6 +39,7 @@ LOGIN_REDIRECT_URL = '/'
 INSTALLED_APPS = [
     'bootstrap5',
     "studybuddy.apps.StudybuddyConfig",
+    'ChatApp.apps.ChatappConfig',
     "whitenoise.runserver_nostatic",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -48,10 +49,12 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     'allauth',
     'celery',
+    'channels',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
 ]
+#ASGI_APPLICATION = 'ChatApp.asgi.application'
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
