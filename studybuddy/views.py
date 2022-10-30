@@ -12,6 +12,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
+from .models import Profile
 
 
 # Create your views here.
@@ -30,7 +31,11 @@ def search(request):
 
 
 def profile(request):
-    return render(request,'studybuddy/profile.html',{})
+    profile_data = Profile.objects.get(user=request.user.id)
+    context = {
+        "profile_data": profile_data
+    }
+    return render(request,'studybuddy/profile.html',context)
 
 
 class ListOfAllClasses(generic.ListView):
@@ -49,5 +54,4 @@ class UpdateProfile(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView)
     
     def get_object(self):
         return self.request.user.profile
-    # profile_form = ProfileForm(instance=request.user.profile)
-    # return render(request, template_name="studybuddy/editprofile.html", context = {"user":request.user, "profile_form":profile_form})
+    

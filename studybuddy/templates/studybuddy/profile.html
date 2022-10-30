@@ -38,7 +38,7 @@
                             <a class="nav-link" href="#">Planner</a>
                         </li>
                         <li>
-                            <a class="nav-link" href="{% url 'editprofile' %}">Profile</a>
+                            <a class="nav-link" href="{% url 'profile' %}">Profile</a>
                         </li>
                         <li>
                             <a class="nav-link" href="#">Chat</a>
@@ -80,6 +80,21 @@
     {% endif %}
 
     <body>
-        <h1>Profile for {{user.username}}</h1>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6 mx-auto">
+                    <h1>Profile for {{user.username}}</h1>
+                    <h3>Name: {{profile_data.name}}</h3>
+                    <h3>Email: {{profile_data.email}}</h3>
+                    <h3>Year: {{profile_data.year}}</h3>
+                    <h3>Major: {{profile_data.major}}</h3>
+                    <h3>Interests: {{profile_data.interests}}</h3>
+                    <br>
+                    <button type="submit" class="btn btn-info">
+                        <a href="{% url 'editprofile' %}">Update Profile Information</a>
+                    </button>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
