@@ -39,6 +39,7 @@ class Profile(models.Model):
     year = models.CharField(max_length=100, blank=True)
     major = models.TextField(blank=True)
     interests = models.TextField(blank=True)
+    classes = models.ManyToMany(LutherClass)
 
     def __str__(self):
         return self.user.username
