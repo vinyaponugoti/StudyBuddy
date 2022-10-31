@@ -56,7 +56,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap5',
 ]
-#ASGI_APPLICATION = 'ChatApp.asgi.application'
+ASGI_APPLICATION = 'ChatApp.asgi.application'
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -181,6 +181,12 @@ CELERY_BEAT_SCHEDULE = {
     'task1': {
         'task': 'studybuddy.tasks.updateClassesDB',
         'schedule': crontab(minute=59, hour=23)
+    }
+}
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
     }
 }
 
