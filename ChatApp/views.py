@@ -3,6 +3,6 @@ from django.shortcuts import render, redirect
  
 def chatPage(request, *args, **kwargs):
     if not request.user.is_authenticated:
-        return redirect("login-user")
+        return redirect("login")
     context = {}
     return render(request, "chat/ChatPage.html", context)
