@@ -96,6 +96,15 @@
                         <div>{{form.year | as_crispy_field}}</div>
                         <div>{{form.major | as_crispy_field}}</div>
                         <div>{{form.interests | as_crispy_field}}</div>
+
+                            <% for class in form.classes %>
+                                <div>
+                                    Name: {{ class.DeptNnemonic }} {{ class.CourseNumber }} Professor: {{ class.ProfessorName }}
+                                    Time: {{ class.DaysOfTheWeek }}
+                                </div>
+                            {% endfor %}
+
+                        <div>
                         <button type="submit" class="btn btn-info">Update Profile</button>
                     </form>
                 </div>
