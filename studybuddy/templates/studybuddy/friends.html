@@ -1,0 +1,64 @@
+{# Load the tag library #}
+{% load bootstrap5 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+{% load static %}
+
+<html>
+    <head>
+
+    </head>
+
+    <body>
+
+        <div class="container">
+            <div class="row">
+                
+                {% if request_num != 0 %}
+                    <h1>Request Sent By: </h1>
+                    {%for r in request_senders%}
+                    <div class="row">
+                        <div class="card" style="width: 36rem; margin-bottom: 10px;">
+                            <div class="card-body">
+                                <h3>{{r}}</h3>
+                                <button class="btn btn-info" style="margin-bottom: 20px;">View Profile</button>
+                                
+                                <div class="row">
+                                    <div class="col">
+                                        <form action="{% url 'acceptfriend' %}" method="POST">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="primary_key_profile" value={{r.pk}}>
+                                                <button type="submit" class="btn btn-success"> Accept Friend Request</button>
+                                        </form>
+                                    </div>
+                                    
+                                    <div class="col">
+                                        <form action="{% url 'declinefriend' %}" method="POST">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="primary_key_profile" value={{r.pk}}>
+                                                <button type="submit" class="btn btn-danger"> Reject Friend Request</button>
+                                        </form>
+                                    </div>
+                                </div>
+                                
+                                
+                            </div>
+                        </div>
+                    </div>
+                    {%endfor%}
+                {% endif %}
+       
+                {% if request_num == 0 %}
+                    <h3> You have no Friend Requests currently </h3>
+                {% endif %}
+            </div>
+        </div>
+        
+
+    </body>
+</html>

@@ -3,7 +3,7 @@ from django.db import models
 from django.utils import timezone
 from django.contrib import admin
 from django.contrib.auth.models import User
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, pre_delete
 from django.dispatch import receiver
 
 # Create your models here.
@@ -40,6 +40,10 @@ class Profile(models.Model):
     major = models.TextField(blank=True)
     interests = models.TextField(blank=True)
     classes = models.ManyToManyField(LutherClass)
+    friends_list = models.ManyToManyField(User, blank=True, related_name="friends_list")
+
+    def get_friends_list(self):
+        return self.friends_list.all()
 
     def __str__(self):
         return self.user.username
@@ -55,4 +59,29 @@ def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
 
 
+class FriendRequest(models.Model):
+    requester = models.ForeignKey(Profile,on_delete=models.CASCADE, related_name="requester")
+    requested = models.ForeignKey(Profile,on_delete=models.CASCADE, related_name="requested")
+    is_accepted = models.BooleanField(default=False)
 
+    def __str__(self):
+        return f"{self.requester} wants to be friends with {self.requested}"
+
+@receiver(post_save,sender=FriendRequest)
+def post_save_mutuals(sender, instance, created, **kwargs):
+    requester_user = instance.requester
+    requested_user = instance.requested
+    if instance.is_accepted == True:
+        requester_user.friends_list.add(requested_user.user)
+        requested_user.friends_list.add(requester_user.user)
+        requester_user.save()
+        requested_user.save()
+
+@receiver(pre_delete,sender=FriendRequest)
+def pre_delete_removing_friends(sender, instance, **kwargs):
+    requester_user = instance.requester
+    requested_user = instance.requested
+    requester_user.friends_list.remove(requested_user.user)
+    requested_user.friends_list.remove(requester_user.user)
+    requester_user.save()
+    requested_user.save()
