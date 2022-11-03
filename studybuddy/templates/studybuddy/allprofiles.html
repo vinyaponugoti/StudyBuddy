@@ -79,50 +79,66 @@
     </head>
     {% endif %}
 
-    <body>
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-6 mx-auto">
-                    <h1>Profile for {{user.username}}</h1>
-                    <h3>Name: {{profile_data.name}}</h3>
-                    <h3>Email: {{profile_data.email}}</h3>
-                    <h3>Year: {{profile_data.year}}</h3>
-                    <h3>Major: {{profile_data.major}}</h3>
-                    <h3>Interests: {{profile_data.interests}}</h3>
-                    <h3>Classes: {{profile_data.classes}}</h3>
 
-                    <br>
+        <ul>
+            <div class="container">
+              <h1 >Other Profiles</h1>
+              <div class = "row">
+          {% for p in profiles_list %}
+              <div class = "col-lg-3 d-flex align-items-stretch mb-4">
+                <div class="card" style="width: 18rem;">
+                  <div class="card-body">
+                    <h3 >{{p}}'s Profile</h3>
                     <div>
-                        <h3>Friends List: </h3>
-                        {%for f in friend_list%}
-                            <h3>{{f}}</h3>
-                        {%endfor%}
+                        <button type="submit" class="btn btn-info">
+                            <a href="{% url 'viewprofile' p.user.username %}">View Profile</a>
+                        </button>
                     </div>
-                    <br>
-
-
-                    {% if user.username == request.user.username %}
-                    <button type="submit" class="btn btn-info">
-                        <a href="{% url 'editprofile' %}">Update Profile Information</a>
-                    </button>
                     
-                    <button type="submit" class="btn btn-info">
-                        <a href="{% url 'requests' %}">View Friend Requests</a>
-                    </button>
 
+                  <div>
+                    <form action="{% url 'addfriend' %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="primary_key_profile" value={{p.pk}}>
+                        {% if p not in requests_for_user and p not in requests_by_user%}
+                            <button type="submit" class="btn btn-success"> Add Friend</button>
+                        {% endif %}
+    
+                    </form>
+                  </div>
+                  
+
+
+                  <div>
+                    {% if p in requests_for_user and request.user not in p.friends_list.all %}
+                        <button type="button" class="btn btn-secondary btn" disabled> Friend Request Pending</button>
+                    {% endif %}
+                  </div>
+                    
+                  <form action="{% url 'removefriend' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="primary_key_profile" value={{p.pk}}>
+                    {% if request.user in p.friends_list.all%}
+                        <button type="submit" class="btn btn-danger"> Remove Friend</button>
                     {% endif %}
 
-                    <button type="submit" class="btn btn-info">
-                        <a href="{% url 'allprofiles' %}">View All Profiles</a>
-                    </button>
+                  </form>
                     
-
-
                 </div>
-                <div class="col-sm-6 mx-auto">
-                   
+                  
                 </div>
-            </div>
-        </div>
+              </div>
+          {% endfor %}
+          </div>
+          </div>
+          
+          </ul>
+
+          <!-- <h1>Profiles {{user.username}} can send requests to</h1>
+        <div>
+            {%for c in can_send_requests_to%}
+                <h4>Profile: {{c}}</h4>
+            {%endfor%}
+        </div> -->
     </body>
 </html>
