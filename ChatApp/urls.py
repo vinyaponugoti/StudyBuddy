@@ -2,5 +2,6 @@ from django.urls import path, include
 from ChatApp import views as chat_views
 
 urlpatterns = [
-    path("", chat_views.chatPage, name="chat-page"),
+    path("<str:room_name>/", chat_views.room, name='room'),
+    path("", chat_views.index, name='index'),
 ]

@@ -22,7 +22,7 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('logout/', include('studybuddy.urls')),
     path('search/', include('studybuddy.urls')),
-    path("chat", include("ChatApp.urls")),
+    path("chat/", include("ChatApp.urls")),
     path("profile/", include('studybuddy.urls')),
     path("editprofile/", include('studybuddy.urls')),
     path("profile/<str:username>", include('studybuddy.urls')),

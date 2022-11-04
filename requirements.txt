@@ -13,3 +13,4 @@ django-celery-beat
 channels
 django-crispy-forms
 crispy-bootstrap5
+channels_redis
