@@ -17,6 +17,9 @@ class ProfileForm(forms.ModelForm):
         self.fields['interests'].widget.attrs.update({
             "rows": "5"
         })
+        self.fields['friends_list'].widget.attrs.update({
+            'hidden' : 'hidden'
+        })
     class Meta: 
         model = Profile
         fields = "__all__"
