@@ -1,2 +1,2 @@
 release: python manage.py migrate
-web: daphne -b 0.0.0.0 mysite.asgi:application
+web: daphne mysite.asgi:application --port $PORT -b 0.0.0.0
