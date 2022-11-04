@@ -93,10 +93,12 @@
 
                     <br>
                     <div>
-                        <h3>Friends List: </h3>
-                        {%for f in friend_list%}
-                            <h3>{{f}}</h3>
-                        {%endfor%}
+
+                         <h3>Friends List: </h3>
+                         {%for f in user.profile.get_friends_list%}
+                         <h3><a href="{% url 'viewprofile' f %}">{{f}}</a></h3>
+                        {%endfor%} 
+
                     </div>
                     <br>
 
@@ -115,6 +117,13 @@
                     <button type="submit" class="btn btn-info">
                         <a href="{% url 'allprofiles' %}">View All Profiles</a>
                     </button>
+
+                    {% if user.username != request.user.username %}
+                    <button type="submit" class="btn btn-info">
+                        <a href="{% url 'viewprofile' request.user.username %}">Go to Your Profile</a>
+                    </button>
+
+                    {% endif %}
                     
 
 
