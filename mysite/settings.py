@@ -38,6 +38,7 @@ LOGIN_REDIRECT_URL = '/'
 
 INSTALLED_APPS = [
     'bootstrap5',
+    'channels',
     "studybuddy.apps.StudybuddyConfig",
     'ChatApp.apps.ChatappConfig',
     "whitenoise.runserver_nostatic",
@@ -49,7 +50,6 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     'allauth',
     'celery',
-    'channels',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
@@ -188,7 +188,7 @@ CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [("127.0.0.1", 6379)],
+            "hosts": [("127.0.0.1", 6390), ("0.0.0.0", 6390)],
         },
     },
 }
