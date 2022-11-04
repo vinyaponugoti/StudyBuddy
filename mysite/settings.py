@@ -185,23 +185,24 @@ CELERY_BEAT_SCHEDULE = {
     }
 }
 
-new_context = ssl.SSLContext() # this sets the verify_mode to 'CERT_NONE'
-host = [{
-        'address': f'rediss://ec2-52-21-235-5.compute-1.amazonaws.com:10480', # don't miss the 'rediss'!
-        'db': "redis-trapezoidal-39472",
-        'password': "p651279d43c25973a3bb50fe380280f2d3ce2d3c6e313befb483abfc0090418fe",
-        'ssl': new_context ,
-    }]
 
+ssl_context = ssl.SSLContext()
+ssl_context.check_hostname = False
+
+heroku_redis_ssl_host = {
+    'address': 'rediss://:p651279d43c25973a3bb50fe380280f2d3ce2d3c6e313befb483abfc0090418fe@ec2-52-21-235-5.compute-1.amazonaws.com:10480/0',  # The 'rediss' schema denotes a SSL connection.
+    'ssl': ssl_context
+}
 
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts" : host
-            #"hosts" : [("127.0.0.1", 6379)],
-        },
-    },
+                  "hosts": (heroku_redis_ssl_host, )
+                  #"symmetric_encryption_keys": [SECRET_KEY],
+         },
+        
+   }
 }
 
 try:
