@@ -17,5 +17,6 @@ urlpatterns = [
     path('removefriend',views.click_remove_friend, name='removefriend'),
     path('acceptfriend',views.accept_request, name='acceptfriend'),
     path('declinefriend',views.decline_request, name='declinefriend'),
-    path('profile/<str:username>',views.view_profile,name="viewprofile")
+    path('profile/<str:username>',views.view_profile,name="viewprofile"),
+    path('upload', views.uploadStudyPost, name="uploadStudyPost")
 ]

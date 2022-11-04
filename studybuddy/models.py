@@ -1,10 +1,11 @@
-import datetime
 from django.db import models
 from django.utils import timezone
+import datetime
 from django.contrib import admin
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save, pre_delete
 from django.dispatch import receiver
+import uuid
 
 # Create your models here.
 class LutherClass(models.Model):    
@@ -47,6 +48,21 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.user.username
+
+class StudyPost(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    groupUsers = models.ManyToManyField(User, related_name="other_users_joining")
+    timeDate = models.DateTimeField(auto_now = True)
+    location = models.CharField(max_length=200)
+    studyClass = models.ManyToManyField(LutherClass)
+    requests = models.ForeignKey(User, on_delete=models.CASCADE, related_name = "users_want_to_join")
+
+class StudySession(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    groupUsers = models.ManyToManyField(User, related_name="other_users_attending")
+    timeDate = models.DateTimeField(auto_now = True)    
+    location = models.CharField(max_length=200)
+    studyClass = models.ManyToManyField(LutherClass)
 
 @receiver(post_save, sender=User) 
 def create_user_profile(sender, instance, created, **kwargs):
