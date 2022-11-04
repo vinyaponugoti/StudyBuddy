@@ -1,0 +1,21 @@
+{% load socialaccount %}
+{% load bootstrap5 %}
+{% load static %}
+
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+<html>
+    <body>
+        <h1>Please Login!</h1>
+        {% if user.is_authenticated %}
+        <p>Login Successful.</p>
+        <p>Welcome to Study Buddies, {{ user.username }}!</p>
+        <p><button><a href="/logout">Logout</a></button>
+    
+        {% else %}
+        <button><a href="{% provider_login_url 'google' %}">Login with Google</a></button>
+        {% endif %}
+    
+    </body>
+</html>
