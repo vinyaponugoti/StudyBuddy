@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 from __future__ import absolute_import, unicode_literals
-import os
+import os, ssl
 from pathlib import Path
 from celery.schedules import crontab
 from .celery import app as celery_app
@@ -185,11 +185,21 @@ CELERY_BEAT_SCHEDULE = {
     }
 }
 
+new_context = ssl.SSLContext() # this sets the verify_mode to 'CERT_NONE'
+host = [{
+        'address': f'rediss://ec2-52-21-235-5.compute-1.amazonaws.com:10480', # don't miss the 'rediss'!
+        'db': "redis-trapezoidal-39472",
+        'password': "p651279d43c25973a3bb50fe380280f2d3ce2d3c6e313befb483abfc0090418fe",
+        'ssl': new_context ,
+    }]
+
+
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": ["redis://:p651279d43c25973a3bb50fe380280f2d3ce2d3c6e313befb483abfc0090418fe@ec2-52-21-235-5.compute-1.amazonaws.com:10480"],
+            "hosts" : host
+            #"hosts" : [("127.0.0.1", 6379)],
         },
     },
 }
