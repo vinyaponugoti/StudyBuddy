@@ -14,6 +14,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from .models import Profile, FriendRequest
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
@@ -27,6 +28,7 @@ def logout(request):
     log_out(request)
     return redirect('/')
 
+@login_required(login_url='')
 def search(request):
     return render(request, 'studybuddy/display_classes.html', {})
 
