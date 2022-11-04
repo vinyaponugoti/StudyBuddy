@@ -56,7 +56,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap5',
 ]
-ASGI_APPLICATION = 'mysite.asgi.application'
+
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -91,7 +91,8 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "mysite.wsgi.application"
+#WSGI_APPLICATION = "mysite.wsgi.application"
+ASGI_APPLICATION = 'mysite.asgi.application'
 
 
 # Database

@@ -16,8 +16,8 @@
           } else {wsProtocol = 'ws://'}
         const chatSocket = new WebSocket(
             wsProtocol
-            + window.location.hostname
-            + ':8001/ws/chat/'
+            + window.location.host
+            + '/ws/chat/'
             + roomName
             + '/'
         );
