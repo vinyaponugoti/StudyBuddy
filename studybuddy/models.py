@@ -54,7 +54,7 @@ class StudyPost(models.Model):
     groupUsers = models.ManyToManyField(User, related_name="other_users_joining")
     timeDate = models.DateTimeField(auto_now = True)
     location = models.CharField(max_length=200)
-    studyClass = models.ManyToManyField(LutherClass)
+    studyClass = models.ManyToManyField(Class)
     requests = models.ForeignKey(User, on_delete=models.CASCADE, related_name = "users_want_to_join")
 
 class StudySession(models.Model):
@@ -62,7 +62,7 @@ class StudySession(models.Model):
     groupUsers = models.ManyToManyField(User, related_name="other_users_attending")
     timeDate = models.DateTimeField(auto_now = True)    
     location = models.CharField(max_length=200)
-    studyClass = models.ManyToManyField(LutherClass)
+    studyClass = models.ManyToManyField(Class)
 
 @receiver(post_save, sender=User) 
 def create_user_profile(sender, instance, created, **kwargs):
