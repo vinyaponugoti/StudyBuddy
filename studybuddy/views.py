@@ -27,10 +27,11 @@ def logout(request):
     log_out(request)
     return redirect('/')
 
+@login_required(login_url='loginrequired')
 def search(request):
     return render(request, 'studybuddy/display_classes.html', {})
 
-
+@login_required(login_url='loginrequired')
 def profile(request):
     profile_data = Profile.objects.get(user=request.user.id)
     request_list = FriendRequest.objects.all().filter(requested=request.user.profile, is_accepted=False)
@@ -54,13 +55,14 @@ class ListOfAllClasses(generic.ListView):
 
 class UpdateProfile(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView):
     form_class = ProfileForm
-    login_url = "login"
+    login_url = "loginrequired"
     template_name = "studybuddy/editprofile.html"
     success_url = reverse_lazy("profile")
     
     def get_object(self):
         return self.request.user.profile
 
+@login_required(login_url='loginrequired')
 def view_requests(request):
     # list of pending friend request sent to user
     request_list = FriendRequest.objects.all().filter(requested=request.user.profile, is_accepted=False)
@@ -81,6 +83,7 @@ def view_requests(request):
     return render(request,'studybuddy/friends.html',context)
 
 # Clean this up!!
+@login_required(login_url='loginrequired')
 def view_all_profiles(request):
     # All profiles
     profiles_list = Profile.objects.all().exclude(user=request.user)
@@ -128,7 +131,7 @@ def view_all_profiles(request):
     }
     return render(request,'studybuddy/allprofiles.html',context)
 
-
+@login_required(login_url='loginrequired')
 def click_add_friend(request):
     if request.method == "POST":
         primary_key = request.POST.get('primary_key_profile')
@@ -139,6 +142,7 @@ def click_add_friend(request):
 
     return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
 
+@login_required(login_url='loginrequired')
 def click_remove_friend(request):
     if request.method == "POST":
         primary_key = request.POST.get('primary_key_profile')
@@ -150,6 +154,7 @@ def click_remove_friend(request):
 
     return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
 
+@login_required(login_url='loginrequired')
 def accept_request(request):
     if request.method == "POST":
         primary_key = request.POST.get('primary_key_profile')
@@ -163,7 +168,7 @@ def accept_request(request):
 
         return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
 
-
+@login_required(login_url='loginrequired')
 def decline_request(request):
     if request.method == "POST":
         primary_key = request.POST.get('primary_key_profile')
@@ -175,6 +180,7 @@ def decline_request(request):
 
         return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
 
+@login_required(login_url='loginrequired')
 def view_profile(request, username):
         profiles_list = Profile.objects.all().exclude(user=request.user)
         user_list = User.objects.all()
@@ -194,5 +200,5 @@ def view_profile(request, username):
         
         return render(request,'studybuddy/profile.html',context)
 
-def uploadStudyPost(request):
-    return render(request, 'studybuddy/upload.html')
+def loginrequired(request):
+    return render(request, 'studybuddy/loginrequired.html')
