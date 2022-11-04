@@ -195,4 +195,4 @@ def view_profile(request, username):
         return render(request,'studybuddy/profile.html',context)
 
 def uploadStudyPost(request):
-    return HttpResponse('<h1>Upload!</h1>')
+    return render(request, 'studybuddy/upload.html')
