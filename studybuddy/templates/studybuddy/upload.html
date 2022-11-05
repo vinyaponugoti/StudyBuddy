@@ -5,6 +5,11 @@
 {% bootstrap_css %}
 {% bootstrap_javascript %}
 
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+{% load crispy_forms_tags %}
+
 <html>
     <head>
         <div class="container">
@@ -43,4 +48,19 @@
             </nav>
         </div>
     </head>
+
+    <body>
+        <form>
+            <h2>Looking For: </h2> <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Class
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    {% for class in user_classes %}
+                        <a class="dropdown-item" href="#">{{class}}</a>
+                    {% endfor %}
+                  </div>
+            </div>
+        </form>
+    </body>
 </html>

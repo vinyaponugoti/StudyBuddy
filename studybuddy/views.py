@@ -14,6 +14,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from .models import Profile, FriendRequest
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
@@ -43,6 +44,14 @@ def profile(request):
         "friend_list": friend_list,
     }
     return render(request,'studybuddy/profile.html',context)
+
+def uploadStudyPost(request):
+    profile_data = Profile.objects.get(user=request.user.id)
+    user_classes = Profile.getClasses(request.user.profile)
+    context = {
+        "user_classes" : user_classes
+    }
+    return render(request, 'studybuddy/upload.html', context)
 
 
 class ListOfAllClasses(generic.ListView):

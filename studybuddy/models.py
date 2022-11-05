@@ -45,6 +45,8 @@ class Profile(models.Model):
 
     def get_friends_list(self):
         return self.friends_list.all()
+    def getClasses(self):
+        return self.classes.all()
 
     def __str__(self):
         return self.user.username
@@ -56,6 +58,7 @@ class StudyPost(models.Model):
     location = models.CharField(max_length=200)
     studyClass = models.ManyToManyField(Class)
     requests = models.ForeignKey(User, on_delete=models.CASCADE, related_name = "users_want_to_join")
+    description = models.TextField(max_length=500, default="")
 
 class StudySession(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
