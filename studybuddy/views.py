@@ -44,11 +44,14 @@ def profile(request):
     }
     return render(request,'studybuddy/profile.html',context)
 
+@login_required(login_url='loginrequired')
 def uploadStudyPost(request):
     profile_data = Profile.objects.get(user=request.user.id)
     user_classes = Profile.getClasses(request.user.profile)
+    user_friends = Profile.get_friends_list(request.user.profile)
     context = {
-        "user_classes" : user_classes
+        "user_classes" : user_classes,
+        "user_friends" : user_friends
     }
     return render(request, 'studybuddy/upload.html', context)
 
