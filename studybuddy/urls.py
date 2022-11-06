@@ -18,5 +18,7 @@ urlpatterns = [
     path('acceptfriend',views.accept_request, name='acceptfriend'),
     path('declinefriend',views.decline_request, name='declinefriend'),
     path('profile/<str:username>',views.view_profile,name="viewprofile"),
-    path('loginrequired', views.loginrequired, name='loginrequired')
+    path('loginrequired', views.loginrequired, name='loginrequired'),
+    path('editschedule', views.add_class, name='schedule'),
+    # path('editschedule',views.UpdateSchedule.as_view(), name = 'editschedule'),
 ]

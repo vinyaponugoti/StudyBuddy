@@ -1,0 +1,17 @@
+<html>
+    <head>
+
+    </head>
+
+    <body>
+        <form method ="post" enctype="multipart/form-data">
+            {% csrf_token %}
+    
+
+            <div>{{form.as_p}}</div>
+            <div>{{form.classes.class_department}}</div>
+            
+            <button type="submit" class="btn btn-info">Update Schedule</button>
+        </form>
+    </body>
+</html>
