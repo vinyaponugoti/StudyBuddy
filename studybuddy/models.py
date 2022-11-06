@@ -22,7 +22,7 @@ class LutherClass(models.Model):
     Semester = models.TextField()
     
     def __str__(self):
-        return self.DeptNnemonic + str(self.CatalogNumber)
+        return self.DeptNnemonic + " " + str(self.CatalogNumber) + ": " + self.ClassName
     
 class Class(models.Model):
     course_mnemonic = models.CharField(max_length=5)
@@ -31,6 +31,15 @@ class Class(models.Model):
 
 class Mnemonics(models.Model):
     course_mnemonics = models.CharField(max_length=5)
+
+class ScheduleClass(models.Model):
+    class_department = models.TextField(blank=True)
+    class_number = models.IntegerField(blank=True)
+    classes_owner =  models.ForeignKey(User,on_delete=models.CASCADE, related_name="classes_owner", default=1)
+
+    def __str__(self):
+        return f"{self.class_department} {self.class_number}"
+
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -45,6 +54,9 @@ class Profile(models.Model):
     def get_friends_list(self):
         return self.friends_list.all()
 
+    def get_classes(self):
+        return self.classes.all()
+
     def __str__(self):
         return self.user.username
 
@@ -58,6 +70,20 @@ def create_user_profile(sender, instance, created, **kwargs):
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
 
+
+# class Schedule(models.Model):
+#     user = models.OneToOneField(User, on_delete=models.CASCADE)
+#     classes = models.ManyToManyField(ScheduleClass,blank=True, related_name="classes")
+
+# @receiver(post_save, sender=User) 
+# def create_user_schedule(sender, instance, created, **kwargs):
+#     if created:
+#         Schedule.objects.create(user=instance)
+    
+
+# @receiver(post_save, sender=User) 
+# def save_user_profile(sender, instance, **kwargs):
+#     instance.schedule.save()
 
 class FriendRequest(models.Model):
     requester = models.ForeignKey(Profile,on_delete=models.CASCADE, related_name="requester")
@@ -85,3 +111,5 @@ def pre_delete_removing_friends(sender, instance, **kwargs):
     requested_user.friends_list.remove(requester_user.user)
     requester_user.save()
     requested_user.save()
+
+

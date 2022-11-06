@@ -58,7 +58,6 @@
                     <h3>Year: {{profile_data.year}}</h3>
                     <h3>Major: {{profile_data.major}}</h3>
                     <h3>Interests: {{profile_data.interests}}</h3>
-                    <h3>Classes: {{profile_data.classes}}</h3>
 
                     <br>
                     <div>
@@ -98,7 +97,19 @@
 
                 </div>
                 <div class="col-sm-6 mx-auto">
-                   
+                    <br>
+                    <br>
+                
+                    <h3>{{user}}'s schedule: </h3>
+                    {% if user.username == request.user.username %}
+                    <button type="submit" class="btn btn-info">
+                        <a href="{% url 'schedule' %}">Add Classes</a>
+                    </button>
+                    {% endif %}
+                    {% for s in user.profile.get_classes %}
+                    <p>{{s}}</p>
+                    {% endfor %}
+
                 </div>
             </div>
         </div>

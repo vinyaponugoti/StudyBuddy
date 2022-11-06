@@ -55,22 +55,33 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-6 mx-auto">
-                    <h1>Edit Profile</h1>
+                    <h1>Save Classes</h1>
                     <form method ="post" enctype="multipart/form-data">
                         {% csrf_token %}
 
-                        <div>{{form.user}}</div>
-                        <div>{{form.name | as_crispy_field}}</div>
-                        <div>{{form.email | as_crispy_field}}</div>
-                        <div>{{form.year | as_crispy_field}}</div>
-                        <div>{{form.major | as_crispy_field}}</div>
-                        <div>{{form.interests | as_crispy_field}}</div>
-                        <div>{{form.classes}}</div>
-                        <div>{{form.friends_list}}</div>
+                        {{schedule_form.class_department|as_crispy_field}}
+                        {{schedule_form.class_number|as_crispy_field}}
 
-                        <div>
-                        <button type="submit" class="btn btn-info">Update Profile</button>
+                        <button type="submit" class="btn btn-info">Submit</button>
                     </form>
+
+                   
+                    
+                    <!-- {% for c in classes %}
+                    {% if user == c.classes_owner %}
+                    <p>{{c.class_department}} {{c.class_number}}</p>
+                    {% endif %}
+                    {% endfor %} -->
+
+                    <!-- {% for l in luther_list %}
+                    <p>{{l}}</p>
+                    {% endfor %} -->
+
+
+                    {% for u in updated_classes %}
+                    <p>{{u}}</p>
+                    {% endfor %}
+
                 </div>
             </div>
         </div>
