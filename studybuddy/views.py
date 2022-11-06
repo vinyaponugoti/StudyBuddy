@@ -16,7 +16,6 @@ from .models import Profile, FriendRequest
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 
-
 # Create your views here.
 # def index(request):
 #     return HttpResponse("Study Buddy")
