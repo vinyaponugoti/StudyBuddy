@@ -74,7 +74,7 @@ ROOT_URLCONF = "mysite.urls"
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
-CSRF_TRUSTED_ORIGINS = ["https://*.project-b13.herokuapp.com","https://*.127.0.0.1"]
+CSRF_TRUSTED_ORIGINS = ["https://*.project-b13.herokuapp.com","http://*.127.0.0.1", "http://*.localhost:8000", "http://127.0.0.1:8000/accounts/google/login/callback/", "http://localhost:8000/accounts/google/login/callback/", "https://project-b13.herokuapp.com/accounts/google/login/callback/"]
 
 #changes to here and staticfiles_dirs were to allow static images
 TEMPLATES = [
