@@ -13,10 +13,10 @@ from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
-from .models import Profile, FriendRequest, Class, ScheduleClass
+from .models import Profile, FriendRequest, StudyPost, Class, ScheduleClass
+from .forms import StudyPostForm
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
-from django.contrib import messages
 
 
 # Create your views here.
@@ -32,11 +32,11 @@ def logout(request):
     log_out(request)
     return redirect('/')
 
-# @login_required(login_url='loginrequired')
+@login_required(login_url='loginrequired')
 def search(request):
     return render(request, 'studybuddy/display_classes.html', {})
 
-# @login_required(login_url='loginrequired')
+@login_required(login_url='loginrequired')
 def profile(request):
     profile_data = Profile.objects.get(user=request.user.id)
     request_list = FriendRequest.objects.all().filter(requested=request.user.profile, is_accepted=False)
@@ -54,6 +54,45 @@ def profile(request):
     }
     return render(request,'studybuddy/profile.html',context)
 
+@login_required(login_url='loginrequired')
+def uploadStudyPost(request):
+    profile_data = Profile.objects.get(user=request.user.id)
+    user_classes = Profile.getClasses(request.user.profile)
+    user_friends = Profile.get_friends_list(request.user.profile)
+
+    initial_data = {
+        'user': profile_data
+    }
+    form = StudyPostForm(initial=initial_data)
+    submitted = False
+    if request.method == "POST":
+        form = StudyPostForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/upload?submitted=True')
+    else:
+        form = StudyPostForm
+        if 'submitted' in request.GET:
+            submitted = True
+    context = {
+        "user_classes" : user_classes,
+        "user_friends" : user_friends,
+        "form" : form,
+        "submitted" : submitted
+    }
+    return render(request, 'studybuddy/upload.html', context)
+
+@login_required(login_url='loginrequired')
+def home(request):
+    profile_data = Profile.objects.get(user=request.user.id)
+    user_friends = Profile.get_friends_list(request.user.profile)
+    friends_posts = []
+    for friend in user_friends:
+        friends_posts.append(Profile.objects.get(user=friend.user.id))
+    context = {
+        "friends_posts": friends_posts
+    }
+    return render(request, 'studybuddy/home.html', context)
 
 class ListOfAllClasses(generic.ListView):
     model = LutherClass
@@ -72,7 +111,7 @@ class UpdateProfile(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView)
     def get_object(self):
         return self.request.user.profile
 
-# @login_required(login_url='loginrequired')
+@login_required(login_url='loginrequired')
 def view_requests(request):
     # list of pending friend request sent to user
     request_list = FriendRequest.objects.all().filter(requested=request.user.profile, is_accepted=False)
@@ -93,7 +132,7 @@ def view_requests(request):
     return render(request,'studybuddy/friends.html',context)
 
 # Clean this up!!
-# @login_required(login_url='loginrequired')
+@login_required(login_url='loginrequired')
 def view_all_profiles(request):
     # All profiles
     profiles_list = Profile.objects.all().exclude(user=request.user)
@@ -141,7 +180,7 @@ def view_all_profiles(request):
     }
     return render(request,'studybuddy/allprofiles.html',context)
 
-# @login_required(login_url='loginrequired')
+@login_required(login_url='loginrequired')
 def click_add_friend(request):
     if request.method == "POST":
         primary_key = request.POST.get('primary_key_profile')
@@ -152,7 +191,7 @@ def click_add_friend(request):
 
     return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
 
-# @login_required(login_url='loginrequired')
+@login_required(login_url='loginrequired')
 def click_remove_friend(request):
     if request.method == "POST":
         primary_key = request.POST.get('primary_key_profile')
@@ -164,7 +203,7 @@ def click_remove_friend(request):
 
     return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
 
-# @login_required(login_url='loginrequired')
+@login_required(login_url='loginrequired')
 def accept_request(request):
     if request.method == "POST":
         primary_key = request.POST.get('primary_key_profile')
@@ -178,7 +217,7 @@ def accept_request(request):
 
         return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
 
-# @login_required(login_url='loginrequired')
+@login_required(login_url='loginrequired')
 def decline_request(request):
     if request.method == "POST":
         primary_key = request.POST.get('primary_key_profile')
@@ -190,7 +229,7 @@ def decline_request(request):
 
         return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
 
-# @login_required(login_url='loginrequired')
+@login_required(login_url='loginrequired')
 def view_profile(request, username):
         profiles_list = Profile.objects.all().exclude(user=request.user)
         user_list = User.objects.all()
@@ -211,70 +250,3 @@ def view_profile(request, username):
 
 def loginrequired(request):
     return render(request, 'studybuddy/loginrequired.html')
-
-# def schedule(request):
-#     classes = LutherClass.objects.filter(Q(DeptNnemonic="CS") & Q(CatalogNumber=3240))
-#     context = {
-#         "classes": classes
-#     }
-#     return render(request,'studybuddy/schedule.html', context)
-
-# class UpdateSchedule(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView):
-#     form_class = ScheduleForm
-#     login_url = "loginrequired"
-#     template_name = "studybuddy/editschedule.html"
-#     success_url = reverse_lazy("schedule")
-    
-#     def get_object(self):
-#         return self.request.user.schedule
-
-def add_class(request):
-    if request.method == "POST":
-        form = ScheduleForm(request.POST)
-        if form.is_valid():
-            schedule_form = form.save(commit=False)
-            schedule_form.classes_owner = request.user
-            schedule_form.save()
-        else:
-            messages.error(request,"Error saving class")
-
-        return redirect("schedule")
-    schedule_form = ScheduleForm()
-    classes = ScheduleClass.objects.all()
-
-    
-    try:
-        luther_list = []
-        for c in classes:
-            error = 0
-            if c.classes_owner == request.user:
-                if not LutherClass.objects.filter(Q(DeptNnemonic=c.class_department) & Q(CatalogNumber=c.class_number)):
-                    # messages.error(request,"Error: This class doesn't exist \nMake sure department and number are entered correctly")
-                    error = 1
-                    pass
-                else:
-                    luther_list.append(LutherClass.objects.filter(Q(DeptNnemonic=c.class_department) & Q(CatalogNumber=c.class_number))[0])
-                    error = 0
-    except IndexError:
-        messages.error(request,"Error: Class Number is too high or too low")
-
-    if error == 1:
-        messages.error(request,"Error: Class does not exist. Make sure class department and class number are entered correctly")    
-
-    current_profile = Profile.objects.get(user=request.user)
-    current_profile.classes.set(luther_list)
-
-    # Use this when getting user's classes in other views
-    updated_classes = Profile.get_classes(request.user.profile)
-    
-
-
-    context={
-        "schedule_form": schedule_form,
-        "classes": classes,
-        "luther_list":luther_list,
-        "updated_classes": updated_classes,
-    }
-    
-    return render(request, 'studybuddy/schedule.html', context)
-

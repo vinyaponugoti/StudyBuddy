@@ -1,10 +1,11 @@
-import datetime
 from django.db import models
 from django.utils import timezone
+import datetime
 from django.contrib import admin
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save, pre_delete
 from django.dispatch import receiver
+import uuid
 
 # Create your models here.
 class LutherClass(models.Model):    
@@ -44,6 +45,8 @@ class Profile(models.Model):
 
     def get_friends_list(self):
         return self.friends_list.all()
+    def getClasses(self):
+        return self.classes.all()
 
     def get_classes(self):
         return self.classes.all()
@@ -51,19 +54,21 @@ class Profile(models.Model):
     def __str__(self):
         return self.user.username
 
+class StudyPost(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    groupUsers = models.ManyToManyField(User, related_name="other_users_joining")
+    timeDate = models.DateTimeField(default=timezone.now)
+    location = models.CharField(max_length=200)
+    studyClass = models.ManyToManyField(Class)
+    requests = models.ForeignKey(User, on_delete=models.CASCADE, related_name = "users_want_to_join")
+    description = models.TextField(max_length=500, default="")
+
 class StudySession(models.Model):
-    day = models.DateField()
-    course = models.OneToOneField(LutherClass)
-    students = models.ManyToManyField(Profile)
-
-    def __str__(self):
-        return self.day + ' - ' + self.course
-
-    def get_students(self):
-        return self.students.all()
-
-    def add_student(self, User):
-        self.students.add(User)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    groupUsers = models.ManyToManyField(User, related_name="other_users_attending")
+    timeDate = models.DateTimeField(auto_now = True)    
+    location = models.CharField(max_length=200)
+    studyClass = models.ManyToManyField(Class)
 
 @receiver(post_save, sender=User) 
 def create_user_profile(sender, instance, created, **kwargs):
