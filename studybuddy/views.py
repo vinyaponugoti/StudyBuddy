@@ -252,3 +252,53 @@ def view_profile(request, username):
 
 def loginrequired(request):
     return render(request, 'studybuddy/loginrequired.html')
+
+
+def add_class(request):
+    if request.method == "POST":
+        form = ScheduleForm(request.POST)
+        if form.is_valid():
+            schedule_form = form.save(commit=False)
+            schedule_form.classes_owner = request.user
+            schedule_form.save()
+        else:
+            messages.error(request, "Error saving class")
+
+        return redirect("schedule")
+    schedule_form = ScheduleForm()
+    classes = ScheduleClass.objects.all()
+
+    try:
+        luther_list = []
+        for c in classes:
+            error = 0
+            if c.classes_owner == request.user:
+                if not LutherClass.objects.filter(Q(DeptNnemonic=c.class_department) & Q(CatalogNumber=c.class_number)):
+                    # messages.error(request,"Error: This class doesn't exist \nMake sure department and number are entered correctly")
+                    error = 1
+                    pass
+                else:
+                    luther_list.append(LutherClass.objects.filter(
+                        Q(DeptNnemonic=c.class_department) & Q(CatalogNumber=c.class_number))[0])
+                    error = 0
+    except IndexError:
+        messages.error(request, "Error: Class Number is too high or too low")
+
+    if error == 1:
+        messages.error(request,
+                       "Error: Class does not exist. Make sure class department and class number are entered correctly")
+
+    current_profile = Profile.objects.get(user=request.user)
+    current_profile.classes.set(luther_list)
+
+    # Use this when getting user's classes in other views
+    updated_classes = Profile.get_classes(request.user.profile)
+
+    context = {
+        "schedule_form": schedule_form,
+        "classes": classes,
+        "luther_list": luther_list,
+        "updated_classes": updated_classes,
+    }
+
+    return render(request, 'studybuddy/schedule.html', context)
