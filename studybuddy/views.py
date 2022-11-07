@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import logout as log_out
 import requests
-from studybuddy.models import LutherClass, StudySession
+from studybuddy.models import LutherClass, StudyPost, StudySession
 import json
 import urllib
 from django.views import generic
@@ -13,10 +13,12 @@ from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
-from .models import Profile, FriendRequest, StudyPost, ScheduleClass
+from .models import Profile, FriendRequest, ScheduleClass
 from .forms import StudyPostForm
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+
 
 
 # Create your views here.

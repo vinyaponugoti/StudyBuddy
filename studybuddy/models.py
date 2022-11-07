@@ -59,6 +59,17 @@ class Class(models.Model):
     course_number = models.CharField(max_length=5)
     other_info = models.CharField(max_length=300)
 
+@receiver(post_save, sender=User) 
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+    
+
+@receiver(post_save, sender=User) 
+def save_user_profile(sender, instance, **kwargs):
+    instance.profile.save()
+
+
 class StudyPost(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     groupUsers = models.ManyToManyField(User, related_name="other_users_joining")
@@ -85,16 +96,6 @@ class StudySession(models.Model):
 
     def add_student(self, User):
         self.students.add(User)
-
-@receiver(post_save, sender=User) 
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        Profile.objects.create(user=instance)
-    
-
-@receiver(post_save, sender=User) 
-def save_user_profile(sender, instance, **kwargs):
-    instance.profile.save()
 
 
 # class Schedule(models.Model):

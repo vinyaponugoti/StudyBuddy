@@ -31,7 +31,7 @@
                 <div class="collapse navbar-collapse" id="toggleMobileMenu">
                     <ul class="navbar-nav ms-auto text-center">
                         <li>
-                            <a class="nav-link" href="{% url 'home' %}">Home</a>
+                            <a class="nav-link" href="{% url 'login' %}">Home</a>
                         </li>
                         <li>
                             <a class="nav-link" href="#">Planner</a>
@@ -63,7 +63,9 @@
                     <div>
 
                          <h3>Friends List: </h3>
-
+                         {%for f in user.profile.get_friends_list%}
+                         <h3><a href="{% url 'viewprofile' f %}">{{f}}</a></h3>
+                        {%endfor%} 
 
                     </div>
                     <br>
