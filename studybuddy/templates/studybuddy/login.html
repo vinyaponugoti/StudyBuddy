@@ -80,7 +80,7 @@
     {% if user.is_authenticated %}
     <p>Login Successful.</p>
     <p>Welcome to Study Buddies, {{ user.username }}!</p>
-    {% for course in user.profile.classes %}
+    {% for course in user.profile.get_classes %}
         <h3><a href="{% url 'viewclass' course}">{{course}}</a></h3>
     {% endfor %}
     <p><button><a href="{% url 'home' %}">Go back to Home Page</a></button>
