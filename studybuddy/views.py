@@ -24,8 +24,6 @@ from django.contrib.auth.decorators import login_required
 #     return HttpResponse("Study Buddy")
 
 def login(request):
-
-
     return render(request,'studybuddy/login.html', {})
 
 def logout(request):
@@ -91,6 +89,7 @@ def home(request):
     for friend in user_friends:
         friends_posts.append(Profile.objects.get(user=friend.user.id))
     context = {
+        "profile_data" : profile_data,
         "friends_posts": friends_posts,
         "courses": courses
     }
