@@ -23,15 +23,6 @@ class LutherClass(models.Model):
     
     def __str__(self):
         return self.DeptNnemonic + " " + str(self.CatalogNumber) + ": " + self.ClassName
-    
-class Class(models.Model):
-    course_mnemonic = models.CharField(max_length=5)
-    course_number = models.CharField(max_length=5)
-    other_info = models.CharField(max_length=300)
-
-class Mnemonics(models.Model):
-    course_mnemonics = models.CharField(max_length=5)
-
 class ScheduleClass(models.Model):
     class_department = models.TextField(blank=True)
     class_number = models.IntegerField(blank=True)
@@ -59,6 +50,14 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.user.username
+
+class StudySession(models.Model):
+    day = models.DateField()
+    course = models.OneToOneField(LutherClass)
+    students = models.ManyToManyField(Profile)
+
+    def __str__(self):
+        return self.day + ' - ' + self.course
 
 @receiver(post_save, sender=User) 
 def create_user_profile(sender, instance, created, **kwargs):
