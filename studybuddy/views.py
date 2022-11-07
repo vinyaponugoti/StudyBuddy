@@ -73,11 +73,12 @@ def uploadStudyPost(request):
     if request == "POST":
         form = StudyPostForm(request.POST)
         if form.is_valid():
-            form = form.save(commit=False)
+            #form = form.save(commit=False)
             form.user = request.user
             form.requests = request.user
             form.save()
             return HttpResponseRedirect('home')
+        print(form.errors)
     else:
         form = StudyPostForm
         if 'submitted' in request.GET:
