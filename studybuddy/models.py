@@ -54,6 +54,11 @@ class Profile(models.Model):
     def __str__(self):
         return self.user.username
 
+class Class(models.Model):
+    course_mnemonic = models.CharField(max_length=5)
+    course_number = models.CharField(max_length=5)
+    other_info = models.CharField(max_length=300)
+
 class StudyPost(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     groupUsers = models.ManyToManyField(User, related_name="other_users_joining")
