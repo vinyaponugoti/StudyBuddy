@@ -13,7 +13,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
-from .models import Profile, FriendRequest, StudyPost, Class, ScheduleClass
+from .models import Profile, FriendRequest, StudyPost, ScheduleClass
 from .forms import StudyPostForm
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required

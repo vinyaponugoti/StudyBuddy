@@ -64,11 +64,19 @@ class StudyPost(models.Model):
     description = models.TextField(max_length=500, default="")
 
 class StudySession(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    groupUsers = models.ManyToManyField(User, related_name="other_users_attending")
-    timeDate = models.DateTimeField(auto_now = True)    
-    location = models.CharField(max_length=200)
-    studyClass = models.ManyToManyField(Class)
+    day = models.DateField()
+    course = models.OneToOneField(LutherClass,
+                                  on_delete=models.CASCADE)
+    students = models.ManyToManyField(Profile)
+
+    def __str__(self):
+        return self.day + ' - ' + self.course
+
+    def get_students(self):
+        return self.students.all()
+
+    def add_student(self, User):
+        self.students.add(User)
 
 @receiver(post_save, sender=User) 
 def create_user_profile(sender, instance, created, **kwargs):
