@@ -48,7 +48,7 @@
                          <h3><a href="{% url 'viewprofile' f %}">{{f}}</a></h3>
         {%endfor%}
 
-        {%for course in courses%}
+        {%for course in user.profile.classes%}
         <h3><a href="{% url 'viewclass' course}">{{course}}</a></h3>
     {   %endfor%}
         <button><a href="/upload">Post A Study Session</a></button>
