@@ -24,7 +24,9 @@ from django.contrib import messages
 #     return HttpResponse("Study Buddy")
 
 def login(request):
-    return render(request,'studybuddy/login.html',{})
+    courses = LutherClass.objects.all()
+    context = {'courses': courses}
+    return render(request,'studybuddy/login.html', context)
 
 def logout(request):
     log_out(request)

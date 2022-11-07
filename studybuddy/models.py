@@ -59,6 +59,12 @@ class StudySession(models.Model):
     def __str__(self):
         return self.day + ' - ' + self.course
 
+    def get_students(self):
+        return self.students.all()
+
+    def add_student(self, User):
+        self.students.add(User)
+
 @receiver(post_save, sender=User) 
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
