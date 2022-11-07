@@ -12,9 +12,10 @@ from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
-from .models import Profile, FriendRequest
+from .models import Profile, FriendRequest, StudyPost
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
+from .forms import StudyPostForm
 
 # Create your views here.
 # def index(request):
@@ -49,12 +50,40 @@ def uploadStudyPost(request):
     profile_data = Profile.objects.get(user=request.user.id)
     user_classes = Profile.getClasses(request.user.profile)
     user_friends = Profile.get_friends_list(request.user.profile)
+
+    initial_data = {
+        'user': profile_data
+    }
+    form = StudyPostForm(initial=initial_data)
+    submitted = False
+    if request.method == "POST":
+        form = StudyPostForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/upload?submitted=True')
+    else:
+        form = StudyPostForm
+        if 'submitted' in request.GET:
+            submitted = True
     context = {
         "user_classes" : user_classes,
-        "user_friends" : user_friends
+        "user_friends" : user_friends,
+        "form" : form,
+        "submitted" : submitted
     }
     return render(request, 'studybuddy/upload.html', context)
 
+@login_required(login_url='loginrequired')
+def home(request):
+    profile_data = Profile.objects.get(user=request.user.id)
+    user_friends = Profile.get_friends_list(request.user.profile)
+    friends_posts = []
+    for friend in user_friends:
+        friends_posts.append(Profile.objects.get(user=friend.user.id))
+    context = {
+        "friends_posts": friends_posts
+    }
+    return render(request, 'studybuddy/home.html', context)
 
 class ListOfAllClasses(generic.ListView):
     model = LutherClass

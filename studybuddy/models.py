@@ -54,7 +54,7 @@ class Profile(models.Model):
 class StudyPost(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     groupUsers = models.ManyToManyField(User, related_name="other_users_joining")
-    timeDate = models.DateTimeField(auto_now = True)
+    timeDate = models.DateTimeField(default=timezone.now)
     location = models.CharField(max_length=200)
     studyClass = models.ManyToManyField(Class)
     requests = models.ForeignKey(User, on_delete=models.CASCADE, related_name = "users_want_to_join")
