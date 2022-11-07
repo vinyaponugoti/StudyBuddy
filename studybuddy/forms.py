@@ -67,9 +67,9 @@ class StudyPostForm(ModelForm):
 
         widgets = {
             'user': forms.HiddenInput(attrs={'class': 'form-control'}),
-            'groupUsers': forms.Select(attrs={'class': 'form-control'}),
+            'groupUsers': forms.SelectMultiple(attrs={'class': 'form-control'}),
             'location': forms.TextInput(attrs={'class': 'form-control', 'placeholder':'Describe your study location'}),
-            'studyClass': forms.Select(attrs={'class': 'form-control'}),
+            'studyClass': forms.SelectMultiple(attrs={'class': 'form-control'}),
             'description': forms.TextInput(attrs={'class': 'form-control', 'placeholder':'Describe yourself and your plans for the study session'}),
             'timeDate': forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local'})
         }
