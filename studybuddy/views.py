@@ -95,13 +95,11 @@ def home(request):
     profile_data = Profile.objects.get(user=request.user.id)
     user_friends = Profile.get_friends_list(request.user.profile)
     friends_posts = []
-    courses = Profile.get_classes(request.user)
     for friend in user_friends:
         friends_posts.append(Profile.objects.get(user=friend.user.id))
     context = {
         "profile_data" : profile_data,
         "friends_posts": friends_posts,
-        "courses": courses
     }
     return render(request, 'studybuddy/home.html', context)
 
