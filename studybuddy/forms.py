@@ -52,7 +52,7 @@ class ScheduleForm(forms.ModelForm):
 class StudyPostForm(ModelForm):
     class Meta:
         model = StudyPost
-        fields = ('user', 'groupUsers', 'location', 'studyClass', 'description', 'timeDate')
+        fields = ('groupUsers', 'location', 'studyClass', 'description', 'timeDate')
         #'user', 'groupUsers', 'timeDate', 'location', 'studyClass', 'requests', 'description'
         hidden_fields = 'user'
 
@@ -61,12 +61,12 @@ class StudyPostForm(ModelForm):
             'location': '',
             'studyClass': 'Pick the class your session will focus on:',
             'description': '',
-            'timeDate': "Pick your study session's date and time",
-            'user': ''
+            'timeDate': "Pick your study session's date and time"
+            #'user': ''
         }
 
         widgets = {
-            'user': forms.HiddenInput(attrs={'class': 'form-control'}),
+            #'user': forms.HiddenInput(attrs={'class': 'form-control'}),
             'groupUsers': forms.SelectMultiple(attrs={'class': 'form-control'}),
             'location': forms.TextInput(attrs={'class': 'form-control', 'placeholder':'Describe your study location'}),
             'studyClass': forms.SelectMultiple(attrs={'class': 'form-control'}),

@@ -60,16 +60,24 @@ def uploadStudyPost(request):
     user_classes = Profile.getClasses(request.user.profile)
     user_friends = Profile.get_friends_list(request.user.profile)
 
-    initial_data = {
-        'user': profile_data
-    }
-    form = StudyPostForm(initial=initial_data)
+    # initial_data = {
+    #     'user': profile_data
+    # }
+
+            #     schedule_form = form.save(commit=False)
+            # schedule_form.classes_owner = request.user
+            # schedule_form.save()
+
+    form = StudyPostForm() #(initial=initial_data)
     submitted = False
     if request.method == "POST":
         form = StudyPostForm(request.POST)
         if form.is_valid():
+            form = form.save(commit=False)
+            form.user = request.user
+            form.requests = 0
             form.save()
-            return HttpResponseRedirect('/upload?submitted=True')
+            return HttpResponseRedirect('home')
     else:
         form = StudyPostForm
         if 'submitted' in request.GET:
