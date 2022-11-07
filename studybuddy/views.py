@@ -261,7 +261,7 @@ def view_class(request, class_name):
     context = {
         "course_study_sessions": course_obj
     }
-    return render(request, 'studybuddy/studdysessions.html', context)
+    return render(request, 'studybuddy/login.html', context)
 
 def view_session(request, class_name, date):
     class_list = LutherClass.objects.all()
