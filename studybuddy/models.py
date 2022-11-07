@@ -53,7 +53,8 @@ class Profile(models.Model):
 
 class StudySession(models.Model):
     day = models.DateField()
-    course = models.OneToOneField(LutherClass)
+    course = models.OneToOneField(LutherClass,
+                                  on_delete=models.CASCADE)
     students = models.ManyToManyField(Profile)
 
     def __str__(self):
