@@ -24,6 +24,6 @@ urlpatterns = [
     # path('editschedule',views.UpdateSchedule.as_view(), name = 'editschedule'),,
     path('loginrequired', views.loginrequired, name='loginrequired'),
     path('upload', views.uploadStudyPost, name='uploadStudyPost'),
-    path('/<str:class_name>', views.view_class, name='viewclass'),
-    path('/<str:class_name/<str:date>', views.view_sessions, name='viewsessions')
+    path('<str:class_name>', views.view_class, name='viewclass'),
+    path('<str:class_name/<str:date>', views.view_session, name='viewsessions')
 ]

@@ -261,7 +261,18 @@ def view_class(request, class_name):
     }
     return render(request, 'studybuddy/studdysessions.html', context)
 
+def view_session(request, class_name, date):
+    class_list = LutherClass.objects.all()
+    course_match = None
+    for course in class_list:
+        if str(course) == class_name:
+            course_match = course
 
+    course_obj = StudySession.objects.get(course=course_match, day = date)
+    context = {
+        "course_study_sessions": course_obj
+    }
+    return render(request, 'studybuddy/home.html', context)
 
 def loginrequired(request):
     return render(request, 'studybuddy/loginrequired.html')
