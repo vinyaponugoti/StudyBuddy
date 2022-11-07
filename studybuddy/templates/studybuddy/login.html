@@ -79,8 +79,10 @@
     <h1>Study Buddies Login Page</h1>
     {% if user.is_authenticated %}
     <p>Login Successful.</p>
-    <div>{{classes}}</div>
     <p>Welcome to Study Buddies, {{ user.username }}!</p>
+    {%for f in courses%}
+        <h3><a href="###">{{f}}</a></h3>
+    {%endfor%}
     <p><button><a href="/logout">Logout</a></button>
 
     {% else %}
