@@ -25,5 +25,5 @@ urlpatterns = [
     path('loginrequired', views.loginrequired, name='loginrequired'),
     path('upload', views.uploadStudyPost, name='uploadStudyPost'),
     path('<str:class_name>', views.view_class, name='viewclass'),
-    path('<str:class_name/<str:date>', views.view_session, name='viewsessions')
+    path('sessions/<str:date>', views.view_session, name='viewsessions')
 ]
