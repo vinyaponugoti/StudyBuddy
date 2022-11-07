@@ -44,6 +44,9 @@
         </div>
     </head>
     <body>
+        {%for f in user.profile.get_friends_list%}
+                         <h3><a href="{% url 'viewprofile' f %}">{{f}}</a></h3>
+        {%endfor%}
         <button><a href="/upload">Post A Study Session</a></button>
 
         {% for post in friends_posts %}
