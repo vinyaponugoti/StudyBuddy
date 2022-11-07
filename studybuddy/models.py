@@ -23,7 +23,7 @@ class LutherClass(models.Model):
     Semester = models.TextField()
     
     def __str__(self):
-        return self.DeptNnemonic + " " + str(self.CatalogNumber) + ": " + self.ClassName
+        return self.DeptNnemonic + str(self.CatalogNumber) + ": " + self.ClassName
 class ScheduleClass(models.Model):
     class_department = models.TextField(blank=True)
     class_number = models.IntegerField(blank=True)
@@ -79,6 +79,9 @@ class StudySession(models.Model):
 
     def get_students(self):
         return self.students.all()
+
+    def get_dates(self):
+        return self.day.all()
 
     def add_student(self, User):
         self.students.add(User)

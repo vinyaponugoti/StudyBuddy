@@ -44,17 +44,8 @@
         </div>
     </head>
     <body>
-        {%for f in user.profile.get_friends_list%}
-                         <h3><a href="{% url 'viewprofile' f %}">{{f}}</a></h3>
+        {%for date in course_study_sessions.day%}
+                         <h3><a href="{% url 'viewprofile' date %}">{{date}}</a></h3>
         {%endfor%}
-
-        {%for course in courses%}
-        <h3><a href="{% url 'viewclass' course}">{{course}}</a></h3>
-    {   %endfor%}
-        <button><a href="/upload">Post A Study Session</a></button>
-
-        {% for post in friends_posts %}
-            {{post}}
-        {% endfor %}
     </body>
 </html>

@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import logout as log_out
 import requests
-from studybuddy.models import LutherClass
+from studybuddy.models import LutherClass, StudySession
 import json
 import urllib
 from django.views import generic
@@ -248,6 +248,20 @@ def view_profile(request, username):
         }
         
         return render(request,'studybuddy/profile.html',context)
+
+def view_class(request, class_name):
+    class_list = LutherClass.objects.all()
+    course_match = None
+    for course in class_list:
+        if str(course) == class_name:
+            course_match = course
+    course_obj = StudySession.objects.get(course=course_match)
+    context = {
+        "course_study_sessions": course_obj
+    }
+    return render(request, 'studybuddy/studdysessions.html', context)
+
+
 
 def loginrequired(request):
     return render(request, 'studybuddy/loginrequired.html')

@@ -81,9 +81,7 @@
     <p>Login Successful.</p>
     <p>Welcome to Study Buddies, {{ user.username }}!</p>
     <p><button><a href="/home">Go back to Home Page</a></button>
-    {%for f in courses%}
-        <h3><a href="###">{{f}}</a></h3>
-    {%endfor%}
+
     <p><button><a href="/logout">Logout</a></button>
 
     {% else %}
