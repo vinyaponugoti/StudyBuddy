@@ -46,8 +46,10 @@ class ScheduleForm(forms.ModelForm):
     class Meta: 
         model = ScheduleClass
         fields = ('class_department','class_number')
-        
-        
+
+
+
+
 # making a studypost form
 class StudyPostForm(ModelForm):
     class Meta:
@@ -66,10 +68,9 @@ class StudyPostForm(ModelForm):
         }
 
         widgets = {
-            #'user': forms.HiddenInput(attrs={'class': 'form-control'}),
-            'groupUsers': forms.SelectMultiple(attrs={'class': 'form-control'}),
-            'location': forms.TextInput(attrs={'class': 'form-control', 'placeholder':'Describe your study location'}),
-            'studyClass': forms.SelectMultiple(attrs={'class': 'form-control'}),
-            'description': forms.TextInput(attrs={'class': 'form-control', 'placeholder':'Describe yourself and your plans for the study session'}),
-            'timeDate': forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local'})
+            'groupUsers': forms.SelectMultiple(attrs={'class': 'form-control', 'style': 'max-width: 600px;'}),
+            'location': forms.TextInput(attrs={'class': 'form-control', 'style': 'max-width: 600px;', 'placeholder': 'Describe your study location'}),
+            'studyClass': forms.SelectMultiple(attrs={'class': 'form-control', 'style': 'max-width: 600px;'}),
+            'description': forms.TextInput(attrs={'class': 'form-control', 'style': 'max-width: 600px;', 'placeholder':'Describe yourself and your plans for the study session'}),
+            'timeDate': forms.DateTimeInput(attrs={'class': 'form-control', 'style': 'max-width: 600px;', 'type': 'datetime-local'})
         }
