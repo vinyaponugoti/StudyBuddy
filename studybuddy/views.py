@@ -70,12 +70,12 @@ def uploadStudyPost(request):
 
     form = StudyPostForm() #(initial=initial_data)
     submitted = False
-    if request.method == "POST":
+    if request == "POST":
         form = StudyPostForm(request.POST)
         if form.is_valid():
             form = form.save(commit=False)
             form.user = request.user
-            form.requests = 0
+            form.requests = request.user
             form.save()
             return HttpResponseRedirect('home')
     else:
