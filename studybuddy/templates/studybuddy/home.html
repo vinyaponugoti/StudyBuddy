@@ -5,6 +5,9 @@
 {% bootstrap_css %}
 {% bootstrap_javascript %}
 
+{# Load CSS and JavaScript #}
+
+
 <html>
     <head>
         <div class="container">
@@ -43,18 +46,36 @@
             </nav>
         </div>
     </head>
-    <body>
-        {%for f in user.profile.get_friends_list%}
-                         <h3><a href="{% url 'viewprofile' f %}">{{f}}</a></h3>
-        {%endfor%}
+    <head>
 
-        {%for course in user.profile.get_classes%}
-        <h3><a href="{% url 'viewclass' course}">{{course}}</a></h3>
-        {%endfor%}
-        <button><a href="/upload">Post A Study Session</a></button>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+       <div class="wrapper">
+           <!-- Sidebar -->
+           <nav id="sidebar">
+               <div class="sidebar-header">
 
-        {% for post in friends_posts %}
-            {{post}}
-        {% endfor %}
-    </body>
+                   <h3>Friends</h3>
+               <ul class="list-unstyled components">
+                   {%for f in user.profile.get_friends_list%}
+                         <li><a href="{% url 'viewprofile' f %}">{{f}}</a></li>
+                    {%endfor%}
+               </ul>
+
+                   <h3>Schedule</h3>
+               </div>
+               <ul class="list-unstyled components" >
+                   {%for f in user.profile.get_classes%}
+                        <li><a href="{% url 'viewclass' course}">{{f}}</a></li>
+                   {%endfor%}
+                   <button id= "butt" type="submit" class="btn btn-light"><a href="/upload">Post A Study Session</a></button>
+               </ul>
+           </nav>
+       </div>
+    </head>
 </html>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
