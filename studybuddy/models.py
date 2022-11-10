@@ -72,6 +72,7 @@ def save_user_profile(sender, instance, **kwargs):
 
 
 class StudyPost(models.Model):
+<<<<<<< Updated upstream
     user = models.ForeignKey(User, on_delete=models.CASCADE,default=1)
     user_luther_class = models.ForeignKey(LutherClass, on_delete=models.CASCADE, default=1, related_name="user_luther_class")
     groupUsers = models.ManyToManyField(User, related_name="other_users_joining", blank=True)
@@ -88,6 +89,15 @@ class StudyPost(models.Model):
 
     def get_studiers_list(self):
         return self.groupUsers.all()
+=======
+    user = models.OneToOneField(User, on_delete=models.CASCADE) 
+    groupUsers = models.ManyToManyField(User, related_name="other_users_joining")
+    timeDate = models.DateTimeField(default=timezone.now)
+    location = models.CharField(max_length=200)
+    studyClass = models.ManyToManyField(ScheduleClass)
+    requests = models.ForeignKey(User, on_delete=models.CASCADE, related_name = "users_want_to_join")
+    description = models.TextField(max_length=500, default="")
+>>>>>>> Stashed changes
 
 class StudySession(models.Model):
     day = models.DateField()

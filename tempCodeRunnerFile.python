@@ -1,0 +1,8 @@
+max = 8000
+skip = 16
+iters = 64000000
+for i in range(max):
+    print((i + skip) % max)
+
+
+#print((2 + skip) % max)
