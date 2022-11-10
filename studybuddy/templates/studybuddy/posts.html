@@ -10,6 +10,7 @@
 
 {% load crispy_forms_tags %}
 
+
 <html>
     <head>
         <meta charset="utf-8">
@@ -59,30 +60,46 @@
     </head>
 
     <body>
-        {% if submitted %}
-            <h1>You have successfully uploaded a post!</h1>
-        {% else %}
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-6 mx-auto">
-                    <form method="POST" align="center">
-                        <h1>Create a Study Post</h1>
-                        <h5>Fill out the form below to find study buddies for a class!</h5>
-                        <br>
-                        <p align="left" class="tab">Note: You can only create a study post if you added classes to your schedule</p>
-                        <p align="left" class="tab">Note: In Other Buddies Joining Section- Hold down “Control”, or “Command” on a Mac, to select more than one buddy that will be at the study session! Leave empty if you are looking for buddies to join your study session.</p>
-                        <br>
-                        {% csrf_token %}
+        <div>
+            <div class="container">
+                <div class="row">
+                    {% for p in posts%}
+                    <div class="col-lg-3 d-flex align-items-stretch mb-4">
+                    <div class="card" >
+                        <div class="card-body">
+                       
+                            <p><b>Post created by:</b></p>
+                            <p>{{p.user}}</p>
+                        
+                            <p><b>Class:</b></p>
+                            <p>{{p.user_luther_class}}</p>
+                        
+                            <p><b>Date and Time:</b></p>
+                            <p>{{p.timeDate}}</p>
 
-                        {{ form.as_p }}
+                            <p><b>Location:</b></p>
+                            <p>{{p.location}}</p>
 
-                        <input type="submit" class="btn btn-primary">
-                    </form>
+                            <p><b>Description:</b></p>
+                            <p>{{p.description}}</p>
+                        
+                            <p><b>Study Session Members:</b></p>
+                            {% if not p.groupUsers.all%}
+                                <p>Currently no other member. {{p.user}} is looking for study buddies!</p>
+                            {% endif %}
+                            {% for pg in p.groupUsers.all%}
+                                <p>{{pg}}</p>
+                            {% endfor %}
+                            
+                    </div>
+                    </div>
+                </div>
+                    {% endfor %}
+                    
+
                 </div>
             </div>
+            
         </div>
-        {% endif %}
-
-        
     </body>
 </html>

@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import logout as log_out
 import requests
-from studybuddy.models import LutherClass, StudyPost, StudySession
+from studybuddy.models import LutherClass, StudySession, StudyPost
 import json
 import urllib
 from django.views import generic
@@ -14,7 +14,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from .models import Profile, FriendRequest, ScheduleClass
-from .forms import StudyPostForm
+from .forms import ScheduleNewPost
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -54,42 +54,42 @@ def profile(request):
     }
     return render(request,'studybuddy/profile.html',context)
 
-@login_required(login_url='loginrequired')
-def uploadStudyPost(request):
-    profile_data = Profile.objects.get(user=request.user.id)
-    user_classes = Profile.getClasses(request.user.profile)
-    user_friends = Profile.get_friends_list(request.user.profile)
+# @login_required(login_url='loginrequired')
+# def uploadStudyPost(request):
+#     profile_data = Profile.objects.get(user=request.user.id)
+#     user_classes = Profile.getClasses(request.user.profile)
+#     user_friends = Profile.get_friends_list(request.user.profile)
 
-    # initial_data = {
-    #     'user': profile_data
-    # }
+#     # initial_data = {
+#     #     'user': profile_data
+#     # }
 
-            #     schedule_form = form.save(commit=False)
-            # schedule_form.classes_owner = request.user
-            # schedule_form.save()
+#             #     schedule_form = form.save(commit=False)
+#             # schedule_form.classes_owner = request.user
+#             # schedule_form.save()
 
-    form = StudyPostForm() #(initial=initial_data)
-    submitted = False
-    if request == "POST":
-        form = StudyPostForm(request.POST)
-        if form.is_valid():
-            #form = form.save(commit=False)
-            form.user = request.user
-            form.requests = request.user
-            form.save()
-            return HttpResponseRedirect('home')
-        print(form.errors)
-    else:
-        form = StudyPostForm
-        if 'submitted' in request.GET:
-            submitted = True
-    context = {
-        "user_classes" : user_classes,
-        "user_friends" : user_friends,
-        "form" : form,
-        "submitted" : submitted
-    }
-    return render(request, 'studybuddy/upload.html', context)
+#     form = StudyPostForm() #(initial=initial_data)
+#     submitted = False
+#     if request == "POST":
+#         form = StudyPostForm(request.POST)
+#         if form.is_valid():
+#             #form = form.save(commit=False)
+#             form.user = request.user
+#             form.requests = request.user
+#             form.save()
+#             return HttpResponseRedirect('home')
+#         print(form.errors)
+#     else:
+#         form = StudyPostForm
+#         if 'submitted' in request.GET:
+#             submitted = True
+#     context = {
+#         "user_classes" : user_classes,
+#         "user_friends" : user_friends,
+#         "form" : form,
+#         "submitted" : submitted
+#     }
+#     return render(request, 'studybuddy/upload.html', context)
 
 @login_required(login_url='loginrequired')
 def home(request):
@@ -97,7 +97,8 @@ def home(request):
     user_friends = Profile.get_friends_list(request.user.profile)
     friends_posts = []
     for friend in user_friends:
-        friends_posts.append(Profile.objects.get(user=friend.user.id))
+        # friends_posts.append(Profile.objects.get(user=friend.user.id))
+        friends_posts.append(Profile.get_friends_list(request.user.profile))
     context = {
         "profile_data" : profile_data,
         "friends_posts": friends_posts,
@@ -258,17 +259,18 @@ def view_profile(request, username):
         
         return render(request,'studybuddy/profile.html',context)
 
-def view_class(request, class_name):
-    class_list = LutherClass.objects.all()
-    course_match = None
-    for course in class_list:
-        if str(course) == class_name:
-            course_match = course
-    course_obj = StudySession.objects.get(course=course_match)
-    context = {
-        "course_study_sessions": course_obj
-    }
-    return render(request, 'studybuddy/login.html', context)
+
+# def view_class(request, class_name):
+#     class_list = LutherClass.objects.all()
+#     course_match = None
+#     for course in class_list:
+#         if str(course) == class_name:
+#             course_match = course
+#     course_obj = StudySession.objects.get(course=course_match)
+#     context = {
+#         "course_study_sessions": course_obj
+#     }
+#     return render(request, 'studybuddy/login.html', context)
 
 def view_session(request, class_name, date):
     class_list = LutherClass.objects.all()
@@ -335,3 +337,49 @@ def add_class(request):
     }
 
     return render(request, 'studybuddy/schedule.html', context)
+
+
+
+
+@login_required(login_url='loginrequired')
+def add_study_post(request):
+   
+    if request.method == "POST":
+        form = ScheduleNewPost(request.POST, user=request.user)
+
+        if form.is_valid():
+            form.instance.user = request.user
+            # form.instance.user_class = classes[0]
+            form.save()
+        else:
+            messages.error(request, "Error saving post")
+
+        # return redirect("uploadStudyPost")
+        return redirect("studyposts")
+
+    else:
+         form = ScheduleNewPost(user=request.user)
+
+    form = ScheduleNewPost(user=request.user)
+    posts = StudyPost.objects.all()
+    updated_classes = Profile.get_classes(request.user.profile)
+
+
+    context= {
+        "form":form,
+        "posts":posts,
+        "updated_classes":updated_classes,
+    }
+
+    return render(request,'studybuddy/upload.html',context)
+
+def view_study_posts(request):
+    posts = StudyPost.objects.all()
+    context={
+        "posts":posts,
+    }
+    return render(request, 'studybuddy/posts.html', context)
+
+    
+
+

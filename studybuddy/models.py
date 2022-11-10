@@ -24,6 +24,7 @@ class LutherClass(models.Model):
     
     def __str__(self):
         return self.DeptNnemonic + str(self.CatalogNumber) + ": " + self.ClassName
+
 class ScheduleClass(models.Model):
     class_department = models.TextField(blank=True)
     class_number = models.IntegerField(blank=True)
@@ -71,13 +72,22 @@ def save_user_profile(sender, instance, **kwargs):
 
 
 class StudyPost(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    groupUsers = models.ManyToManyField(User, related_name="other_users_joining")
-    timeDate = models.DateTimeField(default=timezone.now)
-    location = models.CharField(max_length=200)
-    studyClass = models.ManyToManyField(ScheduleClass)
-    requests = models.ForeignKey(User, on_delete=models.CASCADE, related_name = "users_want_to_join")
-    description = models.TextField(max_length=500, default="")
+    user = models.ForeignKey(User, on_delete=models.CASCADE,default=1)
+    user_luther_class = models.ForeignKey(LutherClass, on_delete=models.CASCADE, default=1, related_name="user_luther_class")
+    groupUsers = models.ManyToManyField(User, related_name="other_users_joining", blank=True)
+    timeDate = models.DateTimeField(default=timezone.now, blank=True)
+    location = models.CharField(max_length=200, blank=True)
+    # studyClass = models.ManyToManyField(ScheduleClass,blank=True)
+    requests = models.ManyToManyField(User, related_name = "users_want_to_join", blank=True)
+    description = models.TextField(max_length=500, default="", blank=True)
+    # user_class = models.ForeignKey(ScheduleClass, on_delete=models.CASCADE, default=1, related_name="user_class")
+    
+
+    def __str__(self):
+        return f"{self.user} wants to study at {self.location} at {self.timeDate} for {self.user_luther_class} with {self.groupUsers.all()}"
+
+    def get_studiers_list(self):
+        return self.groupUsers.all()
 
 class StudySession(models.Model):
     day = models.DateField()
@@ -98,19 +108,6 @@ class StudySession(models.Model):
         self.students.add(User)
 
 
-# class Schedule(models.Model):
-#     user = models.OneToOneField(User, on_delete=models.CASCADE)
-#     classes = models.ManyToManyField(ScheduleClass,blank=True, related_name="classes")
-
-# @receiver(post_save, sender=User) 
-# def create_user_schedule(sender, instance, created, **kwargs):
-#     if created:
-#         Schedule.objects.create(user=instance)
-    
-
-# @receiver(post_save, sender=User) 
-# def save_user_profile(sender, instance, **kwargs):
-#     instance.schedule.save()
 
 class FriendRequest(models.Model):
     requester = models.ForeignKey(Profile,on_delete=models.CASCADE, related_name="requester")

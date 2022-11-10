@@ -1,8 +1,9 @@
 from dataclasses import fields
 from django import forms
-from .models import Profile, ScheduleClass, StudyPost
+from .models import Profile, ScheduleClass, StudyPost, LutherClass
 from django.forms import TextInput, EmailInput
 from django.forms import ModelForm
+from django.contrib.auth.models import User
 
 
 class ProfileForm(forms.ModelForm):
@@ -51,26 +52,75 @@ class ScheduleForm(forms.ModelForm):
 
 
 # making a studypost form
-class StudyPostForm(ModelForm):
-    class Meta:
+# class StudyPostForm(ModelForm):
+#     class Meta:
+#         model = StudyPost
+#         fields = ('groupUsers', 'location', 'studyClass', 'description', 'timeDate')
+#         #'user', 'groupUsers', 'timeDate', 'location', 'studyClass', 'requests', 'description'
+#         hidden_fields = 'user'
+
+#         labels = {
+#             'groupUsers': 'Other Studies Buddies Joining:',
+#             'location': '',
+#             'studyClass': 'Pick the class your session will focus on:',
+#             'description': '',
+#             'timeDate': "Pick your study session's date and time"
+#             #'user': ''
+#         }
+
+#         widgets = {
+#             'groupUsers': forms.SelectMultiple(attrs={'class': 'form-control', 'style': 'max-width: 600px;'}),
+#             'location': forms.TextInput(attrs={'class': 'form-control', 'style': 'max-width: 600px;', 'placeholder': 'Describe your study location'}),
+#             'studyClass': forms.SelectMultiple(attrs={'class': 'form-control', 'style': 'max-width: 600px;'}),
+#             'description': forms.TextInput(attrs={'class': 'form-control', 'style': 'max-width: 600px;', 'placeholder':'Describe yourself and your plans for the study session'}),
+#             'timeDate': forms.DateTimeInput(attrs={'class': 'form-control', 'style': 'max-width: 600px;', 'type': 'datetime-local'})
+#         }
+
+
+
+
+
+# Form that lets users create study posts
+
+class ScheduleNewPost(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+            user = kwargs.pop('user','')
+            super(ScheduleNewPost, self).__init__(*args, **kwargs)
+
+            self.fields['user_luther_class']=forms.ModelChoiceField(
+                queryset=Profile.get_classes(user.profile), 
+                widget=forms.Select(attrs={'class': 'form-control', 'style': 'max-width: 600px;'}),
+                label= 'Pick the class your session will focus on:',
+                )
+
+
+            self.fields["groupUsers"] = forms.ModelMultipleChoiceField(
+                queryset=User.objects.all().exclude(username=user.username).order_by('username'),
+                widget=forms.SelectMultiple(attrs={'class': 'form-control', 'style': 'max-width: 600px;',}),
+                label = "Other Studies Buddies Joining: ",
+                required = False
+            )
+
+
+    class Meta: 
         model = StudyPost
-        fields = ('groupUsers', 'location', 'studyClass', 'description', 'timeDate')
-        #'user', 'groupUsers', 'timeDate', 'location', 'studyClass', 'requests', 'description'
-        hidden_fields = 'user'
+        fields = ('user_luther_class', "timeDate","location","groupUsers","description")
 
         labels = {
-            'groupUsers': 'Other Studies Buddies Joining:',
+            'groupUsers': 'Other Study Buddies Joining:',
             'location': '',
-            'studyClass': 'Pick the class your session will focus on:',
             'description': '',
             'timeDate': "Pick your study session's date and time"
-            #'user': ''
         }
 
         widgets = {
-            'groupUsers': forms.SelectMultiple(attrs={'class': 'form-control', 'style': 'max-width: 600px;'}),
             'location': forms.TextInput(attrs={'class': 'form-control', 'style': 'max-width: 600px;', 'placeholder': 'Describe your study location'}),
-            'studyClass': forms.SelectMultiple(attrs={'class': 'form-control', 'style': 'max-width: 600px;'}),
             'description': forms.TextInput(attrs={'class': 'form-control', 'style': 'max-width: 600px;', 'placeholder':'Describe yourself and your plans for the study session'}),
-            'timeDate': forms.DateTimeInput(attrs={'class': 'form-control', 'style': 'max-width: 600px;', 'type': 'datetime-local'})
+            'timeDate': forms.DateTimeInput(attrs={'class': 'form-control', 'style': 'max-width: 600px;', 'type': 'datetime-local'}),
         }
+
+    
+
+
+       
+        
