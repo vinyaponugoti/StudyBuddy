@@ -54,7 +54,6 @@ def profile(request):
     }
     return render(request,'studybuddy/profile.html',context)
 
-<<<<<<< Updated upstream
 # @login_required(login_url='loginrequired')
 # def uploadStudyPost(request):
 #     profile_data = Profile.objects.get(user=request.user.id)
@@ -91,45 +90,6 @@ def profile(request):
 #         "submitted" : submitted
 #     }
 #     return render(request, 'studybuddy/upload.html', context)
-=======
-@login_required(login_url='loginrequired')
-def uploadStudyPost(request):
-    profile_data = Profile.objects.get(user=request.user.id)
-    user_classes = Profile.getClasses(request.user.profile)
-    user_friends = Profile.get_friends_list(request.user.profile)
-
-    # initial_data = {
-    #     'user': profile_data
-    # }
-
-            #     schedule_form = form.save(commit=False)
-            # schedule_form.classes_owner = request.user
-            # schedule_form.save()
-
-    form = StudyPostForm() #(initial=initial_data)
-    submitted = False
-    if request == "POST":
-        #form = StudyPostForm(request.POST, instance=request.user)
-        form = StudyPostForm(request.POST)
-        if form.is_valid():
-            #form = form.save(commit=False)
-            form.instance.user = request.user
-            form.instance.requests = request.user
-            form.save()
-            return HttpResponseRedirect('home')
-        print(form.errors)
-    else:
-        form = StudyPostForm
-        if 'submitted' in request.GET:
-            submitted = True
-    context = {
-        "user_classes" : user_classes,
-        "user_friends" : user_friends,
-        "form" : form,
-        "submitted" : submitted
-    }
-    return render(request, 'studybuddy/upload.html', context)
->>>>>>> Stashed changes
 
 @login_required(login_url='loginrequired')
 def home(request):
@@ -137,12 +97,8 @@ def home(request):
     user_friends = Profile.get_friends_list(request.user.profile)
     friends_posts = []
     for friend in user_friends:
-<<<<<<< Updated upstream
         # friends_posts.append(Profile.objects.get(user=friend.user.id))
         friends_posts.append(Profile.get_friends_list(request.user.profile))
-=======
-        friends_posts.append(Profile.objects.get(user=friend.user))
->>>>>>> Stashed changes
     context = {
         "profile_data" : profile_data,
         "friends_posts": friends_posts,
