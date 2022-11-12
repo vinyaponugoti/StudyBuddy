@@ -9,6 +9,7 @@
     {%if user.is_authenticated%}
     <head>
         <div class="container">
+            <title>Study Buddy</title>
             <nav class="navbar navbar-expand-md navbar-light">
                 <a href="#" class="navbar-brand">
                     <img src="{% static '/images/Study_Buddy_Logo.png' %}" alt="StudyBuddy Logo" width="70" height="70"
@@ -35,6 +36,9 @@
                         </li>
                         <li>
                             <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="{% url 'studyposts' %}">Study Posts</a>
                         </li>
                         <li>
                             <a class="nav-link" href="#">Chat</a>

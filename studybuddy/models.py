@@ -137,3 +137,30 @@ def pre_delete_removing_friends(sender, instance, **kwargs):
     requested_user.save()
 
 
+
+class PostRequest(models.Model):
+    buddy = models.ForeignKey(Profile,on_delete=models.CASCADE, related_name="buddy")
+    studyposting = models.ForeignKey(StudyPost,on_delete=models.CASCADE, related_name="studypost")
+    is_accepted = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.buddy} wants to join {self.studyposting}"
+
+@receiver(post_save,sender=PostRequest)
+def post_save_member(sender, instance, created, **kwargs):
+    buddy = instance.buddy
+    studyposting = instance.studyposting
+    if instance.is_accepted == True:
+        studyposting.groupUsers.add(buddy.user)
+        studyposting.save()
+        buddy.save()
+
+@receiver(pre_delete,sender=PostRequest)
+def pre_delete_removing_member(sender, instance, **kwargs):
+    buddy = instance.buddy
+    studyposting = instance.studyposting
+    studyposting.groupUsers.remove(buddy.user)
+    studyposting.save()
+    buddy.save()
+
+
