@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import logout as log_out
 import requests
-from studybuddy.models import LutherClass, StudySession, StudyPost
+from studybuddy.models import LutherClass, StudySession, StudyPost, PostRequest
 import json
 import urllib
 from django.views import generic
@@ -364,6 +364,7 @@ def add_study_post(request):
     posts = StudyPost.objects.all()
     updated_classes = Profile.get_classes(request.user.profile)
 
+    
 
     context= {
         "form":form,
@@ -375,10 +376,157 @@ def add_study_post(request):
 
 def view_study_posts(request):
     posts = StudyPost.objects.all()
+
+    other_posts = StudyPost.objects.all().exclude(user=request.user)
+    
+    # List of posts that the user is able to send post requests to
+    can_request = []
+
+    for p in other_posts:
+        can_request.append(p)
+
+    for p in StudyPost.objects.all().exclude(user=request.user):
+        for g in p.groupUsers.all():
+            if g == request.user:
+                can_request.remove(p)
+
+    for r in PostRequest.objects.all().filter(is_accepted=False):
+        if r.buddy == request.user.profile:
+            can_request.remove(r.studyposting)
+
+
+    len_p = len(can_request)
+
+
+    # List of posts that the user has sent requests to
+    post_pending = []
+    for r in PostRequest.objects.all().filter(is_accepted=False):
+        if r.buddy == request.user.profile:
+            post_pending.append(r.studyposting)
+
+    # List of posts that the user created
+    user_posts = []
+    for p in StudyPost.objects.all():
+        if p.user == request.user:
+            user_posts.append(p)
+
+    # List of posts that the user is a member of (not owner)
+    member_posts = []
+    for p in StudyPost.objects.all().exclude(user=request.user):
+        for g in p.groupUsers.all():
+            if g == request.user:
+                member_posts.append(p)
+
+
+
     context={
         "posts":posts,
+        "can_request":can_request,
+        "len_p": len_p,
+        "post_pending":  post_pending,
+        "user_posts": user_posts,
+        "member_posts":member_posts,
     }
     return render(request, 'studybuddy/posts.html', context)
+
+
+@login_required(login_url='loginrequired')
+def view_post_requests(request):
+    # list of pending post requests sent to post
+    post = StudyPost.objects.all().filter(user=request.user)
+
+    request_list = []
+    for sp in PostRequest.objects.all().filter(is_accepted=False):
+        for p in post:
+            if p == sp.studyposting:
+                request_list.append(sp)
+
+   
+    # # list of profiles who requested the post
+    request_senders = []
+    for r in request_list:
+        request_senders.append(r.buddy)
+            
+    # number of profiles that requested the user    
+    request_num = len(request_senders)
+
+    context = {
+        "request_list": request_list,
+        "request_senders": request_senders,
+        "request_num": request_num,
+    }
+    return render(request,'studybuddy/postrequests.html',context)
+
+
+@login_required(login_url='loginrequired')
+def click_join_session(request):
+    if request.method == "POST":
+        primary_key = request.POST.get('primary_key_post')
+        user = request.user
+        requester = Profile.objects.get(user=user)
+        posting = StudyPost.objects.get(pk=primary_key)
+        post_req = PostRequest.objects.create(buddy=requester, studyposting = posting, is_accepted=False)
+
+    return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
+
+
+@login_required(login_url='loginrequired')
+def click_leave_session(request):
+    if request.method == "POST":
+        try:
+            primary_key = request.POST.get('primary_key_post')
+            user = request.user
+            requester = Profile.objects.get(user=user)
+            requested = StudyPost.objects.get(pk=primary_key)
+            post_req = get_object_or_404(PostRequest,buddy=requester,studyposting=requested)
+            post_req.delete()
+        except:
+            primary_key = request.POST.get('primary_key_post')
+            user = request.user
+            posting = StudyPost.objects.get(pk=primary_key)
+            posting.groupUsers.remove(user)
+
+    return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
+
+
+@login_required(login_url='loginrequired')
+def accept_post_request(request):
+    if request.method == "POST":
+        primary_key = request.POST.get('primary_key_posts')
+        user = request.user
+        requester = PostRequest.objects.get(pk=primary_key).buddy
+        requested = PostRequest.objects.get(pk=primary_key).studyposting
+        post_req = get_object_or_404(PostRequest,buddy=requester,studyposting=requested)
+        if post_req.is_accepted == False:
+            post_req.is_accepted = True
+            post_req.save()
+
+        return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
+
+
+@login_required(login_url='loginrequired')
+def decline_post_request(request):
+    if request.method == "POST":
+        primary_key = request.POST.get('primary_key_post')
+        user = request.user
+        requester = PostRequest.objects.get(pk=primary_key).buddy
+        requested = PostRequest.objects.get(pk=primary_key).studyposting
+        post_req = get_object_or_404(PostRequest,buddy=requester,studyposting=requested)
+        post_req.delete()
+
+        return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
+
+
+@login_required(login_url='loginrequired')
+def delete_post(request):
+    if request.method == "POST":
+        primary_key = request.POST.get('primary_key_post')
+        study_post = StudyPost.objects.get(pk=primary_key)
+        study_post.delete()
+
+        return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
+
+
 
     
 

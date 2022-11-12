@@ -30,4 +30,10 @@ urlpatterns = [
     # path('createpost',views.add_study_post,name='createpost'),
     path('upload', views.add_study_post, name='uploadStudyPost'),
     path('studyposts',views.view_study_posts, name="studyposts"),
+    path('viewpostrequests',views.view_post_requests,name="viewpostrequests"),
+    path('joinsession',views.click_join_session, name='joinsession'),
+    path('acceptrequest',views.accept_post_request, name='acceptrequest'),
+    path('declinerequest',views.decline_post_request, name='declinerequest'),
+    path('leavesession',views.click_leave_session, name='leavesession'),
+    path('deletepost',views.delete_post, name='deletepost'),
 ]

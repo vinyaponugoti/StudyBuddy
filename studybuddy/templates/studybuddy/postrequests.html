@@ -1,13 +1,15 @@
-{# Load the tag library #}
+{% load socialaccount %}
 {% load bootstrap5 %}
+{% load static %}
 
-{# Load CSS and JavaScript #}
 {% bootstrap_css %}
 {% bootstrap_javascript %}
 
 {# Display django.contrib.messages as Bootstrap alerts #}
 {% bootstrap_messages %}
-{% load static %}
+
+{% load crispy_forms_tags %}
+
 
 <html>
     <head>
@@ -57,32 +59,41 @@
             <div class="row">
                 
                 {% if request_num != 0 %}
-                    <h1>Request Sent By: </h1>
-                    {%for r in request_senders%}
+                    <h1>Requests to Join your Study Sessions: </h1>
+                    {%for r in request_list%}
                     <div class="row">
                         <div class="card" style="width: 36rem; margin-bottom: 10px;">
                             <div class="card-body">
-                                <h3>{{r}}</h3>
-                                <button type="submit" class="btn btn-info" style="margin-bottom: 20px;">
-                                    <a href="{% url 'viewprofile' r.user.username %}">View Profile</a>
-                                </button>
-                                
+                                <h3>{{r.buddy}} wants to join your study session for {{r.studyposting.user_luther_class.DeptNnemonic}} {{r.studyposting.user_luther_class.CatalogNumber}}!</h3>
+                                <br>
+                                <h4> Date and Time: {{r.studyposting.timeDate}}</h4> 
+                                <h4> Location: {{r.studyposting.location}}</h4> 
+
+                                <div>
+                                    <button type="submit" class="btn btn-info">
+                                        <a href="{% url 'viewprofile' r.buddy.user.username %}">View Profile</a>
+                                    </button>
+                                </div>
+
                                 <div class="row">
                                     <div class="col">
-                                        <form action="{% url 'acceptfriend' %}" method="POST">
+                                        <form action="{% url 'acceptrequest' %}" method="POST">
                                             {% csrf_token %}
-                                            <input type="hidden" name="primary_key_profile" value={{r.pk}}>
-                                                <button type="submit" class="btn btn-success"> Accept Friend Request</button>
+                                            <input type="hidden" name="primary_key_posts" value={{r.pk}}>
+                                                <button type="submit" class="btn btn-success"> Accept Request</button>
                                         </form>
                                     </div>
-                                    
+                                
+                                
                                     <div class="col">
-                                        <form action="{% url 'declinefriend' %}" method="POST">
+                                        <form action="{% url 'declinerequest' %}" method="POST">
                                             {% csrf_token %}
-                                            <input type="hidden" name="primary_key_profile" value={{r.pk}}>
-                                                <button type="submit" class="btn btn-danger"> Reject Friend Request</button>
+                                            <input type="hidden" name="primary_key_post" value={{r.pk}}>
+                                                <button type="submit" class="btn btn-danger"> Reject Request</button>
                                         </form>
                                     </div>
+
+
                                 </div>
                                 
                                 
@@ -93,7 +104,7 @@
                 {% endif %}
        
                 {% if request_num == 0 %}
-                    <h3> You have no Friend Requests currently </h3>
+                    <h3> You have No Post Requests currently </h3>
                 {% endif %}
             </div>
         </div>
@@ -101,3 +112,28 @@
 
     </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <html>
+    <head>
+
+    </head>
+
+    <body>
+        {{request_list}}
+        {{request_senders}}
+        {{request_num}}
+    </body>
+</html>
+ -->
