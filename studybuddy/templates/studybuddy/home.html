@@ -69,7 +69,7 @@
                </div>
                <ul class="list-unstyled components" >
                    {%for f in user.profile.get_classes%}
-                        <li><a href="{% url 'viewclass' course}">{{f}}</a></li>
+                        <li><a href="{% url 'viewclass' f}">{{f}}</a></li>
                    {%endfor%}
                    <button id= "butt" type="submit" class="btn btn-light"><a href="/upload">Post A Study Session</a></button>
                </ul>
