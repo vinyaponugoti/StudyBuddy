@@ -20,11 +20,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 
-
-# Create your views here.
-# def index(request):
-#     return HttpResponse("Study Buddy")
-
 def login(request):
     return render(request,'studybuddy/login.html', {})
 
@@ -53,43 +48,6 @@ def profile(request):
         "schedule": schedule,
     }
     return render(request,'studybuddy/profile.html',context)
-
-# @login_required(login_url='loginrequired')
-# def uploadStudyPost(request):
-#     profile_data = Profile.objects.get(user=request.user.id)
-#     user_classes = Profile.getClasses(request.user.profile)
-#     user_friends = Profile.get_friends_list(request.user.profile)
-
-#     # initial_data = {
-#     #     'user': profile_data
-#     # }
-
-#             #     schedule_form = form.save(commit=False)
-#             # schedule_form.classes_owner = request.user
-#             # schedule_form.save()
-
-#     form = StudyPostForm() #(initial=initial_data)
-#     submitted = False
-#     if request == "POST":
-#         form = StudyPostForm(request.POST)
-#         if form.is_valid():
-#             #form = form.save(commit=False)
-#             form.user = request.user
-#             form.requests = request.user
-#             form.save()
-#             return HttpResponseRedirect('home')
-#         print(form.errors)
-#     else:
-#         form = StudyPostForm
-#         if 'submitted' in request.GET:
-#             submitted = True
-#     context = {
-#         "user_classes" : user_classes,
-#         "user_friends" : user_friends,
-#         "form" : form,
-#         "submitted" : submitted
-#     }
-#     return render(request, 'studybuddy/upload.html', context)
 
 @login_required(login_url='loginrequired')
 def home(request):
@@ -289,10 +247,6 @@ def view_sessions(request, class_name):
     return(request, '/studybuddy/study_session_list.html', context)
 
 
-
-
-
-
 def view_class(request, class_name):
     print(class_name)
     class_list = LutherClass.objects.all()
@@ -371,8 +325,6 @@ def add_class(request):
     }
 
     return render(request, 'studybuddy/schedule.html', context)
-
-
 
 
 @login_required(login_url='loginrequired')
@@ -560,8 +512,6 @@ def delete_post(request):
 
         return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
 
-
-
-    
-
-
+@login_required(login_url='loginrequired')
+def planner(request):
+    return render(request,'studybuddy/planner.html', {})

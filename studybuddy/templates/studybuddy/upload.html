@@ -33,10 +33,10 @@
                 <div class="collapse navbar-collapse" id="toggleMobileMenu">
                     <ul class="navbar-nav ms-auto text-center">
                         <li>
-                            <a class="nav-link" href="{% url 'login' %}">Home</a>
+                            <a class="nav-link" href="{% url 'home' %}">Home</a>
                         </li>
                         <li>
-                            <a class="nav-link" href="#">Planner</a>
+                            <a class="nav-link" href="{% url 'planner' %}">Planner</a>
                         </li>
                         <li>
                             <a class="nav-link" href="{% url 'profile' %}">Profile</a>
@@ -45,7 +45,7 @@
                             <a class="nav-link" href="{% url 'studyposts' %}">Study Posts</a>
                         </li>
                         <li>
-                            <a class="nav-link" href="#">Chat</a>
+                            <a class="nav-link" href="{% url 'chat_index' %}">Chat</a>
                         </li>
                         
                     </ul>

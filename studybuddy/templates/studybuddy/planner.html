@@ -5,6 +5,11 @@
 {% bootstrap_css %}
 {% bootstrap_javascript %}
 
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+{% load crispy_forms_tags %}
+
 <html>
     <head>
         <div class="container">
@@ -42,14 +47,10 @@
                         <li>
                             <a class="nav-link" href="{% url 'chat_index' %}">Chat</a>
                         </li>
+                        
                     </ul>
                 </div>
             </nav>
         </div>
     </head>
-    <body>
-        {%for date in course_study_sessions.day%}
-                         <h3><a href="{% url 'viewprofile' date %}">{{date}}</a></h3>
-        {%endfor%}
-    </body>
 </html>

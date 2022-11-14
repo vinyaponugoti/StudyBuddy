@@ -1,7 +1,7 @@
 from django.urls import path
 
 from . import views
-
+from ChatApp import views as chat_views
 
 urlpatterns = [
     # path('', views.index, name='index'),
@@ -35,4 +35,6 @@ urlpatterns = [
     path('declinerequest',views.decline_post_request, name='declinerequest'),
     path('leavesession',views.click_leave_session, name='leavesession'),
     path('deletepost',views.delete_post, name='deletepost'),
+    path('planner', views.planner, name='planner'),
+    path('chat', chat_views.index, name='chat_index')
 ]
