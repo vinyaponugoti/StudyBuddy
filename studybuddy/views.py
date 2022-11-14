@@ -260,7 +260,41 @@ def view_profile(request, username):
         return render(request,'studybuddy/profile.html',context)
 
 
+@login_required(login_url='login_required')
+def view_sessions(request, class_name):
+    #this will return a list of all the study sessions
+    if class_name == 'all':
+        return render(request, 'studybuddy/study_session_list.html', {"session_list": StudyPost.objects.all(),
+                                                "course": 'all'})
+
+    study_sessions = StudyPost.objects.all()
+    study_sessions_for_class = list()
+    study_session_course = None
+
+
+
+    #if class_name != 'all', we will look for study_session posts of the same class.
+    for session in study_sessions:
+        course = session.user_luther_class
+        course_name = course.DeptNnemonic + str(course.CatalogNumber) + ": " + course.ClassName
+        if course_name == class_name:
+            study_sessions_for_class.append(session)
+            study_session_course = course
+
+    context = {
+        "session_list": study_sessions_for_class,
+        "course": study_session_course
+    }
+
+    return(request, '/studybuddy/study_session_list.html', context)
+
+
+
+
+
+
 def view_class(request, class_name):
+    print(class_name)
     class_list = LutherClass.objects.all()
     course_match = None
     for course in class_list:
