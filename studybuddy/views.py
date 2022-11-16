@@ -40,12 +40,15 @@ def profile(request):
     # Adding Schedule to Profile
     schedule = Profile.get_classes(request.user.profile)
 
+    # Number of Friends user has
+    friends_num = len(friend_list)
 
     context = {
         "profile_data": profile_data,
         "request_list": request_list,
         "friend_list": friend_list,
         "schedule": schedule,
+        "friends_num": friends_num,
     }
     return render(request,'studybuddy/profile.html',context)
 
@@ -54,12 +57,16 @@ def home(request):
     profile_data = Profile.objects.get(user=request.user.id)
     user_friends = Profile.get_friends_list(request.user.profile)
     friends_posts = []
+    friends_num = len(user_friends)
+
     for friend in user_friends:
         # friends_posts.append(Profile.objects.get(user=friend.user.id))
         friends_posts.append(Profile.get_friends_list(request.user.profile))
+
     context = {
         "profile_data" : profile_data,
         "friends_posts": friends_posts,
+        "friends_num": friends_num,
     }
     return render(request, 'studybuddy/home.html', context)
 
