@@ -67,6 +67,11 @@
                     <div>
 
                          <h3>Friends List: </h3>
+                        {% if friends_num == 0 %}
+                            <h4> You have no Friends currently </h4>
+                            <h5> Click on View All Profiles to find users to send friend requests to! </h5>
+                            <h5> Click on View Friend Requests to accept or decline friend requests sent to you! </h5>
+                        {% endif %}
                          {%for f in user.profile.get_friends_list%}
                          <h3><a href="{% url 'viewprofile' f %}">{{f}}</a></h3>
                         {%endfor%} 
