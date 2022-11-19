@@ -21,7 +21,7 @@ from django.contrib import messages
 
 
 def login(request):
-    return render(request,'studybuddy/login.html', {})
+    return render(request,'studybuddy/home.html', {})
 
 def logout(request):
     log_out(request)

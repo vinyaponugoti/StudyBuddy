@@ -43,6 +43,12 @@
                         <li>
                             <a class="nav-link" href="{% url 'chat_index' %}">Chat</a>
                         </li>
+                        <li>
+                            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                        </li>
                     </ul>
                 </div>
             </nav>
@@ -70,7 +76,7 @@
                 <div class="collapse navbar-collapse" id="toggleMobileMenu">
                     <ul class="navbar-nav ms-auto text-center">
                         <li>
-                            <a class="nav-link" href="{% url 'home' %}">Home</a>
+                            <a class="nav-link" href="{% url 'login' %}">Login</a>
                         </li>
                     </ul>
                 </div>
@@ -80,22 +86,70 @@
     {% endif %}
 
 <body>
-    <h1>Study Buddies Login Page</h1>
+    <!-- <h1>Study Buddies Login Page</h1> -->
     {% if user.is_authenticated %}
-    <p>Login Successful.</p>
-    <p>Welcome to Study Buddies, {{ user.username }}!</p>
-    {% for course in user.profile.get_classes %}
+    <!-- <p>Login Successful.</p>
+    <p>Welcome to Study Buddies, {{ user.username }}!</p> -->
+    <!-- {% for course in user.profile.get_classes %}
         <h3><a href="{% url 'viewclass' course}">{{course}}</a></h3>
-    {% endfor %}
-    <p><button><a href="{% url 'home' %}">Go back to Home Page</a></button>
+    {% endfor %} -->
+    <!-- <p><button><a href="{% url 'home' %}">Go back to Home Page</a></button> -->
 
-    <p><button><a href="{% url 'logout' %}">Logout</a></button>
+    <!-- <p><button><a href="{% url 'logout' %}">Logout</a></button> -->
+
+        <head>
+
+            <link rel="stylesheet" href="{% static 'styles.css' %}">
+               <div class="wrapper">
+                   <!-- Sidebar -->
+                   <nav id="sidebar">
+                       <div class="sidebar-header">
+        
+                           <h3>Friends</h3>
+                       <ul class="list-unstyled components">
+                            {% if friends_num == 0 %}
+                                <li><a> No Friends </a></li>
+                            {% endif %}
+                           {%for f in user.profile.get_friends_list%}
+                                 <li><a href="{% url 'viewprofile' f %}">{{f}}</a></li>
+                            {%endfor%}
+                       </ul>
+        
+                           <h3>Schedule</h3>
+                       </div>
+                       <ul class="list-unstyled components" >
+                           {%for f in user.profile.get_classes%}
+                                <li><a href="{% url 'viewclass' f}">{{f}}</a></li>
+                           {%endfor%}
+                           <button id= "butt" type="submit" class="btn btn-light"><a href="/upload">Post A Study Session</a></button>
+                       </ul>
+                   </nav>
+                    <div align="center">
+
+                        <h1 >Welcome to StudyBuddy {{user.username}}!</h1>
+                        <!-- <p><button><a href="{% url 'logout' %}">Logout</a></button> -->
+                    </div>
+               </div>
+               
+            </head>
+
+            
 
     {% else %}
+    
     <button><a href="{% provider_login_url 'google' %}">Login with Google</a></button>
     {% endif %}
 
-    <button><a href="{% url 'uploadStudyPost' %}">Post A Study Session</a></button>
+    <!-- <button><a href="{% url 'uploadStudyPost' %}">Post A Study Session</a></button> -->
+
+    
+    
 </body>
 
 </html>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
