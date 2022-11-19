@@ -1,15 +1,19 @@
-{% load socialaccount %}
+
 {% load bootstrap5 %}
+{% bootstrap_messages %}
 {% load static %}
 
 {% bootstrap_css %}
 {% bootstrap_javascript %}
 
 {# Load CSS and JavaScript #}
+{% load socialaccount %}
 
 
 <html>
+    
     <head>
+        {%if user.is_authenticated%}
         <div class="container">
             <title>Study Buddy</title>
             <nav class="navbar navbar-expand-md navbar-light">
@@ -44,41 +48,124 @@
                         </li>
                         <li>
                             <a class="nav-link" href="{% url 'chat_index' %}">Chat</a>
-                        </li
+                        </li>
+                        <li>
+                            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            
+        </div>
+        {% else %}
+    </head>
+    
+    <head>
+        <div class="container">
+            <nav class="navbar navbar-expand-md navbar-light">
+                <a href="#" class="navbar-brand">
+                    <img src="{% static '/images/Study_Buddy_Logo.png' %}" alt="StudyBuddy Logo" width="70" height="70"
+                    class="d-inline-block align-top" />
+                    StudyBuddy</a>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#toggleMobileMenu"
+                    aria-controls="toggleMobileMenu"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="toggleMobileMenu">
+                    <ul class="navbar-nav ms-auto text-center">
+                        <li>
+                            <a class="nav-link" href="{% provider_login_url 'google' %}">Login to StudyBuddy</a>
+                        </li>
                     </ul>
                 </div>
             </nav>
         </div>
     </head>
-    <head>
+    {% endif %}
 
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
-       <div class="wrapper">
-           <!-- Sidebar -->
-           <nav id="sidebar">
-               <div class="sidebar-header">
+<body>
+    {% if user.is_authenticated %}
 
-                   <h3>Friends</h3>
-               <ul class="list-unstyled components">
-                    {% if friends_num == 0 %}
-                        <li><a> No Friends </a></li>
-                    {% endif %}
-                   {%for f in user.profile.get_friends_list%}
-                         <li><a href="{% url 'viewprofile' f %}">{{f}}</a></li>
-                    {%endfor%}
-               </ul>
+        <head>
 
-                   <h3>Schedule</h3>
+            <link rel="stylesheet" href="{% static 'styles.css' %}">
+               <div class="wrapper">
+                   <!-- Sidebar -->
+                   <nav id="sidebar">
+                       <div class="sidebar-header">
+        
+                           <h3>Friends</h3>
+                       <ul class="list-unstyled components">
+                            {% if friends_num == 0 %}
+                                <li><a> No Friends </a></li>
+                            {% endif %}
+                           {%for f in user.profile.get_friends_list%}
+                                 <li><a href="{% url 'viewprofile' f %}">{{f}}</a></li>
+                            {%endfor%}
+                       </ul>
+        
+                           <h3>Schedule</h3>
+                       </div>
+                       <ul class="list-unstyled components" >
+                           {%for f in user.profile.get_classes%}
+                                <li><a href="{% url 'viewclass' f}">{{f}}</a></li>
+                           {%endfor%}
+                           <button id= "butt" type="submit" class="btn btn-light"><a href="/upload">Post A Study Session</a></button>
+                       </ul>
+                   </nav>
+                    <!-- <div align="center">
+
+                    </div> -->
                </div>
-               <ul class="list-unstyled components" >
-                   {%for f in user.profile.get_classes%}
-                        <li><a href="{% url 'viewclass' f}">{{f}}</a></li>
-                   {%endfor%}
-                   <button id= "butt" type="submit" class="btn btn-light"><a href="/upload">Post A Study Session</a></button>
-               </ul>
-           </nav>
-       </div>
-    </head>
+               
+            </head>
+
+            
+    {% else %}
+    
+    <div >
+        
+        <div class="card" style="width: 100%; height:80%;  background-color: rgba(31, 91, 122, 0.852);">
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+            <div class="container"> 
+                <div class="row"> 
+                    <h1 style="color:rgb(232, 226, 217); padding-bottom: 20px;"> Find Study Buddies for your UVA classes</h1>
+                    <br>
+                    <h5 style="color:rgb(232, 226, 217); padding-bottom: 20px;"> StudyBuddy helps you work smarter.</h5>
+                    <button class="btn btn-secondary" style="width: 20%; background-color: rgba(236, 169, 81, 0.636); font-weight: bold; border-radius: 0; position:relative;left:10px;">
+                        <a href="{% provider_login_url 'google' %}" style="text-decoration:none">
+                            
+                            <h6 style="color:rgb(232, 226, 217); font-weight: bold;">Login with Google</h6>
+                        </a>
+                    </button>
+                </div>
+            </div>   
+
+        </div>
+        
+    </div>
+    
+    {% endif %}
+
+
+    
+    
+</body>
+
 </html>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
