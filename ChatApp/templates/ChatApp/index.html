@@ -1,26 +1,92 @@
+{# Load the tag library #}
+{% load bootstrap5 %}
+
 <!DOCTYPE html>
-<html>
+{% load static %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
 <head>
-    <meta charset="utf-8"/>
-    <title>Chat Room</title>
+    <div class="container">
+        <nav class="navbar navbar-expand-md navbar-light">
+            <a href="#" class="navbar-brand">
+                <img src="{% static '/images/Study_Buddy_Logo.png' %}" alt="StudyBuddy Logo" width="70" height="70"
+                class="d-inline-block align-top" />
+                StudyBuddy</a>
+            <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#toggleMobileMenu"
+                aria-controls="toggleMobileMenu"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+            >
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="toggleMobileMenu">
+                <ul class="navbar-nav ms-auto text-center">
+                    <li>
+                        <a class="nav-link" href="{% url 'home' %}">Home</a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="{% url 'planner' %}">Planner</a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="{% url 'chat_index' %}">Chat</a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
 </head>
-<body>
-    What chat room would you like to enter?<br>
-    <input id="room-name-input" type="text" size="100"><br>
-    <input id="room-name-submit" type="button" value="Enter">
 
-    <script>
-        document.querySelector('#room-name-input').focus();
-        document.querySelector('#room-name-input').onkeyup = function(e) {
-            if (e.keyCode === 13) {  // enter, return
-                document.querySelector('#room-name-submit').click();
-            }
-        };
+    {% if rooms %}
+    <div class="list-group">
+        <b>
+          List of Available Chat Rooms
+        </b>
+        {% for r in rooms %}
+            <a href="{{ r.room_name }}" class="list-group-item list-group-item-action">{{ r.room_name }}</a>
+        {% endfor %}
+      </div>
+    {% else %}
+        <p>No chat rooms exist. Create one below!</p>
+    {% endif %}
+    <form action="{% url 'chat:chat_index'%}" method="post", class="form">
+        <div class="row">
+            <div class="col">
+              </div>
+              <div class="col">
+                {% csrf_token %}
+                {% if form %}
+                    {% bootstrap_form form %}
+                {% endif %}
+                {% buttons %}
+                <button type="submit" class="btn btn-primary">
+                    Create Room
+                </button>
+                {% endbuttons %}
+              </div>
+              <div class="col">
+              </div>   
+            
+        </div>
+    </form>
+</div>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 
-        document.querySelector('#room-name-submit').onclick = function(e) {
-            var roomName = document.querySelector('#room-name-input').value;
-            window.location.pathname = '/chat/' + roomName + '/';
-        };
-    </script>
-</body>
-</html>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>

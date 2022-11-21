@@ -36,5 +36,5 @@ urlpatterns = [
     path('leavesession',views.click_leave_session, name='leavesession'),
     path('deletepost',views.delete_post, name='deletepost'),
     path('planner', views.planner, name='planner'),
-    path('chat', chat_views.index, name='chat_index')
+    path('chat', chat_views.createChatRoom, name='chat_index')
 ]
