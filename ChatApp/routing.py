@@ -1,3 +1,4 @@
+from mysite.wsgi import *
 from django.urls import re_path
 
 from ChatApp import consumers
