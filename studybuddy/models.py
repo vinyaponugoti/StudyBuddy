@@ -80,6 +80,7 @@ class StudyPost(models.Model):
     # studyClass = models.ManyToManyField(ScheduleClass,blank=True)
     requests = models.ManyToManyField(User, related_name = "users_want_to_join", blank=True)
     description = models.TextField(max_length=500, default="", blank=True)
+    session = models.BooleanField(default=False)
     # user_class = models.ForeignKey(ScheduleClass, on_delete=models.CASCADE, default=1, related_name="user_class")
     
 
@@ -106,7 +107,6 @@ class StudySession(models.Model):
 
     def add_student(self, User):
         self.students.add(User)
-
 
 
 class FriendRequest(models.Model):

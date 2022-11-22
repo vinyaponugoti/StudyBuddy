@@ -401,7 +401,8 @@ def view_study_posts(request):
     user_posts = []
     for p in StudyPost.objects.all():
         if p.user == request.user:
-            user_posts.append(p)
+            if p.session == False:
+                user_posts.append(p)
 
     # List of posts that the user is a member of (not owner)
     member_posts = []
@@ -409,7 +410,6 @@ def view_study_posts(request):
         for g in p.groupUsers.all():
             if g == request.user:
                 member_posts.append(p)
-
 
 
     context={
@@ -422,6 +422,26 @@ def view_study_posts(request):
     }
     return render(request, 'studybuddy/posts.html', context)
 
+@login_required(login_url='loginrequired')
+def planner(request):
+    studysessions = []
+
+    userposts = StudyPost.objects.filter(user=request.user)
+    sessions = userposts.exclude(session=False)
+    for s in sessions:
+        studysessions.append(s)
+
+    for p in StudyPost.objects.all().exclude(user=request.user):
+        if p.session == True:
+            for g in p.groupUsers.all():
+                if g == request.user:
+                    studysessions.append(p)
+
+    context = {
+        "studysessions" : studysessions
+    }
+
+    return render(request,'studybuddy/planner.html', context)
 
 @login_required(login_url='loginrequired')
 def view_post_requests(request):
@@ -520,5 +540,12 @@ def delete_post(request):
         return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
 
 @login_required(login_url='loginrequired')
-def planner(request):
-    return render(request,'studybuddy/planner.html', {})
+def closepost(request):
+    if request.method == "POST":
+        primary_key = request.POST.get('primary_key_post')
+        study_post = StudyPost.objects.get(pk=primary_key)
+        study_post.session = True
+        study_post.save()
+
+        #return render(request, 'studybuddy/planner.html')
+        return HttpResponseRedirect('/planner')
