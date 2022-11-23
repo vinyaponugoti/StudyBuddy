@@ -522,3 +522,22 @@ def delete_post(request):
 @login_required(login_url='loginrequired')
 def planner(request):
     return render(request,'studybuddy/planner.html', {})
+
+
+@login_required(login_url='loginrequired')
+def delete_class(request):
+    if request.method == "POST":
+        primary_key = request.POST.get('primary_key_post')
+        class_to_delete = Profile.objects.get(user=request.user.id).classes.get(pk=primary_key)
+        # class_to_delete.delete()
+        class_dep = class_to_delete.DeptNnemonic
+        class_num = class_to_delete.CatalogNumber
+        # print(class_to_delete)
+        # print(class_dep)
+        # print(class_num)
+        classes = ScheduleClass.objects.all().filter(class_department=class_dep, class_number=class_num, classes_owner=request.user)
+        for c in classes:
+            c.delete()
+
+        Profile.objects.get(user=request.user.id).classes.remove(class_to_delete)
+        return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
