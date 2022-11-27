@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class ChatRoom(models.Model):
-    room_name = models.TextField(blank=True)
+    name = models.TextField(blank=True)
     messages_sent = models.IntegerField(blank=True)
 
     def __str__(self):

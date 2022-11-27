@@ -6,6 +6,10 @@
 {% bootstrap_javascript %}
 
 <html>
+    <head>
+        <title>Error</title>
+        <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
+    </head>
     <body>
         <h1>Please Login!</h1>
         {% if user.is_authenticated %}

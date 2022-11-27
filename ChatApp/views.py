@@ -6,8 +6,8 @@ from .forms import ChatForm
  
  
 def room(request, room_name):
-    if ChatRoom.objects.filter(room_name = room_name).exists():
-        room = ChatRoom.objects.filter(room_name=room_name).first()
+    if ChatRoom.objects.filter(name = room_name).exists():
+        room = ChatRoom.objects.filter(name=room_name).first()
         chats = []
         if room:
             chats = Chat.objects.filter(room=room)
@@ -33,7 +33,7 @@ def createChatRoom(request):
         if form.is_valid():
             if not ChatRoom.objects.filter(room_name = form.data['room_name']).exists():
                 model = ChatRoom()
-                model.room_name = form.data['room_name']
+                model.name = form.data['room_name']
                 model.messages_sent = 0
                 model.save()
             return HttpResponseRedirect(form.data['room_name'])

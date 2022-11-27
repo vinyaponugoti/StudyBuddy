@@ -1,9 +1,22 @@
+{# Load the tag library #}
+{% load bootstrap5 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+{% load static %}
+
+{% load crispy_forms_tags %}
+
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8"/>
-    <title>Chat Room</title>
-</head>
+    <head>
+        <title>{{room_name}}</title>
+        <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
+    </head>
 <body>
     <div class="container">
         <div id="chat-log">
@@ -23,9 +36,10 @@
     <div class="container">
         <input class="textInput" id="chat-message-input" type="text" placeholder="Say something!"><br>
         <input class="button" id="chat-message-submit" type="button" value="Send">
+        {{ room_name|json_script:"room-name" }}
         <script>
             const chatLog = document.querySelector('#chat-log')
-            const roomName = 'room_name';
+            const roomName = JSON.parse(document.getElementById('room-name').textContent);
 
             if (chatLog.childNodes.length <= 1) {
                 const emptyText = document.createElement('h3')

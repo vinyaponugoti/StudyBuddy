@@ -6,6 +6,10 @@
 {% bootstrap_javascript %}
 
 <html>
+    <head>
+        <title>Login</title>
+        <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
+    </head>
     {%if user.is_authenticated%}
     <head>
         <div class="container">
