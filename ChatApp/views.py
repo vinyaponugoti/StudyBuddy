@@ -1,13 +1,21 @@
 from django.shortcuts import render, redirect
 from django.views import generic
-from .models import ChatRoom
+from .models import ChatRoom, Chat
 from django.http import HttpResponse, HttpResponseRedirect
 from .forms import ChatForm
  
  
 def room(request, room_name):
     if ChatRoom.objects.filter(room_name = room_name).exists():
-        return render(request, 'ChatApp/room.html', {'room_name': room_name})
+        room = ChatRoom.objects.filter(room_name=room_name).first()
+        chats = []
+        if room:
+            chats = Chat.objects.filter(room=room)
+        else:
+            room = ChatRoom(name=room_name)
+            room.save()
+
+        return render(request, 'ChatApp/room.html', {'room_name': room_name, 'chats': chats})
     else:
         return redirect("chat_index")
     

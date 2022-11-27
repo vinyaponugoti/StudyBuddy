@@ -109,20 +109,62 @@
 
                 </div>
                 <div class="col-sm-6 mx-auto">
+                    
                     <br>
                     <br>
-                
-                    <h3>{{user}}'s schedule: </h3>
+                    <div class="card" style="width: 38rem;">
+                        <div class="card-header">
+                            <h3>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-calendar-event" viewBox="0 0 16 16">
+                                    <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"/>
+                                    <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+                                </svg>
+                                {{user}}'s schedule: 
+                            </h3>
+                        </div>
+
+                    <ul>
+                        <div class="card-body">
+                    {% for s in user.profile.get_classes %}
+
+                    <div class="row">
+                        
+                    <div class="col">
+                        
+                        <h6>
+                            {{s}}
+                        </h6>
+                        <br>
+                    </div>
+                   
+
                     {% if user.username == request.user.username %}
-                    <button type="submit" class="btn btn-info">
-                        <a href="{% url 'schedule' %}">Add Classes</a>
+                    <div class="col">
+                        <ul>
+                            <form action="{% url 'deleteclass' %}" method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="primary_key_post" value={{s.pk}}>
+                                        <button type="submit" class="btn btn-link" style="font-size : 20px; width: 30px; height: 28px; text-align: center; line-height: 0.5em; color:red; text-decoration: none; font-weight: bold;"> 
+                                            x
+                                        </button>
+                            </form>
+                            </ul>
+                    </div>
+                    {% endif %}
+                </div>
+                
+                    {% endfor %}
+                    
+                    {% if user.username == request.user.username %}
+                    <button type="submit" class="btn btn-outline-success" >
+                        <a href="{% url 'schedule' %}" style="text-decoration: none; color:green;"> +  Add Classes</a>
                     </button>
                     {% endif %}
-                    {% for s in user.profile.get_classes %}
-                    <p>{{s}}</p>
-                    {% endfor %}
-
                 </div>
+                </ul>
+                </div>
+                </div>
+                
             </div>
         </div>
     </body>

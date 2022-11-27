@@ -37,5 +37,6 @@ urlpatterns = [
     path('deletepost',views.delete_post, name='deletepost'),
     path('planner', views.planner, name='planner'),
     path('chat', chat_views.createChatRoom, name='chat_index'),
-    path('closepost', views.closepost, name='closepost')
+    path('closepost', views.closepost, name='closepost'),
+    path('deleteclass',views.delete_class, name='deleteclass'),
 ]
