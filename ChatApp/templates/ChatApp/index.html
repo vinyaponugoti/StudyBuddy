@@ -62,7 +62,7 @@
           List of Available Chat Rooms
         </b>
         {% for r in rooms %}
-            <a href="{% url 'chat:room' room_name=r.room_name %}" class="list-group-item list-group-item-action">{{ r.room_name }}</a>
+            <a href="{% url 'chat:room' room_name=r.name %}" class="list-group-item list-group-item-action">Enter {{ r.name }}</a>
         {% endfor %}
       </div>
     {% else %}
