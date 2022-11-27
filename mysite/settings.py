@@ -16,7 +16,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "^6&e1y71+2go2%15c$&kzi4=^n_lotvo4v%bb7#6cve3ja=qs0"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
+DISABLE_SSL = False
 
 ALLOWED_HOSTS = ['localhost','127.0.0.1','project-b13.herokuapp.com']
 
@@ -40,12 +41,12 @@ INSTALLED_APPS = [
     "studybuddy.apps.StudybuddyConfig",
     'ChatApp.apps.ChatappConfig',
     "whitenoise.runserver_nostatic",
+    "django.contrib.staticfiles",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
-    "django.contrib.staticfiles",
     'allauth',
     'celery',
     'allauth.account',
@@ -78,7 +79,7 @@ CSRF_TRUSTED_ORIGINS = ["https://project-b13.herokuapp.com"]
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [os.path.join(BASE_DIR, 'studybuddy', 'templates')], #previously [BASE_DIR / 'templates'],
+        "DIRS": [os.path.join(BASE_DIR, 'studybuddy', 'templates'), os.path.join(BASE_DIR, 'ChatApp', 'templates')], #previously [BASE_DIR / 'templates'],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -216,7 +217,7 @@ except ImportError:
     
     
 # Override production variables if DJANGO_DEVELOPMENT env variable is true
-if DEBUG:
+if DISABLE_SSL:
     
     SECURE_SSL_REDIRECT = False
     
