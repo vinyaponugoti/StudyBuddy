@@ -16,23 +16,23 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "^6&e1y71+2go2%15c$&kzi4=^n_lotvo4v%bb7#6cve3ja=qs0"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['localhost','127.0.0.1','project-b13.herokuapp.com']
 
-#SECURE_SSL_REDIRECT = True
-
-#SESSION_COOKIE_SECURE = True
-
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-#CSRF_COOKIE_SECURE = True
+SECURE_SSL_REDIRECT = True
 
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SESSION_COOKIE_SECURE = True
 
-SECURE_HSTS_SECONDS = 60
+CSRF_COOKIE_SECURE = True
 
-SECURE_HSTS_PRELOAD = True
+SECURE_HSTS_INCLUDE_SUBDOMAINS = False
+
+SECURE_HSTS_SECONDS = 0
+
+SECURE_HSTS_PRELOAD = False
 
 # Application definition
 SITE_ID = 1
