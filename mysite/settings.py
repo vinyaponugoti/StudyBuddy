@@ -16,17 +16,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "^6&e1y71+2go2%15c$&kzi4=^n_lotvo4v%bb7#6cve3ja=qs0"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['localhost','127.0.0.1','project-b13.herokuapp.com']
 
 #SECURE_SSL_REDIRECT = True
 
-SESSION_COOKIE_SECURE = True
+#SESSION_COOKIE_SECURE = True
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-CSRF_COOKIE_SECURE = True
+#CSRF_COOKIE_SECURE = True
 
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 
@@ -217,3 +217,21 @@ try:
         django_heroku.settings(locals())
 except ImportError:
     found = False
+    
+    
+# Override production variables if DJANGO_DEVELOPMENT env variable is true
+if DEBUG:
+    
+    SECURE_SSL_REDIRECT = False
+    
+    SESSION_COOKIE_SECURE = False
+
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+    CSRF_COOKIE_SECURE = False
+
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = False
+
+    SECURE_HSTS_SECONDS = 60
+
+    SECURE_HSTS_PRELOAD = False
