@@ -66,13 +66,13 @@
                 <h1 align="center"> All Study Sessions</h1>
 
                 <div class="text-center">
-                    <button type="submit" class="btn btn-info">
-                        <a href="{% url 'uploadStudyPost' %}">Upload a Study Post</a>
-                    </button>
+                    <!-- <button type="submit" class="btn btn-info"> -->
+                        <a href="{% url 'uploadStudyPost' %}" class="btn btn-outline-info" role="button">Upload a Study Post</a>
+                    <!-- </button> -->
 
-                    <button type="submit" class="btn btn-info">
-                        <a href="{% url 'viewpostrequests' %}">View Post Requests for Your Study Sessions</a>
-                    </button>
+                    <!-- <button type="submit" class="btn btn-info"> -->
+                        <a href="{% url 'viewpostrequests' %}" class="btn btn-outline-info" role="button">View Post Requests for Your Study Sessions</a>
+                    <!-- </button> -->
                 </div>
                 <br>
                 <div class="row">
@@ -174,7 +174,7 @@
                                     {% csrf_token %}
                                     <input type="hidden" name="primary_key_post" value={{p.pk}}>
                                     {% if p in can_request %}
-                                        <button type="submit" class="btn btn-success"> 
+                                        <button type="submit" class="btn btn-outline-success"> 
                                             Join Session
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-add" viewBox="0 0 16 16">
                                                 <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0Zm-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/>
@@ -208,7 +208,7 @@
                                     {% csrf_token %}
                                     <input type="hidden" name="primary_key_post" value={{p.pk}}>
                                         {% if p in user_posts %}
-                                            <button type="submit" class="btn btn-danger"> 
+                                            <button type="submit" class="btn btn-outline-danger"> 
                                                 Delete Post
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-x" viewBox="0 0 16 16">
                                                     <path d="M6.854 7.146a.5.5 0 1 0-.708.708L7.293 9l-1.147 1.146a.5.5 0 0 0 .708.708L8 9.707l1.146 1.147a.5.5 0 0 0 .708-.708L8.707 9l1.147-1.146a.5.5 0 0 0-.708-.708L8 8.293 6.854 7.146z"/>
@@ -226,8 +226,9 @@
                                     {% csrf_token %}
                                     <input type="hidden" name="primary_key_post" value={{p.pk}}>
                                         {% if p in user_posts %}
-                                            <button type="submit" class="btn btn-danger"> 
+                                            <button type="submit" class="btn btn-outline-danger"> 
                                                 Close Post
+
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-x" viewBox="0 0 16 16">
                                                     <path d="M6.854 7.146a.5.5 0 1 0-.708.708L7.293 9l-1.147 1.146a.5.5 0 0 0 .708.708L8 9.707l1.146 1.147a.5.5 0 0 0 .708-.708L8.707 9l1.147-1.146a.5.5 0 0 0-.708-.708L8 8.293 6.854 7.146z"/>
                                                     <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/>
@@ -245,7 +246,7 @@
                                     {% csrf_token %}
                                     <input type="hidden" name="primary_key_post" value={{p.pk}}>
                                     {% if p in member_posts %}
-                                        <button type="submit" class="btn btn-warning"> 
+                                        <button type="submit" class="btn btn-outline-warning"> 
                                             Leave Session
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-x" viewBox="0 0 16 16">
                                                 <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm.256 7a4.474 4.474 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10c.26 0 .507.009.74.025.226-.341.496-.65.804-.918C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4s1 1 1 1h5.256Z"/>
