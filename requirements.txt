@@ -16,3 +16,4 @@ crispy-bootstrap5
 channels_redis==3.4.1
 asyncio
 django-storages==1.13.1
+boto3
