@@ -17,7 +17,7 @@ SECRET_KEY = "^6&e1y71+2go2%15c$&kzi4=^n_lotvo4v%bb7#6cve3ja=qs0"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
-DISABLE_SSL = True # Set this to True for local changes, but make sure to set back to False before commiting local changes to git!!
+DISABLE_SSL = False # Set this to True for local changes, but make sure to set back to False before commiting local changes to git!!
 
 USE_S3 = os.getenv('USE_S3') == 'TRUE'
 
@@ -158,9 +158,10 @@ if USE_S3:
     AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
     AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
     # s3 static settings
-    AWS_LOCATION = 'static'
+    AWS_LOCATION = 'staticfiles'
     STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION}/'
     STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+    DEFAULT_FILE_STORAGE = 'hello_django.storage_backends.PublicMediaStorage'
 else:
     STATIC_URL = '/static/'
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
