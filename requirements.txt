@@ -9,10 +9,10 @@ requests
 daphne==3.0.2
 psycopg2
 django-bootstrap-v5
-whitenoise
 django-celery-beat
 channels==3.0.5
 django-crispy-forms
 crispy-bootstrap5
 channels_redis==3.4.1
 asyncio
+django-storages==1.13.1

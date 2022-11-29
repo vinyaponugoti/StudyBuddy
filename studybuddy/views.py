@@ -579,3 +579,9 @@ def delete_class(request):
 
         Profile.objects.get(user=request.user.id).classes.remove(class_to_delete)
         return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
+
+
+def view_404(request, exception=None):
+    # make a redirect to homepage
+    # you can use the name of url or just the plain link
+    return redirect('/') # or redirect('name-of-index-url')

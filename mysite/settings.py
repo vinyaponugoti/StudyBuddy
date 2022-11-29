@@ -16,8 +16,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "^6&e1y71+2go2%15c$&kzi4=^n_lotvo4v%bb7#6cve3ja=qs0"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-DISABLE_SSL = False # Set this to True for local changes, but make sure to set back to False before commiting local changes to git!!
+DEBUG = False
+DISABLE_SSL = True # Set this to True for local changes, but make sure to set back to False before commiting local changes to git!!
+
+USE_S3 = os.getenv('USE_S3') == 'TRUE'
 
 ALLOWED_HOSTS = ['localhost','127.0.0.1','project-b13.herokuapp.com']
 
@@ -46,13 +48,12 @@ INSTALLED_APPS = [
     'bootstrap5',
     "studybuddy.apps.StudybuddyConfig",
     'ChatApp.apps.ChatappConfig',
-    "whitenoise.runserver_nostatic",
-    "django.contrib.staticfiles",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    "django.contrib.staticfiles",
     'allauth',
     'celery',
     'allauth.account',
@@ -60,12 +61,12 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     'crispy_forms',
     'crispy_bootstrap5',
+    'storages',
 ]
 
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -145,9 +146,27 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = "static/"
-STATIC_ROOT = BASE_DIR / "staticfiles"
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+
+
+if USE_S3:
+    # aws settings
+    AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
+    AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+    AWS_STORAGE_BUCKET_NAME = os.getenv('S3_BUCKET_NAME')
+    AWS_DEFAULT_ACL = 'public-read'
+    AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+    AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
+    # s3 static settings
+    AWS_LOCATION = 'static'
+    STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION}/'
+    STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+else:
+    STATIC_URL = '/static/'
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+#STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

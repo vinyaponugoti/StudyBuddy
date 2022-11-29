@@ -3,6 +3,8 @@ from django.urls import path
 from . import views
 from ChatApp import views as chat_views
 
+handler404 = views.view_404 
+
 urlpatterns = [
     # path('', views.index, name='index'),
     path('home', views.home, name='home'),
@@ -39,4 +41,5 @@ urlpatterns = [
     path('chat', chat_views.createChatRoom, name='chat_index'),
     path('closepost', views.closepost, name='closepost'),
     path('deleteclass',views.delete_class, name='deleteclass'),
+    
 ]
