@@ -19,7 +19,7 @@ SECRET_KEY = "^6&e1y71+2go2%15c$&kzi4=^n_lotvo4v%bb7#6cve3ja=qs0"
 DEBUG = False
 DISABLE_SSL = False # Set this to True for local changes, but make sure to set back to False before commiting local changes to git!!
 
-USE_S3 = os.getenv('USE_S3') == 'TRUE'
+USE_S3 = True
 
 ALLOWED_HOSTS = ['localhost','127.0.0.1','project-b13.herokuapp.com']
 
