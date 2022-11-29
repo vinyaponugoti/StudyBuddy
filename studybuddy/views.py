@@ -18,6 +18,7 @@ from .forms import ScheduleNewPost
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.core.paginator import Paginator
 
 
 def login(request):
@@ -411,6 +412,14 @@ def view_study_posts(request):
             if g == request.user:
                 member_posts.append(p)
 
+    p = Paginator(posts,4)
+    page_number = request.GET.get('page',1)
+    
+
+    try:
+        page = p.page(page_number)
+    except:
+        page = p.page(1)
 
     context={
         "posts":posts,
@@ -419,6 +428,7 @@ def view_study_posts(request):
         "post_pending":  post_pending,
         "user_posts": user_posts,
         "member_posts":member_posts,
+        "page":page,
     }
     return render(request, 'studybuddy/posts.html', context)
 

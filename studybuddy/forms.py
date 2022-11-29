@@ -33,7 +33,7 @@ class ScheduleForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
         self.fields['class_department'].widget.attrs.update({
-            "rows": "1",
+            "rows": "2",
             "required": True,
             "placeholder": "Enter department abbreviation all uppercase (Ex. For class CS 1110 enter CS) ",
         })
@@ -47,6 +47,8 @@ class ScheduleForm(forms.ModelForm):
     class Meta: 
         model = ScheduleClass
         fields = ('class_department','class_number')
+
+        
 
 
 
