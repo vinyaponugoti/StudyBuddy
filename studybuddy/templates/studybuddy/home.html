@@ -1,4 +1,4 @@
-
+{% load crispy_forms_tags %}
 {% load bootstrap5 %}
 {% bootstrap_messages %}
 {% load static %}
@@ -8,6 +8,7 @@
 
 {# Load CSS and JavaScript #}
 {% load socialaccount %}
+{# Load the tag library #}
 
 
 <html>
@@ -118,7 +119,7 @@
                        </div>
                        <ul class="list-unstyled components" >
                            {%for f in user.profile.get_classes%}
-                                <li><a href="{% url 'viewclass' f}">{{f}}</a></li>
+                                <li><a href="{% url 'viewclass' f.ClassName %}">{{f}}</a></li>
                            {%endfor%}
                            <button id= "buttonSidebar" type="submit" class="btn btn-light"><a href="/upload">Post A Study Session</a></button>
                        </ul>
@@ -126,6 +127,11 @@
                     <!-- <div align="center">
 
                     </div> -->
+                   <div class="container">
+                       <div class="row">
+                           <!--ADD HOME PAGE INFO-->
+                       </div>
+                   </div>
                </div>
                
             </head>

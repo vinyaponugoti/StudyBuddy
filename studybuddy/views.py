@@ -225,6 +225,62 @@ def view_profile(request, username):
         
         return render(request,'studybuddy/profile.html',context)
 
+@login_required(login_url='loginrequired')
+def view_classes(request, lutherClassName):
+    other_posts = StudyPost.objects.all().exclude(user=request.user)
+
+    # List of posts that the user is able to send post requests to
+    can_request = []
+
+    for p in other_posts:
+        can_request.append(p)
+
+    for p in StudyPost.objects.all().exclude(user=request.user):
+        for g in p.groupUsers.all():
+            if g == request.user:
+                can_request.remove(p)
+
+    for r in PostRequest.objects.all().filter(is_accepted=False):
+        if r.buddy == request.user.profile:
+            can_request.remove(r.studyposting)
+
+    len_p = len(can_request)
+
+    # List of posts that the user has sent requests to
+    post_pending = []
+    for r in PostRequest.objects.all().filter(is_accepted=False):
+        if r.buddy == request.user.profile:
+            post_pending.append(r.studyposting)
+
+    # List of posts that the user created
+    user_posts = []
+    for p in StudyPost.objects.all():
+        if p.user == request.user:
+            if p.session == False:
+                user_posts.append(p)
+
+    # List of posts that the user is a member of (not owner)
+    member_posts = []
+    for p in StudyPost.objects.all().exclude(user=request.user):
+        for g in p.groupUsers.all():
+            if g == request.user:
+                member_posts.append(p)
+
+    class_list = []
+    for u in StudyPost.objects.all():
+        if u.user_luther_class.ClassName == lutherClassName:
+            class_list.append(u)
+
+        context = {
+            "posts": class_list,
+            "can_request": can_request,
+            "len_p": len_p,
+            "post_pending": post_pending,
+            "user_posts": user_posts,
+            "member_posts": member_posts,
+            "class_post_title": lutherClassName,
+        }
+    return render(request, 'studybuddy/posts.html', context)
 
 @login_required(login_url='login_required')
 def view_sessions(request, class_name):
@@ -428,7 +484,11 @@ def view_study_posts(request):
         "post_pending":  post_pending,
         "user_posts": user_posts,
         "member_posts":member_posts,
+<<<<<<< Updated upstream
         "page":page,
+=======
+        "class_post_title": "All",
+>>>>>>> Stashed changes
     }
     return render(request, 'studybuddy/posts.html', context)
 

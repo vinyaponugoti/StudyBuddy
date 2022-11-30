@@ -63,7 +63,7 @@
     <body>
         <div>
             <div class="container">
-                <h1 align="center"> All Study Sessions</h1>
+                <h1 align="center"> {{class_post_title}} Study Sessions</h1>
 
                 <div class="text-center">
                         <a href="{% url 'uploadStudyPost' %}" class="btn btn-outline-info" role="button">Upload a Study Post</a>
@@ -72,7 +72,12 @@
                 </div>
                 <br>
                 <div class="row">
+<<<<<<< Updated upstream
                     {% for p in page%}
+=======
+                    {% if posts|length > 0 %}
+                    {% for p in posts%}
+>>>>>>> Stashed changes
                     <div class="col-lg-3 d-flex align-items-stretch mb-4" style="width: 80rem;">
                     <div class="card" style="width: 80rem;">
                         <div class="card-header" >
@@ -92,7 +97,7 @@
                                 <p><a href="{% url 'viewprofile' p.user %}">{{p.user}}</a></p>
                                 </ul>
                             </div>
-                           
+
                         
                             <div class="col-lg-5 d-flex align-items-stretch mb-4">
                                 <ul>
@@ -254,15 +259,14 @@
                                 </form>
                                 </ul>
                             </div>
-                              
 
-                            
                     </div>
                     </div>
                 </div>
                     {% endfor %}
-                    
-                    
+                    {% else %}
+                        <h4 style="text-align: center; padding-top: 300px;"> Sorry there are no Study Posts</h4>
+                    {% endif %}
                 </div>
 
                 <div align="right">

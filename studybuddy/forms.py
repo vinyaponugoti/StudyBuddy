@@ -118,7 +118,7 @@ class ScheduleNewPost(forms.ModelForm):
         widgets = {
             'location': forms.TextInput(attrs={'class': 'form-control', 'style': 'max-width: 600px;', 'placeholder': 'Describe your study location'}),
             'description': forms.TextInput(attrs={'class': 'form-control', 'style': 'max-width: 600px;', 'placeholder':'Describe yourself and your plans for the study session'}),
-            'timeDate': forms.DateTimeInput(attrs={'class': 'form-control', 'style': 'max-width: 600px;', 'type': 'datetime-local'}),
+            'timeDate': forms.DateTimeInput(attrs={'class': 'form-control', 'format': '%d/%m/%Y %H:%M', 'style': 'max-width: 600px;', 'type': 'datetime-local'}),
         }
 
     

@@ -43,6 +43,7 @@ a, a:hover, a:focus {
 #buttonSidebar {
     padding: 10px;
     margin: auto;
+    margin-top: 15px;
     display: flex;
     justify-content: center;
     align-items: center;
