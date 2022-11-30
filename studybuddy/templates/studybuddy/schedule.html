@@ -82,10 +82,10 @@
                     </div>
 
                    
-                    <div class="col-sm-6 mx-auto">
+                    <div class="col-sm-6 mx-auto" align="center">
                         
                         
-                    <div class="card" style="width: 38rem;">
+                    <div class="card" style="width: 37rem; margin-left: 10%;">
                         <div class="card-header">
                             <h4>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-calendar-event" viewBox="0 0 16 16">
@@ -116,7 +116,7 @@
                             <form action="{% url 'deleteclass' %}" method="POST">
                                 {% csrf_token %}
                                 <input type="hidden" name="primary_key_post" value={{u.pk}}>
-                                        <button type="submit" class="btn btn-link" style="font-size : 20px; width: 30px; height: 28px; text-align: center; line-height: 0.5em; color:red; text-decoration: none; font-weight: bold;"> 
+                                        <button type="submit" class="btn btn-outline-danger" style="font-weight: bold; margin-left: 50%;">
                                             x
                                         </button>
                             </form>
@@ -127,7 +127,7 @@
                     {% endfor %}
                     
                     
-                        <a href="{% url 'profile' %}" style="text-decoration: none;" class="btn btn-outline-info" role="button"> Go to Your Profile</a>
+                        <a href="{% url 'profile' %}" style="text-decoration: none; margin-right: 70%;" class="btn btn-outline-info" role="button"> Go to Your Profile</a>
                     
                 </div>
                 </ul>
