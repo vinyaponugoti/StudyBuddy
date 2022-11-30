@@ -8,6 +8,7 @@ from .forms import ChatForm
 def room(request, room_name):
     if ChatRoom.objects.filter(name = room_name).exists():
         room = ChatRoom.objects.filter(name=room_name).first()
+        user = request.user.username
         chats = []
         if room:
             chats = Chat.objects.filter(room=room)
@@ -15,7 +16,7 @@ def room(request, room_name):
             room = ChatRoom(name=room_name)
             room.save()
 
-        return render(request, 'ChatApp/room.html', {'room_name': room_name, 'chats': chats})
+        return render(request, 'ChatApp/room.html', {'room_name': room_name, 'chats': chats, 'user' : user})
     else:
         return redirect("chat_index")
     
@@ -31,7 +32,7 @@ def createChatRoom(request):
         form = ChatForm(request.POST)
         # check whether it's valid:
         if form.is_valid():
-            if not ChatRoom.objects.filter(room_name = form.data['room_name']).exists():
+            if not ChatRoom.objects.filter(name = form.data['room_name']).exists():
                 model = ChatRoom()
                 model.name = form.data['room_name']
                 model.messages_sent = 0

@@ -16,38 +16,77 @@
     <head>
         <title>{{room_name}}</title>
         <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
+            <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+        <div class="container">
+            <nav class="navbar navbar-expand-md navbar-light">
+                <a href="#" class="navbar-brand">
+                    <img src="{% static 'images/Study_Buddy_Logo.png' %}" alt="StudyBuddy Logo" width="70" height="70"
+                    class="d-inline-block align-top" />
+                    StudyBuddy</a>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#toggleMobileMenu"
+                    aria-controls="toggleMobileMenu"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="toggleMobileMenu">
+                    <ul class="navbar-nav ms-auto text-center">
+                        <li>
+                            <a class="nav-link" href="{% url 'home' %}">Home</a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="{% url 'planner' %}">Planner</a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="{% url 'studyposts' %}">Study Posts</a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="{% url 'chat_index' %}">Chat</a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
     </head>
 <body>
-    <div class="container">
-        <div id="chat-log">
-            {% for chat in chats.all %}
-                {% if chat.user.id == request.user.id %}
-                    <div class="message sender">
-                        {{ chat.content }}
-                    </div>
-                {% else %}
-                    <div class="message receiver">
-                        {{ chat.content }}
-                    </div>
-                {% endif %}
-            {% endfor %}
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        <div class="col-20">
+            <form>
+                <div class="form-group">
+                    <label for="exampleFormControlTextarea1" class="h4 pt-5">{{room_name}}</label>
+                    
+                    <textarea class="form-control" id="chat-text" readonly rows="20" cols='5'>{% for chat in chats.all %}{{chat.user}}: {{chat.content}}
+{% endfor %}</textarea><br>
+                </div>
+                <div class="form-group">
+                    <input class="form-control" placeholder="Enter text here" id="chat-message-input" type="text"></br>
+                </div>
+                <input class="btn btn-primary btn-lg btn-block" id="chat-message-submit" type="button" value="Send">
+            </form>
         </div>
     </div>
+</div>
     <div class="container">
-        <input class="textInput" id="chat-message-input" type="text" placeholder="Say something!"><br>
-        <input class="button" id="chat-message-submit" type="button" value="Send">
         {{ room_name|json_script:"room-name" }}
+        {{ user|json_script:"user" }}
         <script>
             const chatLog = document.querySelector('#chat-log')
             const roomName = JSON.parse(document.getElementById('room-name').textContent);
-
-            if (chatLog.childNodes.length <= 1) {
-                const emptyText = document.createElement('h3')
-                emptyText.id = 'emptyText'
-                emptyText.innerText = 'No Messages'
-                emptyText.className = 'emptyText'
-                chatLog.appendChild(emptyText)
-            }
+            const user_name = JSON.parse(document.getElementById('user').textContent);
 
             if (window.location.protocol == 'https:') {
                 wsProtocol = 'wss://'
@@ -62,23 +101,7 @@
 
             chatSocket.onmessage = function(e) {
                 const data = JSON.parse(e.data);
-                const messageElement = document.createElement('div')
-                const userId = data['user_id']
-                const loggedInUserId = request.user.id
-                console.log(loggedInUserId)
-                messageElement.innerText = data.message
-                
-                if (userId === loggedInUserId) {
-                    messageElement.classList.add('message', 'sender')
-                } else {
-                    messageElement.classList.add('message', 'receiver')
-                }
-
-                chatLog.appendChild(messageElement)
-
-                if (document.querySelector('#emptyText')) {
-                    document.querySelector('#emptyText').remove()
-                }
+                document.querySelector('#chat-text').value += (data.user_name + ': ' + data.message + "\n") // add message to text box
             };
 
             chatSocket.onclose = function(e) {
@@ -95,10 +118,12 @@
             document.querySelector('#chat-message-submit').onclick = function(e) {
                 const messageInputDom = document.querySelector('#chat-message-input');
                 const message = messageInputDom.value;
+                
                 chatSocket.send(JSON.stringify({
                     'message': message
                 }));
                 messageInputDom.value = '';
+                document.querySelector('#chat-text').value += (user_name + ': ' + message + "\n") // add message to text box
             };
         </script>
     </div>
