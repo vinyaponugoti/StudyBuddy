@@ -271,15 +271,24 @@ def view_classes(request, lutherClassName):
         if u.user_luther_class.ClassName == lutherClassName:
             class_list.append(u)
 
-        context = {
-            "posts": class_list,
-            "can_request": can_request,
-            "len_p": len_p,
-            "post_pending": post_pending,
-            "user_posts": user_posts,
-            "member_posts": member_posts,
-            "class_post_title": lutherClassName,
-        }
+    p = Paginator(class_list, 4)
+    page_number = request.GET.get('page', 1)
+
+    try:
+        page = p.page(page_number)
+    except:
+        page = p.page(1)
+
+    context = {
+        "posts": class_list,
+        "can_request": can_request,
+        "len_p": len_p,
+        "post_pending": post_pending,
+        "user_posts": user_posts,
+        "member_posts": member_posts,
+        "page": page,
+        "class_post_title": lutherClassName,
+    }
     return render(request, 'studybuddy/posts.html', context)
 
 @login_required(login_url='login_required')
@@ -484,11 +493,8 @@ def view_study_posts(request):
         "post_pending":  post_pending,
         "user_posts": user_posts,
         "member_posts":member_posts,
-<<<<<<< Updated upstream
         "page":page,
-=======
         "class_post_title": "All",
->>>>>>> Stashed changes
     }
     return render(request, 'studybuddy/posts.html', context)
 

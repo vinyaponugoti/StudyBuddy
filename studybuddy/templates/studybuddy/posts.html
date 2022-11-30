@@ -72,12 +72,9 @@
                 </div>
                 <br>
                 <div class="row">
-<<<<<<< Updated upstream
                     {% for p in page%}
-=======
                     {% if posts|length > 0 %}
                     {% for p in posts%}
->>>>>>> Stashed changes
                     <div class="col-lg-3 d-flex align-items-stretch mb-4" style="width: 80rem;">
                     <div class="card" style="width: 80rem;">
                         <div class="card-header" >
@@ -267,6 +264,7 @@
                     {% else %}
                         <h4 style="text-align: center; padding-top: 300px;"> Sorry there are no Study Posts</h4>
                     {% endif %}
+                    {% endfor %}
                 </div>
 
                 <div align="right">
