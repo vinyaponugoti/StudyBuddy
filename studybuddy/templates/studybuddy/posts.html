@@ -65,17 +65,27 @@
             <div class="container">
                 <h1 align="center"> {{class_post_title}} Study Sessions</h1>
 
+                
+
                 <div class="text-center">
                         <a href="{% url 'uploadStudyPost' %}" class="btn btn-outline-info" role="button">Upload a Study Post</a>
 
                         <a href="{% url 'viewpostrequests' %}" class="btn btn-outline-info" role="button">View Post Requests for Your Study Sessions</a>
+                        
+
+                        {% if classes_num == 0%}
+                            <h3>Sorry there are no Study Posts for this class</h3>
+                        {% endif %}
                 </div>
                 <br>
                 <div class="row">
-                    {% for p in page%}
-                    {% if posts|length > 0 %}
-                    {% for p in posts%}
+                    
+                   
+                    
+                    {% for p in page %}
+                    
                     <div class="col-lg-3 d-flex align-items-stretch mb-4" style="width: 80rem;">
+                        
                     <div class="card" style="width: 80rem;">
                         <div class="card-header" >
                             <h4 >Study Session for {{p.user_luther_class.DeptNnemonic}}{{p.user_luther_class.CatalogNumber}}</h2>
@@ -261,15 +271,11 @@
                     </div>
                 </div>
                     {% endfor %}
-                    {% else %}
-                        <h4 style="text-align: center; padding-top: 300px;"> Sorry there are no Study Posts</h4>
-                    {% endif %}
-                    {% endfor %}
+                    
                 </div>
 
                 <div align="right">
                     {% if page.has_previous%}
-                        <!-- <a href = "{% url 'studyposts' %}?page={{page.previous_page_number}}"> Previous Page </a> -->
                         <a href="{% url 'studyposts' %}?page={{page.previous_page_number}}" style="text-decoration: none;" class="btn btn-outline-dark" role="button">Previous Page</a>
                         <a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
                     {% endif %}
