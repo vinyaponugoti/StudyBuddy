@@ -267,10 +267,14 @@ def view_classes(request, lutherClassName):
                 member_posts.append(p)
 
     class_list = []
+
+    
     for u in StudyPost.objects.all():
         if u.user_luther_class.ClassName == lutherClassName:
             class_list.append(u)
 
+    classes_num = len(class_list)
+    
     p = Paginator(class_list, 4)
     page_number = request.GET.get('page', 1)
 
@@ -288,6 +292,7 @@ def view_classes(request, lutherClassName):
         "member_posts": member_posts,
         "page": page,
         "class_post_title": lutherClassName,
+        "classes_num": classes_num
     }
     return render(request, 'studybuddy/posts.html', context)
 
@@ -328,8 +333,10 @@ def view_class(request, class_name):
         if str(course) == class_name:
             course_match = course
     course_obj = StudySession.objects.get(course=course_match)
+    
     context = {
-        "course_study_sessions": course_obj
+        "course_study_sessions": course_obj,
+        
     }
     return render(request, 'studybuddy/login.html', context)
 
@@ -341,6 +348,7 @@ def view_session(request, class_name, date):
             course_match = course
 
     course_obj = StudySession.objects.get(course=course_match, day = date)
+    
     context = {
         "course_study_sessions": course_obj
     }
@@ -476,6 +484,7 @@ def view_study_posts(request):
         for g in p.groupUsers.all():
             if g == request.user:
                 member_posts.append(p)
+
 
     p = Paginator(posts,4)
     page_number = request.GET.get('page',1)
