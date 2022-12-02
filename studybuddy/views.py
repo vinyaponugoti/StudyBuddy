@@ -280,13 +280,13 @@ def view_classes(request, lutherClassName):
 
     classes_num = len(class_list)
     
-    p = Paginator(class_list, 4)
-    page_number = request.GET.get('page', 1)
+    # p = Paginator(class_list, 4)
+    # page_number = request.GET.get('page', 1)
 
-    try:
-        page = p.page(page_number)
-    except:
-        page = p.page(1)
+    # try:
+    #     page = p.page(page_number)
+    # except:
+    #     page = p.page(1)
 
     context = {
         "posts": class_list,
@@ -295,11 +295,11 @@ def view_classes(request, lutherClassName):
         "post_pending": post_pending,
         "user_posts": user_posts,
         "member_posts": member_posts,
-        "page": page,
         "class_post_title": lutherClassName,
-        "classes_num": classes_num
+        "classes_num": classes_num,
+        "class_list":class_list,
     }
-    return render(request, 'studybuddy/posts.html', context)
+    return render(request, 'studybuddy/classposts.html', context)
 
 @login_required(login_url='login_required')
 def view_sessions(request, class_name):
