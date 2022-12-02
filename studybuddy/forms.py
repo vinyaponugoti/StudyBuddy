@@ -89,6 +89,8 @@ class ScheduleNewPost(forms.ModelForm):
             user = kwargs.pop('user','')
             super(ScheduleNewPost, self).__init__(*args, **kwargs)
 
+            
+
             self.fields['user_luther_class']=forms.ModelChoiceField(
                 queryset=Profile.get_classes(user.profile), 
                 widget=forms.Select(attrs={'class': 'form-control', 'style': 'max-width: 600px;'}),
@@ -97,19 +99,24 @@ class ScheduleNewPost(forms.ModelForm):
 
 
             self.fields["groupUsers"] = forms.ModelMultipleChoiceField(
-                queryset=User.objects.all().exclude(username=user.username).order_by('username'),
+                # queryset=User.objects.all().exclude(username=user.username).order_by('username'),
+                queryset=Profile.get_friends_list(user.profile),
                 widget=forms.SelectMultiple(attrs={'class': 'form-control', 'style': 'max-width: 600px;',}),
-                label = "Other Studies Buddies Joining: ",
+                label = "Select Any of Your Friends that are joining ",
                 required = False
             )
 
+            if len(Profile.get_friends_list(user.profile)) == 0 :
+                self.fields['groupUsers'].widget.attrs.update({
+                    'hidden' : 'hidden'
+                })
 
     class Meta: 
         model = StudyPost
         fields = ('user_luther_class', "timeDate","location","groupUsers","description")
 
         labels = {
-            'groupUsers': 'Other Study Buddies Joining:',
+            'groupUsers': 'Other Study Buddies Joining',
             'location': '',
             'description': '',
             'timeDate': "Pick your study session's date and time"

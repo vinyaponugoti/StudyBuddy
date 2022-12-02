@@ -31,6 +31,7 @@ urlpatterns = [
     path('sessions/<str:class_name>', views.view_session, name='viewsessions'),
     # path('createpost',views.add_study_post,name='createpost'),
     path('upload', views.add_study_post, name='uploadStudyPost'),
+    # path('uploadclassesfirst', views.are_no_classes, name='uploadclassesfirst'),
     path('studyposts',views.view_study_posts, name="studyposts"),
     path('viewpostrequests',views.view_post_requests,name="viewpostrequests"),
     path('joinsession',views.click_join_session, name='joinsession'),
