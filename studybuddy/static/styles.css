@@ -61,7 +61,7 @@ a, a:hover, a:focus {
 }
 
 .blueBox {
-    background-image: url("static/images/apple-256261_1920.jpg");
+    background-image: url("images/apple-256261_1920.jpg");
     background-color: #cccccc;
     background-size: cover;
     width: 100%;
