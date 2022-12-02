@@ -416,6 +416,11 @@ def add_class(request):
 @login_required(login_url='loginrequired')
 def add_study_post(request):
    
+    no_classes = False
+    schedule = Profile.get_classes(request.user.profile)
+    if len(schedule) == 0 :
+        no_classes = True
+
     if request.method == "POST":
         form = ScheduleNewPost(request.POST, user=request.user)
 
@@ -442,9 +447,24 @@ def add_study_post(request):
         "form":form,
         "posts":posts,
         "updated_classes":updated_classes,
+        "no_classes": no_classes,
     }
 
     return render(request,'studybuddy/upload.html',context)
+
+# def are_no_classes(request):
+#     no_classes = False
+
+#     schedule = Profile.get_classes(request.user.profile)
+#     if len(schedule) == 0 :
+#         no_classes = True
+
+#     context = {
+#         "no_classes": no_classes,
+#     }
+
+#     return render(request,'studybuddy/upload.html',context)
+
 
 def view_study_posts(request):
     posts = StudyPost.objects.all()
