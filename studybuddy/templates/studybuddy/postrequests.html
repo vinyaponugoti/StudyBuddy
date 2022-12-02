@@ -61,62 +61,97 @@
         </div>
     </head>
     <body>
+        {% if request_num != 0 %}
+            {% for r in request_list %}
+            <div class="col-lg-3 d-flex align-items-stretch mb-4" style="width: 80rem;">
+                <div class="card" style="width: 80rem;">
+                    <div class="card-header" style="background: rgba(0, 209, 255, 0.38);">
+                        <h4> {{r.buddy}} wants to join your study session for {{r.studyposting.user_luther_class.DeptNnemonic}} {{r.studyposting.user_luther_class.CatalogNumber}}! </h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-3 d-flex align-items-stretch mb-4">
+                                <ul>
+                                    <p>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-week-fill" viewBox="0 0 16 16">
+                                            <path d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v1h16V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4V.5zM16 14V5H0v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2zM9.5 7h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5zm3 0h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5zM2 10.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3.5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5z"/>
+                                        </svg>
+                                        <b>Date and Time</b>
+                                    </p>
+                                    <p>{{r.studyposting.timeDate}}</p>
+                                </ul>
+                            </div>
 
-        <div class="container">
-            <div class="row">
-                
-                {% if request_num != 0 %}
-                    <h1>Requests to Join your Study Sessions: </h1>
-                    {%for r in request_list%}
-                    <div class="row">
-                        <div class="card" style="width: 36rem; margin-bottom: 10px;">
-                            <div class="card-body">
-                                <h3>{{r.buddy}} wants to join your study session for {{r.studyposting.user_luther_class.DeptNnemonic}} {{r.studyposting.user_luther_class.CatalogNumber}}!</h3>
-                                <br>
-                                <h4> Date and Time: {{r.studyposting.timeDate}}</h4> 
-                                <h4> Location: {{r.studyposting.location}}</h4> 
+                            <div class="col-lg-3 d-flex align-items-stretch mb-4">
+                                <ul>
+                                    <p>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                                            <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+                                            <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                                        </svg>
+                                        <b>Location</b>
+                                    </p>
+                                    <p>{{r.studyposting.location}}</p>
+                                </ul>
+                            </div>
 
-                                <div>
-                                    <button type="submit" class="btn btn-info">
-                                        <a href="{% url 'viewprofile' r.buddy.user.username %}">View Profile</a>
-                                    </button>
-                                </div>
+                            <div>
+                                <ul>
+                                    <form action="{% url 'viewprofile' r.buddy.user.username %}" method="POST">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="primary_key_post" value={{r.pk}}>
+                                            <button type="submit" class="btn btn-outline-info"> 
+                                                View Profile
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-add" viewBox="0 0 16 16">
+                                                    <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0Zm-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/>
+                                                    <path d="M8.256 14a4.474 4.474 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10c.26 0 .507.009.74.025.226-.341.496-.65.804-.918C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4s1 1 1 1h5.256Z"/>
+                                                </svg>
+                                            </button>
+                                    </form>
+                                </ul>
+                            </div>
+                            
+                            <div>
+                                <ul>
+                                    <form action="{% url 'acceptrequest' %}" method="POST">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="primary_key_post" value={{r.pk}}>
+                                            <button type="submit" class="btn btn-outline-success"> 
+                                                Accept Request
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-add" viewBox="0 0 16 16">
+                                                    <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0Zm-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/>
+                                                    <path d="M8.256 14a4.474 4.474 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10c.26 0 .507.009.74.025.226-.341.496-.65.804-.918C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4s1 1 1 1h5.256Z"/>
+                                                </svg>
+                                            </button>
+                                    </form>
+                                </ul>
+                            </div>
 
-                                <div class="row">
-                                    <div class="col">
-                                        <form action="{% url 'acceptrequest' %}" method="POST">
-                                            {% csrf_token %}
-                                            <input type="hidden" name="primary_key_posts" value={{r.pk}}>
-                                                <button type="submit" class="btn btn-success"> Accept Request</button>
-                                        </form>
-                                    </div>
-                                
-                                
-                                    <div class="col">
-                                        <form action="{% url 'declinerequest' %}" method="POST">
-                                            {% csrf_token %}
-                                            <input type="hidden" name="primary_key_post" value={{r.pk}}>
-                                                <button type="submit" class="btn btn-danger"> Reject Request</button>
-                                        </form>
-                                    </div>
-
-
-                                </div>
-                                
-                                
+                            <div>
+                                <ul>
+                                    <form action="{% url 'declinerequest' %}" method="POST">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="primary_key_post" value={{r.pk}}>
+                                            <button type="submit" class="btn btn-outline-danger"> 
+                                                Reject Request
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-add" viewBox="0 0 16 16">
+                                                    <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0Zm-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/>
+                                                    <path d="M8.256 14a4.474 4.474 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10c.26 0 .507.009.74.025.226-.341.496-.65.804-.918C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4s1 1 1 1h5.256Z"/>
+                                                </svg>
+                                            </button>
+                                    </form>
+                                </ul>
                             </div>
                         </div>
                     </div>
-                    {%endfor%}
-                {% endif %}
-       
-                {% if request_num == 0 %}
-                    <h3 style="text-align: center; padding-top: 230px;"> You have No Post Requests currently </h3>
-                {% endif %}
+                </div>
             </div>
-        </div>
-        
+            {% endfor %}
+        {% endif %}
 
+        {% if request_num == 0 %}
+            <h3 style="text-align: center; padding-top: 230px;"> You Have No Post Requests Right Now!</h3>
+        {% endif %}
     </body>
 </html>
 
