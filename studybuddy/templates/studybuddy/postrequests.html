@@ -115,7 +115,7 @@
                                 <ul>
                                     <form action="{% url 'acceptrequest' %}" method="POST">
                                         {% csrf_token %}
-                                        <input type="hidden" name="primary_key_post" value={{r.pk}}>
+                                        <input type="hidden" name="primary_key_posts" value={{r.pk}}>
                                             <button type="submit" class="btn btn-outline-success"> 
                                                 Accept Request
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-add" viewBox="0 0 16 16">

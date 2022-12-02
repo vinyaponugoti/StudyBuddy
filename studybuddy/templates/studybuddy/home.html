@@ -13,11 +13,14 @@
 
 <html>
     <head>
+        <link rel="stylesheet" href="{% static 'styles.css' %}">
         <title>Home</title>
         <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
     </head>
     <head>
+        <link rel="stylesheet" href="{% static 'styles.css' %}">
         {%if user.is_authenticated%}
+        
         <div class="container">
             <title>Study Buddy</title>
             <nav class="navbar navbar-expand-md navbar-light">
@@ -95,6 +98,7 @@
     {% endif %}
 
 <body>
+    
     {% if user.is_authenticated %}
 
         <head>
@@ -142,7 +146,7 @@
     <div >
 
         <link rel="stylesheet" href="{% static 'styles.css' %}">
-
+        
         <div class="blueBox">
                 <br>
                 <br>
