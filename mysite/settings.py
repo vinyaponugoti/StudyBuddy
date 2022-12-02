@@ -17,7 +17,7 @@ SECRET_KEY = "^6&e1y71+2go2%15c$&kzi4=^n_lotvo4v%bb7#6cve3ja=qs0"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False # Set this to True for local changes, but make sure to set back to False before commiting local changes to git!!
-DISABLE_SSL = DEBUG # Set this to True for local changes, but make sure to set back to False before commiting local changes to git!!
+DISABLE_SSL = DEBUG 
 
 USE_S3 = (not DEBUG)
 

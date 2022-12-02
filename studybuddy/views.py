@@ -44,12 +44,17 @@ def profile(request):
     # Number of Friends user has
     friends_num = len(friend_list)
 
+    # Getting the number of Friend Requests the user has
+    request_list = FriendRequest.objects.all().filter(requested=request.user.profile, is_accepted=False)
+    request_num = len(request_list)
+
     context = {
         "profile_data": profile_data,
         "request_list": request_list,
         "friend_list": friend_list,
         "schedule": schedule,
         "friends_num": friends_num,
+        "request_num": request_num,
     }
     return render(request,'studybuddy/profile.html',context)
 
