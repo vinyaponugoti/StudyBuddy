@@ -48,6 +48,20 @@ def profile(request):
     request_list = FriendRequest.objects.all().filter(requested=request.user.profile, is_accepted=False)
     request_num = len(request_list)
 
+    # Getting the number of Classes that the user has 
+    classes_num = len(Profile.get_classes(request.user.profile))
+
+    # Getting the number of Post Requests that the user has
+    post = StudyPost.objects.all().filter(user=request.user)
+
+    request_list = []
+    for sp in PostRequest.objects.all().filter(is_accepted=False):
+        for p in post:
+            if p == sp.studyposting:
+                request_list.append(sp)
+
+    num_preq = len(request_list)
+
     context = {
         "profile_data": profile_data,
         "request_list": request_list,
@@ -55,6 +69,8 @@ def profile(request):
         "schedule": schedule,
         "friends_num": friends_num,
         "request_num": request_num,
+        "classes_num": classes_num,
+        "num_preq": num_preq,
     }
     return render(request,'studybuddy/profile.html',context)
 
