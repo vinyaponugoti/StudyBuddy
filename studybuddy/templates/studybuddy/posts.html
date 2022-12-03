@@ -67,115 +67,111 @@
             <div class="container">
                 <h1 align="center"> {{class_post_title}} Study Sessions</h1>
 
-                
 
                 <div class="text-center">
-                        <a href="{% url 'uploadStudyPost' %}" class="btn btn-outline-info" role="button" style="font-family:Poppins,sans-serif; font-weight: 300;">Upload a Study Post</a>
+                    <a href="{% url 'uploadStudyPost' %}" class="btn btn-outline-info" role="button" style="font-family:Poppins,sans-serif; font-weight: 300;">Upload a Study Post</a>
 
-                        <a href="{% url 'viewpostrequests' %}" class="btn btn-outline-info" role="button" style="font-family:Poppins,sans-serif; font-weight: 300;">View Post Requests for Your Study Sessions</a>
+                    <a href="{% url 'viewpostrequests' %}" class="btn btn-outline-info" role="button" style="font-family:Poppins,sans-serif; font-weight: 300;">View Post Requests for Your Study Sessions</a>
                         
 
-                        {% if classes_num == 0%}
-                            <h3 style="text-align: center; padding-top: 200px;">Sorry there are no Study Posts for this class</h3>
-                        {% endif %}
+                    {% if classes_num == 0%}
+                        <h3 style="text-align: center; padding-top: 200px;">Sorry there are no Study Posts for this class</h3>
+                    {% endif %}
                 </div>
                 <br>
+
                 <div class="row">
-                    
-                   
-                    
                     {% for p in page %}
                     
-                    <div class="col-lg-3 d-flex align-items-stretch mb-4" style="width: 80rem;">
-                        
-                    <div class="card" style="width: 80rem;">
-                        <div class="card-header" style="background: rgba(0, 209, 255, 0.38);">
-                            <h4 >Study Session for {{p.user_luther_class.DeptNnemonic}}{{p.user_luther_class.CatalogNumber}}</h2>
-                        </div>
-                        <div class="card-body">
-                            
-                            <div class="row">
-                            <div class="col-lg-3 d-flex align-items-stretch mb-4">
-                                <ul>
-                                <h5>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-file-earmark-person-fill" viewBox="0 0 16 16">
-                                        <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm2 5.755V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-.245S4 12 8 12s5 1.755 5 1.755z"/>
-                                    </svg>
-                                    <b>Posted By</b>
-                                </h5>
-                                <h5><a href="{% url 'viewprofile' p.user %}">{{p.user}}</a></h5>
-                                </ul>
-                            </div>
+                        <div class="col-lg-3 d-flex align-items-stretch mb-4" style="width: 80rem;">
+                            <div class="card" style="width: 80rem; margin:0 auto; float:none;  margin-bottom: 10px;">
+
+                                <div class="card-header" style="background: rgba(0, 209, 255, 0.38);">
+                                    <h4 >Study Session for {{p.user_luther_class.DeptNnemonic}}{{p.user_luther_class.CatalogNumber}}</h2>
+                                </div>
+
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-3 d-flex align-items-stretch mb-4">
+                                        <ul>
+                                            <h5>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-file-earmark-person-fill" viewBox="0 0 16 16">
+                                                    <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm2 5.755V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-.245S4 12 8 12s5 1.755 5 1.755z"/>
+                                                </svg>
+                                                <b>Posted By</b>
+                                            </h5>
+                                            <h5><a href="{% url 'viewprofile' p.user %}">{{p.user}}</a></h5>
+                                        </ul>
+                                    </div>
 
                         
-                            <div class="col-lg-5 d-flex align-items-stretch mb-4">
-                                <ul>
-                                <h5>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-journals" viewBox="0 0 16 16">
-                                        <path d="M5 0h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2 2 2 0 0 1-2 2H3a2 2 0 0 1-2-2h1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1H1a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v9a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1H3a2 2 0 0 1 2-2z"/>
-                                        <path d="M1 6v-.5a.5.5 0 0 1 1 0V6h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V9h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 2.5v.5H.5a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1H2v-.5a.5.5 0 0 0-1 0z"/>
-                                    </svg>
-                                    <b>Class</b>
-                                </h5>
-                                <h5>{{p.user_luther_class}}</h5>
-                                <ul>
-                            </div>
+                                    <div class="col-lg-5 d-flex align-items-stretch mb-4">
+                                        <ul>
+                                            <h5>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-journals" viewBox="0 0 16 16">
+                                                    <path d="M5 0h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2 2 2 0 0 1-2 2H3a2 2 0 0 1-2-2h1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1H1a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v9a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1H3a2 2 0 0 1 2-2z"/>
+                                                     <path d="M1 6v-.5a.5.5 0 0 1 1 0V6h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V9h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 2.5v.5H.5a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1H2v-.5a.5.5 0 0 0-1 0z"/>
+                                                </svg>
+                                                <b>Class</b>
+                                            </h5>
+                                            <h5>{{p.user_luther_class}}</h5>
+                                        <ul>
+                                    </div>
 
-                            <div class="col-lg-3 d-flex align-items-stretch mb-4">
-                                <ul>
-                                    <h5>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-calendar-week-fill" viewBox="0 0 16 16">
-                                            <path d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v1h16V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4V.5zM16 14V5H0v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2zM9.5 7h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5zm3 0h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5zM2 10.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3.5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5z"/>
-                                        </svg>
-                                        <b>Date and Time</b>
-                                    </h5>
-                                    <h5>{{p.timeDate}}</h5>        
-                                <ul>
-                            </div>
+                                    <div class="col-lg-3 d-flex align-items-stretch mb-4">
+                                        <ul>
+                                            <h5>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-calendar-week-fill" viewBox="0 0 16 16">
+                                                    <path d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v1h16V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4V.5zM16 14V5H0v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2zM9.5 7h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5zm3 0h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5zM2 10.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3.5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5z"/>
+                                                </svg>
+                                                <b>Date and Time</b>
+                                            </h5>
+                                            <h5>{{p.timeDate}}</h5>        
+                                        <ul>
+                                    </div>
 
-                            <div class="col-lg-3 d-flex align-items-stretch mb-4">
-                                <ul>
-                                    <h5>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
-                                            <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
-                                            <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-                                        </svg>
-                                        <b>Location</b>
-                                    </h5>
-                                    <h5>{{p.location}}</h5>      
-                                <ul>
-                            </div>
+                                    <div class="col-lg-3 d-flex align-items-stretch mb-4">
+                                        <ul>
+                                            <h5>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                                                    <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+                                                    <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                                                </svg>
+                                                <b>Location</b>
+                                            </h5>
+                                            <h5>{{p.location}}</h5>      
+                                        <ul>
+                                    </div>
 
-                            <div class="col-lg-5 d-flex align-items-stretch mb-4">
-                                <ul>
-                                    <h5>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-file-earmark-text-fill" viewBox="0 0 16 16">
-                                            <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM4.5 9a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1h-7zM4 10.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 1 0-1h4a.5.5 0 0 1 0 1h-4z"/>
-                                        </svg>
-                                        <b>Description</b>
-                                    </h5>
-                                    <h5>{{p.description}}</h5>
-                                <ul>
-                            </div>
+                                    <div class="col-lg-5 d-flex align-items-stretch mb-4">
+                                        <ul>
+                                            <h5>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-file-earmark-text-fill" viewBox="0 0 16 16">
+                                                    <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM4.5 9a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1h-7zM4 10.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 1 0-1h4a.5.5 0 0 1 0 1h-4z"/>
+                                                </svg>
+                                                <b>Description</b>
+                                            </h5>
+                                            <h5>{{p.description}}</h5>
+                                        <ul>
+                                    </div>
 
-                            <div class="col-lg-3 d-flex align-items-stretch mb-4">
-                                    <ul>
-                                    <h5>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
-                                            <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7Zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216ZM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/>
-                                        </svg>
-                                        <b>Session Members</b>
-                                    </h5>
-                                    {% if not p.groupUsers.all%}
-                                        <h5>Currently no other members. {{p.user}} is looking for study buddies!</h5>
-                                    {% endif %}
-                                    {% for pg in p.groupUsers.all%}
-                                        <h5><a href="{% url 'viewprofile' pg %}">{{pg}}</a></h5>
-                                    {% endfor %}
-                                </ul>
-                            </div>
-
-                            </div>
+                                    <div class="col-lg-3 d-flex align-items-stretch mb-4">
+                                        <ul>
+                                            <h5>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
+                                                    <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7Zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216ZM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/>
+                                                </svg>
+                                                <b>Session Members</b>
+                                            </h5>
+                                            {% if not p.groupUsers.all%}
+                                                <h5>Currently no other members. {{p.user}} is looking for study buddies!</h5>
+                                            {% endif %}
+                                            {% for pg in p.groupUsers.all%}
+                                                <h5><a href="{% url 'viewprofile' pg %}">{{pg}}</a></h5>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
                             
                         
                             <div>
@@ -269,45 +265,43 @@
                                 </ul>
                             </div>
 
-                    </div>
+                        </div>
                     </div>
                 </div>
                     {% endfor %}
                     
                 </div>
 
-                <div align="right">
+                
+                <!-- <div class="col-lg-3 d-flex align-items-stretch mb-4" style="width: 80rem;"> -->
+                    <div align="center">
                     {% if page.has_previous%}
                         <a href="{% url 'studyposts' %}?page={{page.previous_page_number}}" style="text-decoration: none; font-family:Poppins,sans-serif; font-weight: 300;" class="btn btn-outline-dark" role="button">
-                            <!-- <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-circle-fill" viewBox="0 0 16 16">
-                                <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>
-                            </svg> -->
-                            <!-- <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>
-                              </svg> -->
                               <svg xmlns="http://www.w3.org/2000/svg" width="25" height="20" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
                               </svg>
                             Previous Page
                         </a>
-                        
+                
                     {% endif %}
-
+                
                     {% if page.has_previous and page.has_next%}
                     <a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
                     {% endif %}
 
                     {% if page.has_next%}
-                        <a href = "{% url 'studyposts' %}?page={{page.next_page_number}}" style="text-decoration: none; font-family:Poppins,sans-serif; font-weight: 300;" class="btn btn-outline-dark" role="button"> 
+                        
+                        <a href = "{% url 'studyposts' %}?page={{page.next_page_number}}" style="text-decoration: none; font-family:Poppins,sans-serif; font-weight: 300; " class="btn btn-outline-dark" role="button"> 
                             Next Page 
-                            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="20" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="20" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
                             </svg>
                         </a>
                     {% endif %}
                     <br>
                     <br>
-                </div>
+                <!-- </div> -->
+                <!-- </div> -->
 
             </div>
             

@@ -483,7 +483,9 @@ def add_study_post(request):
 
 
 def view_study_posts(request):
-    posts = StudyPost.objects.all()
+    posts = StudyPost.objects.all().order_by("-id")
+    # posts = StudyPost.objects.all().order_by("-timeDate")
+    # posts = StudyPost.objects.all().order_by("user_luther_class")
 
     other_posts = StudyPost.objects.all().exclude(user=request.user)
     
