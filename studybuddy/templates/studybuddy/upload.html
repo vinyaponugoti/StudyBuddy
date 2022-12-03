@@ -19,7 +19,7 @@
         <div class="container">
             <title>Study Buddy</title>
             <nav class="navbar navbar-expand-md navbar-light">
-                <a href="#" class="navbar-brand">
+                <a href="{% url 'home' %}" class="navbar-brand">
                     <img src="{% static 'images/Study_Buddy_Logo.png' %}" alt="StudyBuddy Logo" width="70" height="70"
                     class="d-inline-block align-top" />
                     StudyBuddy</a>
@@ -75,16 +75,12 @@
 
                 <div class="card-body">
                     <ul>
-                        <!-- <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor" class="bi bi-calendar2-plus" viewBox="0 0 16 16">
-                            <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H2z"/>
-                            <path d="M2.5 4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5V4zM8 8a.5.5 0 0 1 .5.5V10H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V11H6a.5.5 0 0 1 0-1h1.5V8.5A.5.5 0 0 1 8 8z"/>
-                          </svg> -->
-                          <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor" class="bi bi-calendar-plus" viewBox="0 0 16 16">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor" class="bi bi-calendar-plus" viewBox="0 0 16 16">
                             <path d="M8 7a.5.5 0 0 1 .5.5V9H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V10H6a.5.5 0 0 1 0-1h1.5V7.5A.5.5 0 0 1 8 7z"/>
                             <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
-                          </svg>
-                          <br>
-                          <br>
+                        </svg>
+                        <br>
+                        <br>
                         <a href="{% url 'schedule' %}" style="text-decoration: none; " class="btn btn-outline-success" role="button" > Add Classes</a>
                     </ul>
                 </div>
@@ -102,7 +98,6 @@
                         <h1>Create a Study Post</h1>
                         <h5>Fill out the form below to find study buddies for a class!</h5>
                         <br>
-                        <p align="left" class="tab">Note: You can only create a study post if you added classes to your schedule</p>
                         <p align="left" class="tab">Note: In Select Any of Your Friends Section- Hold down “Control”, or “Command” on a Mac, to select more than one buddy that will be at the study session! Leave empty if no friends are joining and you're looking for buddies to join your study session.</p>
                         <br>
                         {% csrf_token %}

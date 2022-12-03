@@ -15,10 +15,10 @@
         <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
     </head>
     <head>
-        <div class="container">
+        <div class="container" >
             <title>Study Buddy</title>
             <nav class="navbar navbar-expand-md navbar-light">
-                <a href="#" class="navbar-brand">
+                <a href="{% url 'home' %}" class="navbar-brand">
                     <img src="{% static 'images/Study_Buddy_Logo.png' %}" alt="StudyBuddy Logo" width="70" height="70"
                     class="d-inline-block align-top" />
                     StudyBuddy</a>
@@ -65,42 +65,39 @@
         <div class="container">
             <div class="row">
                 {% if user.username == request.user.username %}
-                         <h1 style="font-family: 'Poppins', sans-serif;" >Your Profile</h1>
-                    {% else %}
-                        <h1>Profile for {{user.username}}</h1>
+                    <h1>Your Profile</h1>
+                {% else %}
+                    <h1>Profile for {{user.username}}</h1>
                 {%endif%}
+
                 <div class="col-sm-6 mx-auto" >
-                    <!-- {% if user.username == request.user.username %}
-                         <h1 style="font-family: 'Poppins', sans-serif;" align="center">Your Profile</h1>
-                    {% else %}
-                        <h1>Profile for {{user.username}}</h1>
-                    {%endif%} -->
-                    
                     <br>
                     <br>
-                    <div class="card" style="width: 29rem;" >
+                    <div class="card" style="width: 35rem;" >
                         <div class="card-header" style="height: 8rem;">
                             <div align="center">
                                 <br>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-                              </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="63" height="63" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                                    <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                                </svg>
                             </div>
                         </div>
+
                         <ul>
                             <br>
-                        
-                        <h4>Name: {{profile_data.name}}</h4>
-                        <h4>Email: {{profile_data.email}}</h4>
-                        <h4>Year: {{profile_data.year}}</h4>
-                        <h4>Major: {{profile_data.major}}</h4>
-                        <h4>Interests: {{profile_data.interests}}</h4>
+            
+                            <h4>Name: {{profile_data.name}}</h4>
+                            <h4>Email: {{profile_data.email}}</h4>
+                            <h4>Year: {{profile_data.year}}</h4>
+                            <h4>Major: {{profile_data.major}}</h4>
+                            <h4>Interests: {{profile_data.interests}}</h4>
 
-                        <br>
-                        {% if user.username == request.user.username %}
-                            <a href="{% url 'editprofile' %}" class="btn btn-outline-light" role="button" style="border-color: #0288d1; color:#0288d1">Update Profile </a>
-                        {% endif %}
+                            <br>
+
+                            {% if user.username == request.user.username %}
+                                <a href="{% url 'editprofile' %}" class="btn btn-outline-light" role="button" style="border-color: #0288d1; color:#0288d1;font-family:Poppins,sans-serif; font-weight: 300;">Update Profile </a>
+                            {% endif %}
                         </ul>
                     </div>
 
@@ -108,58 +105,58 @@
                     <br>
                     
                     <div>
-                        <div class="card" style="width: 29rem;" >
+                        <div class="card" style="width: 35rem;" >
                             <div class="card-header" >
                                 <h3 align="center">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
                                         <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7Zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216ZM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/>
                                     </svg>
-                                    Friends List 
+                                    {% if user.username == request.user.username %}
+                                        Your Friends
+                                    {% else %}
+                                        {{user}}'s friends
+                                    {%endif%}
                                 </h3>
                             </div>
-                            <br>
-                            <ul>
-                        {% if friends_num == 0 %}
-                            <h4> You have 0 StudyBuddy Friends currently </h4>
-                            <br>
-                            <p> Click on View Friend Requests to accept or decline friend requests sent to you! </p>
-                            <p> Click on View All Profiles to find users to send friend requests to! </p>
-                        {% endif %}
-                         {%for f in user.profile.get_friends_list%}
-                         <h4><a href="{% url 'viewprofile' f %}" style="color:#0288d1;">{{f}}</a></h4>
-                        {%endfor%} 
-                        <br>
-                       
-                        {% if user.username == request.user.username %}
-                            <a href="{% url 'requests' %}" class="btn btn-outline-dark" role="button">View Friend Requests ({{request_num}})</a>
-                            <a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                            <a href="{% url 'allprofiles' %}" class="btn btn-outline-dark" role="button">View All Profiles</a>
-                        {% endif %}
-                        
-                        
-                        
 
-                            </ul>
+                            <br>
+
+                            <ul>
+                                {% if friends_num == 0 %}
+                                    <h4> You have 0 StudyBuddy Friends currently </h4>
+                                    <br>
+                                    <p> Click on View Friend Requests to accept or decline friend requests sent to you! </p>
+                                    <p> Click on View All Profiles to find users to send friend requests to! </p>
+                                {% endif %}
+
+                                {%for f in user.profile.get_friends_list%}
+                                    <h4><a href="{% url 'viewprofile' f %}" style="color:#0288d1;">{{f}}</a></h4>
+                                {%endfor%} 
+                                <br>
+                       
+                                {% if user.username == request.user.username %}
+                                    <a href="{% url 'requests' %}" class="btn btn-outline-dark" role="button" style="font-family:Poppins,sans-serif; font-weight: 300;">View Friend Requests ({{request_num}})</a>
+                                    <a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                    <a href="{% url 'allprofiles' %}" class="btn btn-outline-dark" role="button" style="font-family:Poppins,sans-serif; font-weight: 300;">View All Profiles</a>
+                                {% endif %}
+                        
+                             </ul>
+
                         </div>
+
                         <br>
                     </div>
+
                     <br>
 
 
                     {% if user.username != request.user.username %}
-                    <!-- <button type="submit" class="btn btn-info">
-                        <a href="{% url 'profile'%}">Go to Your Profile</a>
-                    </button> -->
-                    <!-- <a href="{% url 'profile' %}" class="btn btn-outline-dark" role="button" style="border-color: #0288d1; color:#0288d1">Go to Your Profile </a> -->
-                    <a href="{% url 'profile' %}" class="btn btn-outline-dark" role="button">Go to Your Profile</a>
-                    <a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                    <a href="{% url 'allprofiles' %}" class="btn btn-outline-dark" role="button">View All Profiles</a>
-                    <br>
-                    <br>
+                        <a href="{% url 'profile' %}" class="btn btn-outline-dark" role="button" style="font-family:Poppins,sans-serif; font-weight: 300;">Go to Your Profile</a>
+                        <a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                        <a href="{% url 'allprofiles' %}" class="btn btn-outline-dark" role="button" style="font-family:Poppins,sans-serif; font-weight: 300;">View All Profiles</a>
+                        <br>
+                        <br>
                     {% endif %}
-                    
-                    
-
 
                 </div>
                 
@@ -178,55 +175,78 @@
                                 {% if user.username == request.user.username %}
                                     Your Schedule
                                 {% else %}
-                                    {{user}}'s schedule: 
+                                    {{user}}'s schedule
                                 {%endif%}
                             </h3>
                         </div>
 
-                    <ul>
-                        <div class="card-body">
-                    {% for s in user.profile.get_classes %}
+                        <ul>
+                            <div class="card-body">
+                                {% for s in user.profile.get_classes %}
 
-                    <div class="row">
-                        
-                    <div class="col">
-                        
-                        <h6>
-                            <a href="{% url 'viewclass' s.ClassName %}">{{s}}</a>
-                            <!-- {{s}} -->
-                        </h6>
-                        <br>
-                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <h6>
+                                                <a href="{% url 'viewclass' s.ClassName %}">{{s}}</a>
+                                            </h6>
+                                            <br>
+                                        </div>
                    
 
+                                        {% if user.username == request.user.username %}
+                                            <div class="col">
+                                                <ul>
+                                                    <form action="{% url 'deleteclass' %}" method="POST">
+                                                        {% csrf_token %}
+                                                        <input type="hidden" name="primary_key_post" value={{s.pk}}>
+                                                        <button type="submit" class="btn btn-outline-danger" style="font-weight: bold; margin-left: 50%;">
+                                                            x
+                                                        </button>
+                                                    </form>
+                                                </ul>
+                                            </div>
+                                        {% endif %}
+                    
+                                    </div>
+                
+                                {% endfor %}
+                    
+                                {% if user.username == request.user.username %}
+                                    {% if classes_num == 0 %}
+                                        <a href="{% url 'schedule' %}" style="text-decoration: none; font-family:Poppins,sans-serif; font-weight: 300;" class="btn btn-outline-success" role="button"> Add Classes</a>
+                                    {% else %}
+                                        <a href="{% url 'schedule' %}" style="text-decoration: none; margin-right: 70%; font-family:Poppins,sans-serif; font-weight: 300;" class="btn btn-outline-success" role="button" style="font-family:Poppins,sans-serif; font-weight: 300;"> + Add Classes</a>
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                        </ul>
+                    </div>
+
+                    <br>
+                    <br>
+
                     {% if user.username == request.user.username %}
-                    <div class="col">
-                        <ul>
-                            <form action="{% url 'deleteclass' %}" method="POST">
-                                {% csrf_token %}
-                                <input type="hidden" name="primary_key_post" value={{s.pk}}>
-                                        <button type="submit" class="btn btn-outline-danger" style="font-weight: bold; margin-left: 50%;">
-                                            x
-                                        </button>
-                            </form>
-                            </ul>
+                    <div class="card" style="width: 37rem; margin-left: 10%;">
+                        <div class="card-header">
+                            <h3>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-file-earmark-text-fill" viewBox="0 0 16 16">
+                                    <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM4.5 9a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1h-7zM4 10.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 1 0-1h4a.5.5 0 0 1 0 1h-4z"/>
+                                </svg>
+                                Study Sessions
+                            </h3>
+                        </div>
+                        
+                        <div class="card-body">
+                            <br>
+                            <a href="{% url 'viewpostrequests' %}"  class="btn btn-outline-dark" role="button" style="font-family:Poppins,sans-serif; font-weight: 300;">View Post Requests for Your Study Sessions ({{num_preq}})</a>
+                            <br>
+                            <br>
+                            <a href="{% url 'uploadStudyPost' %}" class="btn btn-outline-dark" role="button" style="font-family:Poppins,sans-serif; font-weight: 300;">Upload a Study Post</a>
+                        </div>
                     </div>
                     {% endif %}
-                    
+
                 </div>
-                
-                    {% endfor %}
-                    
-                    {% if user.username == request.user.username %}
-                        <a href="{% url 'schedule' %}" style="text-decoration: none; margin-right: 75%;" class="btn btn-outline-success" role="button"> +  Add Classes</a>
-                    {% endif %}
-                    
-                </div>
-                
-                </ul>
-                </div>
-                </div>
-                
             </div>
         </div>
     </body>
