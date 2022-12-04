@@ -13,7 +13,7 @@
 
 <head>
     <head>
-        <title>Chat Rooms</title>
+        <title >Chat Rooms</title>
         <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
     </head>
     <div class="container">
@@ -61,17 +61,17 @@
 
     {% if rooms %}
     <div class="list-group">
-        <b>
-          List of Available Chat Rooms
+        <b >
+          <h4 style="font-family:Poppins,sans-serif; font-weight: 300;">List of Available Chat Rooms</h4>
         </b>
         {% for r in rooms %}
-            <a href="{% url 'chat:room' room_name=r.name %}" class="list-group-item list-group-item-action">Enter {{ r.name }}</a>
+            <a href="{% url 'chat:room' room_name=r.name %}" class="list-group-item list-group-item-action" style="font-family:Poppins,sans-serif; font-weight: 300;">Enter {{ r.name }}</a>
         {% endfor %}
       </div>
     {% else %}
-        <p>No chat rooms exist. Create one below!</p>
+        <p style="font-family:Poppins,sans-serif; font-weight: 300;">No chat rooms exist. Create one below!</p>
     {% endif %}
-    <form action="{% url 'chat:chat_index'%}" method="post", class="form">
+    <form action="{% url 'chat:chat_index'%}" method="post", class="form" style="font-family:Poppins,sans-serif; font-weight: 300;">
         <div class="row">
             <div class="col">
               </div>
@@ -81,7 +81,7 @@
                     {% bootstrap_form form %}
                 {% endif %}
                 {% buttons %}
-                <button type="submit" class="btn btn-primary">
+                <button type="submit" class="btn btn-primary" style="font-family:Poppins,sans-serif; font-weight: 300;">
                     Create Room
                 </button>
                 {% endbuttons %}
