@@ -38,7 +38,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=128, blank=True)
     email = models.EmailField(max_length = 254, blank=True)
-    year = models.CharField(max_length=100, blank=True)
+    year = models.CharField(max_length=100, blank=True, validators=[validate_year])
     major = models.TextField(blank=True)
     interests = models.TextField(blank=True)
     classes = models.ManyToManyField(LutherClass)
@@ -48,6 +48,20 @@ class Profile(models.Model):
         return self.friends_list.all()
     def getClasses(self):
         return self.classes.all()
+
+    def validate_year(value):
+        try:
+            converted_value = int(value)
+        except:
+            raise ValidationError("Please enter a valid year")
+
+        if converted_value < 2023:
+            raise ValidationError("Only current students are allowed")
+        elif converted_value > 2026:
+            raise ValidationError("Only current students are allowed")
+
+
+
 
     def get_classes(self):
         return self.classes.all()

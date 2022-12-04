@@ -26,12 +26,6 @@ class ProfileForm(forms.ModelForm):
         model = Profile
         fields = ('name','email','year','major','interests')
 
-        def clean_year(self):
-            data = self.cleaned_data.get('year')
-            if int(data) < 2023 or int(data) > 2035:
-                raise ValidationError('Please enter a valid graduation year (Between 2023 and 2035)')
-            return data
-
         # fields = "__all__"
 
 
