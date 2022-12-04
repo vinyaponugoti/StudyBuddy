@@ -58,28 +58,42 @@
             </nav>
         </div>
     </head>
+
+    <body>
+        <link rel="stylesheet" href="{% static 'styles.css' %}">
         <ul>
             <div class="container">
-              <h1 >Other Profiles</h1>
+              <h1 >All Profiles</h1>
+              <br>
               <div class = "row">
+                
           {% for p in profiles_list %}
               <div class = "col-lg-3 d-flex align-items-stretch mb-4">
                 <div class="card" style="width: 18rem;">
-                  <div class="card-body">
-                    <h3 >{{p}}'s Profile</h3>
-                    <div>
-                        <button type="submit" class="btn btn-info">
-                            <a href="{% url 'viewprofile' p.user.username %}">View Profile</a>
-                        </button>
+                    <div class="card-header" align="center" style="height:7rem">
+                        <br>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                        </svg>
                     </div>
-                    
+                  <div class="card-body">
+                    <h3><a href="{% url 'viewprofile' p %}" style="color:#0288d1;">{{p}}'s profile</a></h3>
+                    <br>
 
                   <div>
                     <form action="{% url 'addfriend' %}" method="POST">
                         {% csrf_token %}
                         <input type="hidden" name="primary_key_profile" value={{p.pk}}>
                         {% if p not in requests_for_user and p not in requests_by_user%}
-                            <button type="submit" class="btn btn-success"> Add Friend</button>
+                            <button type="submit" class="btn btn-outline-success"> 
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-person-add" viewBox="0 0 16 16">
+                                    <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0Zm-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/>
+                                    <path d="M8.256 14a4.474 4.474 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10c.26 0 .507.009.74.025.226-.341.496-.65.804-.918C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4s1 1 1 1h5.256Z"/>
+                                </svg>
+                                Add Friend
+                                
+                            </button>
                         {% endif %}
     
                     </form>
@@ -89,7 +103,27 @@
 
                   <div>
                     {% if p in requests_for_user and request.user not in p.friends_list.all %}
-                        <button type="button" class="btn btn-secondary btn" disabled> Friend Request Pending</button>
+                        <button type="button" class="btn btn-secondary btn" disabled> 
+                            
+                            Friend Request Pending
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock" viewBox="0 0 16 16">
+                                <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/>
+                                <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z"/>
+                            </svg>
+                        </button>
+                    {% endif %}
+                  </div>
+
+                  <div>
+                    {% if p in requests_by_user and request.user not in p.friends_list.all %}
+                        <a href="{% url 'requests' %}" class="btn btn-outline-secondary" role="button" style="font-family:Poppins,sans-serif; font-weight: 300;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+                                <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
+                                <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                            </svg>
+                            View {{p}}'s request
+                        </a>
+
                     {% endif %}
                   </div>
                     
@@ -97,7 +131,13 @@
                     {% csrf_token %}
                     <input type="hidden" name="primary_key_profile" value={{p.pk}}>
                     {% if request.user in p.friends_list.all%}
-                        <button type="submit" class="btn btn-danger"> Remove Friend</button>
+                        <button type="submit" class="btn btn-outline-danger"> 
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-person-dash" viewBox="0 0 16 16">
+                                <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7ZM11 12h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1 0-1Zm0-7a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/>
+                                <path d="M8.256 14a4.474 4.474 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10c.26 0 .507.009.74.025.226-.341.496-.65.804-.918C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4s1 1 1 1h5.256Z"/>
+                            </svg>
+                            Remove Friend
+                        </button>
                     {% endif %}
 
                   </form>
