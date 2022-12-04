@@ -8,6 +8,17 @@ from django.dispatch import receiver
 import uuid
 
 # Create your models here.
+
+def validate_year(value):
+    try:
+        converted_value = int(value)
+    except:
+        raise ValidationError("Please enter a valid year")
+
+    if converted_value < 2023:
+        raise ValidationError("Only current students are allowed")
+    elif converted_value > 2026:
+        raise ValidationError("Only current students are allowed")
 class LutherClass(models.Model):    
     DeptNnemonic = models.TextField()
     DeptName = models.TextField()
@@ -48,17 +59,6 @@ class Profile(models.Model):
         return self.friends_list.all()
     def getClasses(self):
         return self.classes.all()
-
-    def validate_year(value):
-        try:
-            converted_value = int(value)
-        except:
-            raise ValidationError("Please enter a valid year")
-
-        if converted_value < 2023:
-            raise ValidationError("Only current students are allowed")
-        elif converted_value > 2026:
-            raise ValidationError("Only current students are allowed")
 
 
 
