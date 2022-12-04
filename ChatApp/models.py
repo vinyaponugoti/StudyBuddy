@@ -10,6 +10,10 @@ class ChatRoom(models.Model):
 
     def __str__(self):
         return self.room_name
+        
+    def clean(self):
+        if self.name:
+            self.name = self.name.replace(" ", "")
 
 class Chat(models.Model):
     content = models.CharField(max_length=1000)

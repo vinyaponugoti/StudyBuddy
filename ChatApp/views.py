@@ -36,6 +36,7 @@ def createChatRoom(request):
                 model = ChatRoom()
                 model.name = form.data['room_name']
                 model.messages_sent = 0
+                model.clean()
                 model.save()
             return HttpResponseRedirect(form.data['room_name'])
 
