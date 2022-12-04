@@ -13,19 +13,19 @@
 
 
 <html>
-    <head>
-        <title>Schedule</title>
-        <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
-    </head>
-    <head>
-        <div class="container">
-            <title>Study Buddy</title>
-            <nav class="navbar navbar-expand-md navbar-light">
-                <a href="{% url 'home' %}" class="navbar-brand">
-                    <img src="{% static 'images/Study_Buddy_Logo.png' %}" alt="StudyBuddy Logo" width="70" height="70"
-                    class="d-inline-block align-top" />
-                    StudyBuddy</a>
-                <button
+<head>
+    <title>Schedule</title>
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
+</head>
+<head>
+    <div class="container">
+        <title>Study Buddy</title>
+        <nav class="navbar navbar-expand-md navbar-light">
+            <a href="{% url 'home' %}" class="navbar-brand">
+                <img src="{% static 'images/Study_Buddy_Logo.png' %}" alt="StudyBuddy Logo" width="70" height="70"
+                     class="d-inline-block align-top"/>
+                StudyBuddy</a>
+            <button
                     class="navbar-toggler"
                     type="button"
                     data-bs-toggle="collapse"
@@ -33,117 +33,124 @@
                     aria-controls="toggleMobileMenu"
                     aria-expanded="false"
                     aria-label="Toggle navigation"
-                >
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="toggleMobileMenu">
-                    <ul class="navbar-nav ms-auto text-center">
-                        <li>
-                            <a class="nav-link" href="{% url 'home' %}">Home</a>
-                        </li>
-                        <li>
-                            <a class="nav-link" href="{% url 'planner' %}">Planner</a>
-                        </li>
-                        <li>
-                            <a class="nav-link" href="{% url 'profile' %}">Profile</a>
-                        </li>
-                        <li>
-                            <a class="nav-link" href="{% url 'studyposts' %}">Study Posts</a>
-                        </li>
-                        <li>
-                            <a class="nav-link" href="{% url 'chat_index' %}">Chat</a>
-                        </li>
-                        <li>
-                            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-                        </li>
-                    </ul>
+            >
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="toggleMobileMenu">
+                <ul class="navbar-nav ms-auto text-center">
+                    <li>
+                        <a class="nav-link" href="{% url 'home' %}">Home</a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="{% url 'planner' %}">Planner</a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="{% url 'studyposts' %}">Study Posts</a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="{% url 'chat_index' %}">Chat</a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</head>
+
+<body>
+<link rel="stylesheet" href="{% static 'styles.css' %}">
+<div class="container">
+    <div class="row">
+
+
+        <h1>Add Classes</h1>
+        <div class="col-sm-6 mx-auto" style="font-family: 'Poppins', sans-serif;  font-size:20px">
+            <br>
+            <br>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Dropdown button
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        {% for course in course_list %}
+                        <a class="dropdown-item" href="#">course</a>
+                        {% endfor %}
+
+                    </div>
                 </div>
-            </nav>
+                {{schedule_form.class_number|as_crispy_field}}
+
+                <br>
+
+                <button type="submit" class="btn btn-outline-success"
+                        style="font-family:Poppins,sans-serif; font-weight: 300;"> + Add Class
+                </button>
+            </form>
         </div>
-    </head>
 
-    <body>
-        <link rel="stylesheet" href="{% static 'styles.css' %}">
-        <div class="container">
-            <div class="row">
-                
-                
-                    <h1>Add Classes</h1>
-                    <div class="col-sm-6 mx-auto" style="font-family: 'Poppins', sans-serif;  font-size:20px">
-                        <br>
-                        <br>
-                    <form method ="post" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        <div class="btn-group">
-                          <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Right-aligned menu
-                          </button>
-                          <div class="dropdown-menu dropdown-menu-right">
-                              {% for course in course_list %}
-                                    <button class="dropdown-item" type="button">course</button>
-                          </div>
-                        </div>
-                        {{schedule_form.class_number|as_crispy_field}}
 
-                        <br>
+        <div class="col-sm-6 mx-auto" align="center">
 
-                        <button type="submit" class="btn btn-outline-success" style="font-family:Poppins,sans-serif; font-weight: 300;"> + Add Class</button>
-                    </form>
-                    </div>
 
-                   
-                    <div class="col-sm-6 mx-auto" align="center">
-                        
-                        
-                    <div class="card" style="width: 37rem; margin-left: 10%;">
-                        <div class="card-header">
-                            <h4>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-calendar-event" viewBox="0 0 16 16">
-                                    <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"/>
-                                    <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
-                                </svg>
-                                    Your Schedule
-                            </h4>
-                        </div>
+            <div class="card" style="width: 37rem; margin-left: 10%;">
+                <div class="card-header">
+                    <h4>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+                             class="bi bi-calendar-event" viewBox="0 0 16 16">
+                            <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"/>
+                            <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+                        </svg>
+                        Your Schedule
+                    </h4>
+                </div>
 
-                    <ul>
-                        <div class="card-body">
-                    {% for u in updated_classes %}
+                <ul>
+                    <div class="card-body">
+                        {% for u in updated_classes %}
 
-                    <div class="row">
-                        
-                    <div class="col">
-                        
-                        <h6>
-                            <a href="{% url 'viewclass' u.ClassName %}">{{u}}</a>
-                        </h6>
-                        <br>
-                    </div>
-                   
+                        <div class="row">
 
-                    <div class="col">
-                        <ul>
-                            <form action="{% url 'deleteclass' %}" method="POST">
-                                {% csrf_token %}
-                                <input type="hidden" name="primary_key_post" value={{u.pk}}>
-                                        <button type="submit" class="btn btn-outline-danger" style="font-weight: bold; margin-left: 50%;">
+                            <div class="col">
+
+                                <h6>
+                                    <a href="{% url 'viewclass' u.ClassName %}">{{u}}</a>
+                                </h6>
+                                <br>
+                            </div>
+
+
+                            <div class="col">
+                                <ul>
+                                    <form action="{% url 'deleteclass' %}" method="POST">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="primary_key_post" value={{u.pk}}>
+                                        <button type="submit" class="btn btn-outline-danger"
+                                                style="font-weight: bold; margin-left: 50%;">
                                             x
                                         </button>
-                            </form>
-                            </ul>
-                    </div>
-                </div>
-                
-                    {% endfor %}
-                    
-                    
-                        <!-- <a href="{% url 'profile' %}" style="text-decoration: none; margin-right: 70%; border-color: #0288d1; color:#0288d1;font-family:Poppins,sans-serif; font-weight: 300;" class="btn btn-outline-light" role="button"> Go to Your Profile</a> -->
-                </div>
-                </ul>
-                </div>
+                                    </form>
+                                </ul>
+                            </div>
+                        </div>
 
-                </div>
+                        {% endfor %}
+
+
+                        <!-- <a href="{% url 'profile' %}" style="text-decoration: none; margin-right: 70%; border-color: #0288d1; color:#0288d1;font-family:Poppins,sans-serif; font-weight: 300;" class="btn btn-outline-light" role="button"> Go to Your Profile</a> -->
+                    </div>
+                </ul>
             </div>
+
         </div>
-    </body>
+    </div>
+</div>
+</body>
 </html>
