@@ -437,23 +437,37 @@ def add_class(request):
 
     try:
         luther_list = []
+        
         for c in classes:
-            error = 0
+            # error = 0
+            # print("start: 0")
+            
             if c.classes_owner == request.user:
+                
                 if not LutherClass.objects.filter(Q(DeptNnemonic=c.class_department) & Q(CatalogNumber=c.class_number)):
-                    # messages.error(request,"Error: This class doesn't exist \nMake sure department and number are entered correctly")
-                    error = 1
+                    messages.error(request,"Error: This class doesn't exist \nMake sure department and number are entered correctly")
+                    # error = 1
+                    (ScheduleClass.objects.all().filter(class_department=c.class_department, class_number=c.class_number, classes_owner=request.user)).delete()
+                    # print("wrong: 1")
                     pass
                 else:
                     luther_list.append(LutherClass.objects.filter(
                         Q(DeptNnemonic=c.class_department) & Q(CatalogNumber=c.class_number))[0])
-                    error = 0
+                    # error = 0
+                    # print("correct: 0")
+
     except IndexError:
         messages.error(request, "Error: Class Number is too high or too low")
 
-    if error == 1:
-        messages.error(request,
-                       "Error: Class does not exist. Make sure class department and class number are entered correctly")
+    # print("before",error)
+    # if error == 1:
+    #     # print(to_remove)
+    #     # classes.delete(to_remove)
+    #     messages.error(request,
+    #                    "Error: Class does not exist. Make sure class department and class number are entered correctly")
+    #     error = 0
+
+    # print("after",error)
 
     current_profile = Profile.objects.get(user=request.user)
     current_profile.classes.set(luther_list)

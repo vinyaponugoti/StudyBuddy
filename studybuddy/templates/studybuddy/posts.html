@@ -114,7 +114,11 @@
                                                 </svg>
                                                 <b>Class</b>
                                             </h5>
-                                            <h5>{{p.user_luther_class}}</h5>
+                                            <h5>
+                                                <a href="{% url 'viewclass' p.user_luther_class.ClassName %}">
+                                                {{p.user_luther_class}}
+                                                </a>
+                                            </h5>
                                         <ul>
                                     </div>
 
