@@ -14,7 +14,7 @@ def validate_year(value):
     try:
         converted_value = int(value)
     except:
-        raise ValidationError("Please enter a valid year")
+        raise ValidationError("Please enter a valid graduation year (ex. 2022)")
 
     if converted_value < 2023:
         raise ValidationError("Only current students are allowed")
