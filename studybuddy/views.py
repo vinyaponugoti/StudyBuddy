@@ -461,11 +461,20 @@ def add_class(request):
     # Use this when getting user's classes in other views
     updated_classes = Profile.get_classes(request.user.profile)
 
+    all_courses= LutherClass.objects.all()
+
+    course_list = set()
+
+    for course in all_courses:
+        course_list.add(course.get_deptname())
+
+
     context = {
         "schedule_form": schedule_form,
         "classes": classes,
         "luther_list": luther_list,
         "updated_classes": updated_classes,
+        "course_list": course_list
     }
 
     return render(request, 'studybuddy/schedule.html', context)

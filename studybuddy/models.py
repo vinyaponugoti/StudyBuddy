@@ -36,7 +36,10 @@ class LutherClass(models.Model):
     
     def __str__(self):
         return self.DeptNnemonic + str(self.CatalogNumber) + ": " + self.ClassName
-
+    def get_deptname(self):
+        return self.DeptNnemonic
+    def get_coursenumber(self):
+        return self.CourseNumber
 class ScheduleClass(models.Model):
     class_department = models.TextField(blank=True)
     class_number = models.IntegerField(blank=True)

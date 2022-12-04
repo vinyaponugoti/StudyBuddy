@@ -74,8 +74,15 @@
                         <br>
                     <form method ="post" enctype="multipart/form-data">
                         {% csrf_token %}
-
-                        {{schedule_form.class_department|as_crispy_field}}
+                        <div class="btn-group">
+                          <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Right-aligned menu
+                          </button>
+                          <div class="dropdown-menu dropdown-menu-right">
+                              {% for course in course_list %}
+                                    <button class="dropdown-item" type="button">course</button>
+                          </div>
+                        </div>
                         {{schedule_form.class_number|as_crispy_field}}
 
                         <br>
