@@ -572,6 +572,8 @@ def add_class(request):
     for course in all_courses:
         course_list.add(course.get_deptname())
 
+    course_list.
+
 
     context = {
         "schedule_form": schedule_form,
