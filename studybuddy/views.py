@@ -1,3 +1,5 @@
+import datetime
+from datetime import date
 from sqlite3 import IntegrityError
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
@@ -273,12 +275,26 @@ def view_profile(request, username):
         if p not in cant_send_requests_to:
             can_send_requests_to.append(p)
         
-        
+    request_list = FriendRequest.objects.all().filter(requested=request.user.profile, is_accepted=False)
+    request_num = len(request_list)
+
+    request_list = []
+    post = StudyPost.objects.all().filter(user=request.user)
+
+    for sp in PostRequest.objects.all().filter(is_accepted=False):
+        for p in post:
+            if p == sp.studyposting:
+                request_list.append(sp)
+
+    num_preq = len(request_list)
+
+
     context = {
             "profiles_list":profiles_list,
             "profile_data":profile_data,
             "user":user_match,
-
+            "request_num":request_num,
+            "num_preq":num_preq,
             "can_send_requests_to": can_send_requests_to,
             "requests_by_user": requests_by_user,
             "requests_for_user": requests_for_user,
@@ -338,13 +354,13 @@ def view_classes(request, lutherClassName):
 
     classes_num = len(class_list)
     
-    # p = Paginator(class_list, 4)
-    # page_number = request.GET.get('page', 1)
+    p = Paginator(class_list, 4)
+    page_number = request.GET.get('page', 1)
 
-    # try:
-    #     page = p.page(page_number)
-    # except:
-    #     page = p.page(1)
+    try:
+        page = p.page(page_number)
+    except:
+        page = p.page(1)
 
     context = {
         "posts": class_list,
@@ -356,8 +372,82 @@ def view_classes(request, lutherClassName):
         "class_post_title": lutherClassName,
         "classes_num": classes_num,
         "class_list":class_list,
+        "page":page,
     }
     return render(request, 'studybuddy/classposts.html', context)
+
+
+@login_required(login_url='loginrequired')
+def view_classes_notjoined(request, lutherClassName):
+    other_posts = StudyPost.objects.all().exclude(user=request.user)
+
+    # List of posts that the user is able to send post requests to
+    can_request = []
+
+    for p in other_posts:
+        can_request.append(p)
+
+    for p in StudyPost.objects.all().exclude(user=request.user):
+        for g in p.groupUsers.all():
+            if g == request.user:
+                can_request.remove(p)
+
+    for r in PostRequest.objects.all().filter(is_accepted=False):
+        if r.buddy == request.user.profile:
+            can_request.remove(r.studyposting)
+
+    len_p = len(can_request)
+
+    # List of posts that the user has sent requests to
+    post_pending = []
+    for r in PostRequest.objects.all().filter(is_accepted=False):
+        if r.buddy == request.user.profile:
+            post_pending.append(r.studyposting)
+
+    # List of posts that the user created
+    user_posts = []
+    for p in StudyPost.objects.all():
+        if p.user == request.user:
+            if p.session == False:
+                user_posts.append(p)
+
+    # List of posts that the user is a member of (not owner)
+    member_posts = []
+    for p in StudyPost.objects.all().exclude(user=request.user):
+        for g in p.groupUsers.all():
+            if g == request.user:
+                member_posts.append(p)
+
+    class_list = []
+
+    
+    for u in StudyPost.objects.all():
+        if u.user_luther_class.ClassName == lutherClassName and u.user != request.user and (request.user not in u.groupUsers.all()):
+            class_list.append(u)
+
+    classes_num = len(class_list)
+    
+    p = Paginator(class_list, 4)
+    page_number = request.GET.get('page', 1)
+
+    try:
+        page = p.page(page_number)
+    except:
+        page = p.page(1)
+
+    context = {
+        "posts": class_list,
+        "can_request": can_request,
+        "len_p": len_p,
+        "post_pending": post_pending,
+        "user_posts": user_posts,
+        "member_posts": member_posts,
+        "class_post_title": lutherClassName,
+        "classes_num": classes_num,
+        "class_list":class_list,
+        "page":page,
+    }
+    return render(request, 'studybuddy/classpostsnotjoined.html', context)
 
 @login_required(login_url='login_required')
 def view_sessions(request, class_name):
@@ -522,13 +612,14 @@ def add_study_post(request):
     posts = StudyPost.objects.all()
     updated_classes = Profile.get_classes(request.user.profile)
 
-    
+    friends_num = len(Profile.get_friends_list(request.user.profile))
 
     context= {
         "form":form,
         "posts":posts,
         "updated_classes":updated_classes,
         "no_classes": no_classes,
+        "friends_num": friends_num,
     }
 
     return render(request,'studybuddy/upload.html',context)
@@ -1059,7 +1150,7 @@ def view_class_order_study_posts(request):
 def planner(request):
     studysessions = []
 
-    userposts = StudyPost.objects.filter(user=request.user)
+    userposts = StudyPost.objects.filter(user=request.user).order_by("-timeDate")
     sessions = userposts.exclude(session=False)
     for s in sessions:
         studysessions.append(s)
@@ -1069,9 +1160,16 @@ def planner(request):
             for g in p.groupUsers.all():
                 if g == request.user:
                     studysessions.append(p)
+    
+    # done_sessions = []
+    # for s in studysessions:
+    #     if s.timeDate.date() < date.today() and s.user == request.user:
+    #         done_sessions.append(s)
+        
 
     context = {
-        "studysessions" : studysessions
+        "studysessions" : studysessions,
+        # "done_sessions": done_sessions,
     }
 
     return render(request,'studybuddy/planner.html', context)
