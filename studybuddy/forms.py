@@ -100,6 +100,7 @@ class ScheduleNewPost(forms.ModelForm):
                 )
 
 
+            # if len(Profile.get_friends_list(user.profile)) != 0 :
             self.fields["groupUsers"] = forms.ModelMultipleChoiceField(
                 # queryset=User.objects.all().exclude(username=user.username).order_by('username'),
                 queryset=Profile.get_friends_list(user.profile),
@@ -110,13 +111,15 @@ class ScheduleNewPost(forms.ModelForm):
 
             if len(Profile.get_friends_list(user.profile)) == 0 :
                 self.fields['groupUsers'].widget.attrs.update({
-                    'hidden' : 'hidden'
+                    'hidden' : 'hidden',
                 })
+                self.fields['groupUsers'].label = False
 
     class Meta: 
         model = StudyPost
         fields = ('user_luther_class', "timeDate","location","groupUsers","description")
 
+    
         labels = {
             'groupUsers': 'Other Study Buddies Joining',
             'location': '',

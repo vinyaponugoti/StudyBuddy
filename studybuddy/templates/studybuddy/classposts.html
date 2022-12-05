@@ -70,21 +70,25 @@
                 
 
                 <div class="text-center">
-                        <a href="{% url 'uploadStudyPost' %}" class="btn btn-outline-info" role="button">Upload a Study Post</a>
+                        <a href="{% url 'uploadStudyPost' %}" class="btn btn-outline-info" role="button" style="font-family:Poppins,sans-serif; font-weight: 300;">Upload a Study Post</a>
 
-                        <a href="{% url 'viewpostrequests' %}" class="btn btn-outline-info" role="button">View Post Requests for Your Study Sessions</a>
+                        <a href="{% url 'viewpostrequests' %}" class="btn btn-outline-info" role="button" style="font-family:Poppins,sans-serif; font-weight: 300;">View Post Requests for Your Study Sessions</a>
                         
-
-                        {% if classes_num == 0%}
-                            <h3 style="text-align: center; padding-top: 200px;">Sorry there are no Study Posts for this class</h3>
-                        {% endif %}
+                        <a href="{% url 'studyposts' %}" class="btn btn-outline-info" role="button" style="font-family:Poppins,sans-serif; font-weight: 300;">Go Back to All Study Sessions</a>
+                </div>
+                <br>
+                <div class="text-center">
+                    <a href="{% url 'postsnotjoined' class_post_title %}" class="btn btn-outline-secondary" role="button" style="font-family:Poppins,sans-serif; font-weight: 300;">Only View the New Sessions You Can Join for this Class</a>
+                    {% if classes_num == 0%}
+                        <h3 style="text-align: center; padding-top: 200px;">Sorry there are no Study Posts for this class</h3>
+                    {% endif %}
                 </div>
                 <br>
                 <div class="row">
                     
                    
                     
-                    {% for p in class_list %}
+                    {% for p in page %}
                     
                     <div class="col-lg-3 d-flex align-items-stretch mb-4" style="width: 80rem;">
                         
@@ -184,7 +188,7 @@
                                     {% csrf_token %}
                                     <input type="hidden" name="primary_key_post" value={{p.pk}}>
                                     {% if p in can_request %}
-                                        <button type="submit" class="btn btn-outline-success"> 
+                                        <button type="submit" class="btn btn-outline-success" style="font-family:Poppins,sans-serif; font-weight: 300;"> 
                                             Join Session
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-add" viewBox="0 0 16 16">
                                                 <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0Zm-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/>
@@ -200,7 +204,7 @@
                             <div>
                                 <ul>
                                 {% if p in post_pending %}
-                                    <button type="button" class="btn btn-secondary btn" disabled> 
+                                    <button type="button" class="btn btn-secondary btn" disabled style="font-family:Poppins,sans-serif; font-weight: 300;"> 
                                         Request Pending
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock" viewBox="0 0 16 16">
                                             <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/>
@@ -218,7 +222,7 @@
                                     {% csrf_token %}
                                     <input type="hidden" name="primary_key_post" value={{p.pk}}>
                                         {% if p in user_posts %}
-                                            <button type="submit" class="btn btn-outline-danger"> 
+                                            <button type="submit" class="btn btn-outline-danger" style="font-family:Poppins,sans-serif; font-weight: 300;"> 
                                                 Delete Post
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-x" viewBox="0 0 16 16">
                                                     <path d="M6.854 7.146a.5.5 0 1 0-.708.708L7.293 9l-1.147 1.146a.5.5 0 0 0 .708.708L8 9.707l1.146 1.147a.5.5 0 0 0 .708-.708L8.707 9l1.147-1.146a.5.5 0 0 0-.708-.708L8 8.293 6.854 7.146z"/>
@@ -236,7 +240,7 @@
                                     {% csrf_token %}
                                     <input type="hidden" name="primary_key_post" value={{p.pk}}>
                                         {% if p in user_posts %}
-                                            <button type="submit" class="btn btn-outline-info"> 
+                                            <button type="submit" class="btn btn-outline-info" style="font-family:Poppins,sans-serif; font-weight: 300;"> 
                                                 Finalize Study Session
 
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar2-check" viewBox="0 0 16 16">
@@ -257,7 +261,7 @@
                                     {% csrf_token %}
                                     <input type="hidden" name="primary_key_post" value={{p.pk}}>
                                     {% if p in member_posts %}
-                                        <button type="submit" class="btn btn-outline-warning"> 
+                                        <button type="submit" class="btn btn-outline-warning" style="font-family:Poppins,sans-serif; font-weight: 300;"> 
                                             Leave Session
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-x" viewBox="0 0 16 16">
                                                 <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm.256 7a4.474 4.474 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10c.26 0 .507.009.74.025.226-.341.496-.65.804-.918C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4s1 1 1 1h5.256Z"/>
@@ -275,7 +279,33 @@
                     {% endfor %}
                     
                 </div>
+                
+                <div align="center">
+                    {% if page.has_previous%}
+                        <a href="{% url 'viewclass' class_post_title %}?page={{page.previous_page_number}}" style="text-decoration: none; font-family:Poppins,sans-serif; font-weight: 300;" class="btn btn-outline-dark" role="button">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="25" height="20" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                              </svg>
+                            Previous Page
+                        </a>
+                
+                    {% endif %}
+                
+                    {% if page.has_previous and page.has_next%}
+                    <a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                    {% endif %}
 
+                    {% if page.has_next%}
+                        
+                        <a href = "{% url 'viewclass' class_post_title %}?page={{page.next_page_number}}" style="text-decoration: none; font-family:Poppins,sans-serif; font-weight: 300; " class="btn btn-outline-dark" role="button"> 
+                            Next Page 
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="20" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+                            </svg>
+                        </a>
+                    {% endif %}
+                    <br>
+                    <br>
                 
 
             </div>
