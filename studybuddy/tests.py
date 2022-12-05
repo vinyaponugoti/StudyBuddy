@@ -91,7 +91,6 @@ class Functionality_Tests(TestCase):
 
         self.assertNotEqual(response.status_code, 200)
 
-    def test
 
 
 
