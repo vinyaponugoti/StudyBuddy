@@ -1,28 +1,5 @@
+from django.contrib.auth.models import User
 from django.test import TestCase
-from django.contrib.auth.models import User
-import datetime
-from datetime import date
-from sqlite3 import IntegrityError
-from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect
-from django.contrib.auth import logout as log_out
-import requests
-from studybuddy.models import LutherClass, StudySession, StudyPost, PostRequest
-import json
-import urllib
-from django.views import generic
-from django.utils import timezone
-from .forms import ProfileForm, ScheduleForm
-from django.contrib.auth.models import User
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.messages.views import SuccessMessageMixin
-from django.urls import reverse_lazy
-from .models import Profile, FriendRequest, ScheduleClass
-from .forms import ScheduleNewPost
-from django.db.models import Q
-from django.contrib.auth.decorators import login_required
-from django.contrib import messages
-from django.core.paginator import Paginator
 
 #Create your tests here.
  class LoginTestCase(TestCase):
