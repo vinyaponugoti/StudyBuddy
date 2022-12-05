@@ -44,7 +44,7 @@ class LutherClass(models.Model):
 class ScheduleClass(models.Model):
     class_department = models.TextField(blank=True)
     class_number = models.IntegerField(blank=True)
-    classes_owner =  models.ForeignKey(User,on_delete=models.CASCADE, related_name="classes_owner", default=1)
+    classes_owner = models.ForeignKey(User,on_delete=models.CASCADE, related_name="classes_owner", default=1)
 
     def __str__(self):
         return f"{self.class_department} {self.class_number}"
