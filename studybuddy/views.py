@@ -616,6 +616,227 @@ def view_study_posts(request):
     return render(request, 'studybuddy/posts.html', context)
 
 @login_required(login_url='loginrequired')
+def view_your_posts(request):
+    posts = StudyPost.objects.all().filter(user=request.user).order_by("-id")
+    # posts = StudyPost.objects.all().order_by("-timeDate")
+    # posts = StudyPost.objects.all().order_by("user_luther_class")
+
+    other_posts = StudyPost.objects.all().exclude(user=request.user)
+    
+    # List of posts that the user is able to send post requests to
+    can_request = []
+
+    for p in other_posts:
+        can_request.append(p)
+
+    for p in StudyPost.objects.all().exclude(user=request.user):
+        for g in p.groupUsers.all():
+            if g == request.user:
+                can_request.remove(p)
+
+    for r in PostRequest.objects.all().filter(is_accepted=False):
+        if r.buddy == request.user.profile:
+            can_request.remove(r.studyposting)
+
+
+    len_p = len(can_request)
+
+
+    # List of posts that the user has sent requests to
+    post_pending = []
+    for r in PostRequest.objects.all().filter(is_accepted=False):
+        if r.buddy == request.user.profile:
+            post_pending.append(r.studyposting)
+
+    # List of posts that the user created
+    user_posts = []
+    for p in StudyPost.objects.all():
+        if p.user == request.user:
+            if p.session == False:
+                user_posts.append(p)
+
+    # List of posts that the user is a member of (not owner)
+    member_posts = []
+    for p in StudyPost.objects.all().exclude(user=request.user):
+        for g in p.groupUsers.all():
+            if g == request.user:
+                member_posts.append(p)
+
+
+    p = Paginator(posts,4)
+    page_number = request.GET.get('page',1)
+    
+
+    try:
+        page = p.page(page_number)
+    except:
+        page = p.page(1)
+
+    context={
+        "posts":posts,
+        "can_request":can_request,
+        "len_p": len_p,
+        "post_pending":  post_pending,
+        "user_posts": user_posts,
+        "member_posts":member_posts,
+        "page":page,
+        "class_post_title": "All",
+    }
+    return render(request, 'studybuddy/yourposts.html', context)
+
+
+@login_required(login_url='loginrequired')
+def view_all_attending_posts(request):
+    # posts = StudyPost.objects.all().filter(user=request.user).order_by("-id")
+    # posts = StudyPost.objects.all().order_by("-timeDate")
+    # posts = StudyPost.objects.all().order_by("user_luther_class")
+
+    posts = []
+    for p in  StudyPost.objects.all().order_by("-id"):
+        if p.user == request.user or request.user in p.groupUsers.all():
+            posts.append(p)
+        
+
+    other_posts = StudyPost.objects.all().exclude(user=request.user)
+    
+    # List of posts that the user is able to send post requests to
+    can_request = []
+
+    for p in other_posts:
+        can_request.append(p)
+
+    for p in StudyPost.objects.all().exclude(user=request.user):
+        for g in p.groupUsers.all():
+            if g == request.user:
+                can_request.remove(p)
+
+    for r in PostRequest.objects.all().filter(is_accepted=False):
+        if r.buddy == request.user.profile:
+            can_request.remove(r.studyposting)
+
+
+    len_p = len(can_request)
+
+
+    # List of posts that the user has sent requests to
+    post_pending = []
+    for r in PostRequest.objects.all().filter(is_accepted=False):
+        if r.buddy == request.user.profile:
+            post_pending.append(r.studyposting)
+
+    # List of posts that the user created
+    user_posts = []
+    for p in StudyPost.objects.all():
+        if p.user == request.user:
+            if p.session == False:
+                user_posts.append(p)
+
+    # List of posts that the user is a member of (not owner)
+    member_posts = []
+    for p in StudyPost.objects.all().exclude(user=request.user):
+        for g in p.groupUsers.all():
+            if g == request.user:
+                member_posts.append(p)
+
+
+    p = Paginator(posts,4)
+    page_number = request.GET.get('page',1)
+    
+
+    try:
+        page = p.page(page_number)
+    except:
+        page = p.page(1)
+
+    context={
+        "posts":posts,
+        "can_request":can_request,
+        "len_p": len_p,
+        "post_pending":  post_pending,
+        "user_posts": user_posts,
+        "member_posts":member_posts,
+        "page":page,
+        "class_post_title": "All",
+    }
+    return render(request, 'studybuddy/attendingposts.html', context)
+
+
+@login_required(login_url='loginrequired')
+def view_friends_posts(request):
+    # posts = StudyPost.objects.all().filter(user=request.user).order_by("-id")
+    # posts = StudyPost.objects.all().order_by("-timeDate")
+    # posts = StudyPost.objects.all().order_by("user_luther_class")
+
+    posts = []
+    for p in  StudyPost.objects.all().order_by("-id"):
+        if p.user in request.user.profile.get_friends_list():
+            posts.append(p)
+        
+
+    other_posts = StudyPost.objects.all().exclude(user=request.user)
+    
+    # List of posts that the user is able to send post requests to
+    can_request = []
+
+    for p in other_posts:
+        can_request.append(p)
+
+    for p in StudyPost.objects.all().exclude(user=request.user):
+        for g in p.groupUsers.all():
+            if g == request.user:
+                can_request.remove(p)
+
+    for r in PostRequest.objects.all().filter(is_accepted=False):
+        if r.buddy == request.user.profile:
+            can_request.remove(r.studyposting)
+
+
+    len_p = len(can_request)
+
+
+    # List of posts that the user has sent requests to
+    post_pending = []
+    for r in PostRequest.objects.all().filter(is_accepted=False):
+        if r.buddy == request.user.profile:
+            post_pending.append(r.studyposting)
+
+    # List of posts that the user created
+    user_posts = []
+    for p in StudyPost.objects.all():
+        if p.user == request.user:
+            if p.session == False:
+                user_posts.append(p)
+
+    # List of posts that the user is a member of (not owner)
+    member_posts = []
+    for p in StudyPost.objects.all().exclude(user=request.user):
+        for g in p.groupUsers.all():
+            if g == request.user:
+                member_posts.append(p)
+
+
+    p = Paginator(posts,4)
+    page_number = request.GET.get('page',1)
+    
+
+    try:
+        page = p.page(page_number)
+    except:
+        page = p.page(1)
+
+    context={
+        "posts":posts,
+        "can_request":can_request,
+        "len_p": len_p,
+        "post_pending":  post_pending,
+        "user_posts": user_posts,
+        "member_posts":member_posts,
+        "page":page,
+        "class_post_title": "All",
+    }
+    return render(request, 'studybuddy/friendsposts.html', context)
+
+@login_required(login_url='loginrequired')
 def view_latest_study_posts(request):
     # posts = StudyPost.objects.all().order_by("-id")
     posts = StudyPost.objects.all().order_by("-timeDate")
