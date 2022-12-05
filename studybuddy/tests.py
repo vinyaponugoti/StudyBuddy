@@ -28,16 +28,16 @@ from django.core.paginator import Paginator
  class LoginTestCase(TestCase):
     def test_login(self):
       user = User.objects.create(username='test_acc')
-         user.set_password('12345')
-         user.is_active = True
-         user.save()
+      user.set_password('12345')
+      user.is_active = True
+      user.save()
 
-         self.client.login(username='test_acc', password='12345')
+      self.client.login(username='test_acc', password='12345')
 
-         response = self.flow()
+      response = self.flow()
 
-         self.assertEqual(200, response.status_code, response.content)
-         self.assertContains(response, 'This profile is already connected to another user account')
+      self.assertEqual(200, response.status_code, response.content)
+      self.assertContains(response, 'This profile is already connected to another user account')
  class URLTestCases(TestCase):
      #tests to see that all urls will not return an 404 error.
 
