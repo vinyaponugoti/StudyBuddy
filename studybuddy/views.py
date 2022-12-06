@@ -929,6 +929,87 @@ def view_friends_posts(request):
     }
     return render(request, 'studybuddy/friendsposts.html', context)
 
+
+
+@login_required(login_url='loginrequired')
+def view_class_sessions_you_can_join(request):
+    # posts = StudyPost.objects.all().filter(user=request.user).order_by("-id")
+    # posts = StudyPost.objects.all().order_by("-timeDate")
+    # posts = StudyPost.objects.all().order_by("user_luther_class")
+
+    posts = []
+    for u in StudyPost.objects.all().order_by("-id"):
+        if u.user_luther_class in request.user.profile.getClasses() and u.user != request.user and (request.user not in u.groupUsers.all()):
+            posts.append(u)
+
+        
+
+    other_posts = StudyPost.objects.all().exclude(user=request.user)
+    
+    # List of posts that the user is able to send post requests to
+    can_request = []
+
+    for p in other_posts:
+        can_request.append(p)
+
+    for p in StudyPost.objects.all().exclude(user=request.user):
+        for g in p.groupUsers.all():
+            if g == request.user:
+                can_request.remove(p)
+
+    for r in PostRequest.objects.all().filter(is_accepted=False):
+        if r.buddy == request.user.profile:
+            can_request.remove(r.studyposting)
+
+
+    len_p = len(can_request)
+
+
+    # List of posts that the user has sent requests to
+    post_pending = []
+    for r in PostRequest.objects.all().filter(is_accepted=False):
+        if r.buddy == request.user.profile:
+            post_pending.append(r.studyposting)
+
+    # List of posts that the user created
+    user_posts = []
+    for p in StudyPost.objects.all():
+        if p.user == request.user:
+            if p.session == False:
+                user_posts.append(p)
+
+    # List of posts that the user is a member of (not owner)
+    member_posts = []
+    for p in StudyPost.objects.all().exclude(user=request.user):
+        for g in p.groupUsers.all():
+            if g == request.user:
+                member_posts.append(p)
+
+
+    p = Paginator(posts,4)
+    page_number = request.GET.get('page',1)
+    
+
+    try:
+        page = p.page(page_number)
+    except:
+        page = p.page(1)
+
+    context={
+        "posts":posts,
+        "can_request":can_request,
+        "len_p": len_p,
+        "post_pending":  post_pending,
+        "user_posts": user_posts,
+        "member_posts":member_posts,
+        "page":page,
+        "class_post_title": "All",
+    }
+    return render(request, 'studybuddy/classsessionsjoin.html', context)
+
+
+
+
 @login_required(login_url='loginrequired')
 def view_latest_study_posts(request):
     # posts = StudyPost.objects.all().order_by("-id")

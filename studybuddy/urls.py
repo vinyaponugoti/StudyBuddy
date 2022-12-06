@@ -40,6 +40,7 @@ urlpatterns = [
     path('yourposts',views.view_your_posts, name="yourposts"),
     path("attendingposts",views.view_all_attending_posts,name="attendingposts"),
     path("friendsposts",views.view_friends_posts,name="friendsposts"),
+    path("sessionscanjoin",views.view_class_sessions_you_can_join,name="sessionscanjoin"),
     path('viewpostrequests',views.view_post_requests,name="viewpostrequests"),
     path('joinsession',views.click_join_session, name='joinsession'),
     path('acceptrequest',views.accept_post_request, name='acceptrequest'),
