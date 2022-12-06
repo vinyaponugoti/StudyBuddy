@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.test import TestCase
 
-#Create your tests here.
+# Create your tests here.
 # class LoginTestCase(TestCase):
 #     def test_login(self):
 #       user = User.objects.create(username='test_acc')
