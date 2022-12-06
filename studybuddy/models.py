@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 import datetime
+from datetime import date
 from django.contrib import admin
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save, pre_delete
@@ -14,7 +15,7 @@ def validate_year(value):
     try:
         converted_value = int(value)
     except:
-        raise ValidationError("Please enter a valid graduation year (ex. 2022)")
+        raise ValidationError("Please enter a valid graduation year (ex. 2023)")
 
     if converted_value < 2023:
         raise ValidationError("Only current students are allowed")
@@ -23,10 +24,12 @@ def validate_year(value):
 
 
 def validate_study_post_date(value):
-    curr_time = datetime.datetime.now()
+    # curr_time = datetime.datetime.now()
+    curr_time = date.today()
 
-    if value < curr_time:
-        raise ValidationError("You cannot set the date to a time in the past")
+    # if value.date < curr_time:
+    if value.date() < curr_time:
+        raise ValidationError("You cannot set the session date to a time in the past")
 
 class LutherClass(models.Model):    
     DeptNnemonic = models.TextField()
