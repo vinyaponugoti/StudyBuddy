@@ -13,12 +13,10 @@
 
 <html>
     <head>
-        <link rel="stylesheet" href="{% static 'styles.css' %}">
         <title>Home</title>
         <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
     </head>
     <head>
-        <link rel="stylesheet" href="{% static 'styles.css' %}">
         {%if user.is_authenticated%}
         
         <div class="container">
@@ -87,9 +85,6 @@
                 </button>
                 <div class="collapse navbar-collapse" id="toggleMobileMenu">
                     <ul class="navbar-nav ms-auto text-center">
-                        <li>
-                            <a class="nav-link" href="{% provider_login_url 'google' %}">Login to StudyBuddy</a>
-                        </li>
                     </ul>
                 </div>
             </nav>
@@ -103,37 +98,114 @@
 
         <head>
 
-            <link rel="stylesheet" href="{% static 'styles.css' %}">
                <div class="wrapper">
                    <!-- Sidebar -->
+                   <link rel="stylesheet" href="{% static 'styles.css' %}">
                    <nav id="sidebar">
                        <div class="sidebar-header">
         
                            <h3>Friends</h3>
                        <ul class="list-unstyled components">
                             {% if not user.profile.get_friends_list %}
-                                <li><a> No Friends </a></li>
+                                <li align="center"><a href="{% url 'allprofiles' %}">No Friends (Click to add friends)</a></li>
                             {% endif %}
                            {%for f in user.profile.get_friends_list%}
-                                 <li><a href="{% url 'viewprofile' f %}">{{f}}</a></li>
+                                 <li style="padding-left: 0px;"><a href="{% url 'viewprofile' f %}">{{f}}</a></li>
                             {%endfor%}
                        </ul>
         
                            <h3>Schedule</h3>
                        </div>
                        <ul class="list-unstyled components" >
+                           {% if not user.profile.get_classes  %}
+                                <li align="center"><a href="{% url 'schedule' %}">No Classes (Click to add classes)</a></li>
+                            {% endif %}
                            {%for f in user.profile.get_classes%}
-                                <li><a href="{% url 'viewclass' f.ClassName %}">{{f}}</a></li>
+                                <li style="padding-left: 0px;"><a href="{% url 'viewclass' f.ClassName %}">{{f}}</a></li>
                            {%endfor%}
-                           <button id= "buttonSidebar" type="submit" class="btn btn-light"><a href="/upload">Post A Study Session</a></button>
+                           <button id= "buttonSidebar" type="submit" class="btn btn-light"><a href="/upload" style="font-weight: 300; color: rgba(30, 209, 227, 1);">Post A Study Session</a></button>
                        </ul>
                    </nav>
                     <!-- <div align="center">
 
                     </div> -->
-                   <div class="container">
-                       <div class="row">
+                   <div>
                            <!--ADD HOME PAGE INFO-->
+                           <link rel="stylesheet" href="{% static 'morestyles.css' %}">
+                       <div id="main">
+                           <div class="inner">
+                               <section id="banner">
+                                    <div class="content">
+                                        <header>
+                                            <h1 id="randText" style="font-weight: 200;">Welcome to StudyBuddy!<br />
+                                            </h1>
+                                            <br>
+                                            <p id="randText" style="font-weight: 200;">A place to find people to study and make friends with</p>
+                                        </header>
+                                        <p id="randText">Sometimes reaching out to classmates to study together is hard, well thanks to StudyBuddy we've
+                                        made it easier to find other people in your class to form a study session with. It could be someone you really wanted to talk to but haven't had
+                                        the opportunity to do so yet or it could be friends of yours that you want to formally create a study group with and let others in your class join!
+                                            Here at StudyBuddy we want to reduce the steps it takes to study with one another, so you can just focus on that exam, presentation or group assignment of yours!
+                                            <!--<br><br><h4 > Study with people of similar interests!</h4> <p align="center">or</p> <h4 align="right">Find new friends from joining a study session! </h4>--></p>
+                                        <!--
+                                        <ul class="actions">
+                                            <li><a href="#" class="btn btn-outline-info">Learn More</a></li>
+                                        </ul>-->
+                                    </div>
+                                    <span class="image object">
+                                        <img src="/static/images/priscilla-du-preez-XkKCui44iM0-unsplash.jpg" alt="" />
+                                    </span>
+                                </section>
+                               <section>
+									<header class="major">
+										<h2>New Users</h2>
+									</header>
+									<div class="features">
+										<article>
+                                            <!--#00d1ffcc-->
+											<span class="image object" >
+                                                <img style="padding-right: 20px;"src="/static/images/icons8-male-user-50.png" alt="" />
+                                            </span>
+											<div class="content">
+												<h3>Profile</h3>
+												<p>First thing you want to do as a new user of StudyBuddy is create your profile! After building your profile start adding classes to your schedule to create study posts
+                                                 and view study sessions for that particular class!</p>
+                                                <a href="{% url 'editprofile' %}" class="btn btn-outline-info" role="button" style="font-family:Poppins,sans-serif; font-weight: 300;">Create your profile</a>
+											</div>
+										</article>
+										<article>
+											<span class="image object" >
+                                                <img style="padding-right: 20px;"src="/static/images/icons8-what-i-do-50.png" alt="" />
+                                            </span>
+											<div class="content">
+												<h3>Planner</h3>
+												<p>Planner is where you will see all of your finalized study sessions that either you created and finalized or you're a part of a finalized study session. Both instances you will see the specific day, time and location of the session.
+                                                 As a new user you will not have any finalized study session so to do so start creating or join study posts!</p>
+											</div>
+										</article>
+										<article>
+											<span class="image object" >
+                                                <img style="padding-right: 20px;"src="/static/images/icons8-reading-50.png" alt="" />
+                                            </span>
+											<div class="content">
+												<h3>Study Posts</h3>
+												<p>Study Posts contains all the study sessions that other StudyBuddy users created and are not finalized yet. Here you can sort all sessions from when they were created, latest and earliest date/time and class name.
+                                                You can join a study session that interests you and wait for the creator of the session to accept your request to join. You can also filter sessions by your friends list, ones you created and ones you are attending.</p>
+											</div>
+										</article>
+										<article>
+											<span class="image object" >
+                                                <img style="padding-right: 20px;"src="/static/images/icons8-communication-50.png" alt="" />
+                                            </span>
+											<div class="content">
+												<h3>Chat</h3>
+												<p>Chat provides StudyBuddy users with the opportunity to message others through chat rooms that are available or through new ones that you can create! Message others in your study sessions or message people that you want advice from on a certain class!</p>
+                                                <a href="{% url 'chat_index' %}" class="btn btn-outline-info" role="button" style="font-family:Poppins,sans-serif; font-weight: 300;">Chat with other users!</a>
+											</div>
+										</article>
+									</div>
+								</section>
+                            </div>
                        </div>
                    </div>
                </div>

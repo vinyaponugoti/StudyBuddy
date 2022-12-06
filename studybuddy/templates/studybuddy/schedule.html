@@ -89,7 +89,7 @@
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         List of Class Departments (View Only)
                     </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <div class="dropdown-menu" style="overflow-y:auto; padding-top:15px; height:40vh; max-height:80vh" aria-labelledby="dropdownMenuButton">
                         {% for course in course_list %}
                         <a class="dropdown-item" href="#">{{course}}</a>
                         {% endfor %}

@@ -27,7 +27,19 @@ p {
    line-height: 1.7em;
    color: #999;
 }
+.dropdown-menu {
+  max-height: 200px;
+  overflow-y: auto;
+}
 
+.not-selectable {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
 
 a, a:link a:hover, a:focus {
    color: inherit;
@@ -38,10 +50,11 @@ a, a:link a:hover, a:focus {
 #sidebar {
    /* don't forget to add all the previously mentioned styles here too */
    min-width: 250px;
-   max-width: 250px;
+   max-width: 200px;
    min-height: 100vh;
+   max-height: 100%;
    /* #0288d1 is the primary blue color of study buddy */
-   background: #0288d1;
+   background: rgba(131, 209, 227, 1);
    color: #fff;
    transition: all 0.3s;
 }
@@ -52,7 +65,10 @@ a, a:link a:hover, a:focus {
     margin-top: 15px;
     display: flex;
     justify-content: center;
+    color: rgba(0, 209, 255, 0.1);
     align-items: center;
+    font-family:Poppins,sans-serif;
+    font-weight: 300;
 }
 
 #buttonHome {
@@ -72,13 +88,14 @@ a, a:link a:hover, a:focus {
     background-size: cover;
     width: 100%;
     height:80%;
-    background-color: rgba(0, 128, 245, 0.82);
+    background-color: rgba(0, 128, 245, 1);
     opacity: 0.80;
 }
 
 #sidebar .sidebar-header {
-   padding: 20px;
-   background: #0288d1;
+   padding: 15px;
+   font-family:Poppins,sans-serif;
+   background: rgba(131, 209, 227, 1);
 }
 
 #sidebar ul p {
@@ -89,6 +106,8 @@ a, a:link a:hover, a:focus {
 #sidebar ul li a {
    padding: 10px;
    font-size: 1.1em;
+   font-family:Poppins,sans-serif;
+   font-weight: 500;
    display: block;
    color: #fff;
 }
@@ -104,6 +123,8 @@ a, a:link a:hover, a:focus {
 }
 ul ul a {
    font-size: 0.9em !important;
+   font-family:Poppins,sans-serif;
+   font-weight: 300;
    padding-left: 30px !important;
    background: #6d7fcc;
 }
