@@ -54,7 +54,7 @@ a, a:link a:hover, a:focus {
    min-height: 100vh;
    max-height: 100%;
    /* #0288d1 is the primary blue color of study buddy */
-   background: rgba(131, 209, 227, 1);
+   background: #83d1e3;
    color: #fff;
    transition: all 0.3s;
 }
@@ -95,7 +95,7 @@ a, a:link a:hover, a:focus {
 #sidebar .sidebar-header {
    padding: 15px;
    font-family:Poppins,sans-serif;
-   background: rgba(131, 209, 227, 1);
+   background: #83d1e3;
 }
 
 #sidebar ul p {
