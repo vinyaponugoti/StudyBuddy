@@ -30,6 +30,11 @@ def validate_study_post_date(value):
     # if value.date < curr_time:
     if value.date() < curr_time:
         raise ValidationError("You cannot set the session date to a time in the past")
+# def validate_study_post_date(value):
+#     curr_time = datetime.datetime.now()
+#
+#     if value < curr_time:
+#         raise ValidationError("You cannot set the date to a time in the past")
 
 class LutherClass(models.Model):    
     DeptNnemonic = models.TextField()

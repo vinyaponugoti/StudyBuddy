@@ -1,6 +1,8 @@
 from dataclasses import fields
 from django import forms
 from .models import Profile, ScheduleClass, StudyPost, LutherClass
+from django.core.exceptions import ValidationError
+import datetime
 from django.forms import TextInput, EmailInput
 from django.forms import ModelForm
 from django.contrib.auth.models import User
@@ -115,6 +117,13 @@ class ScheduleNewPost(forms.ModelForm):
                 })
                 self.fields['groupUsers'].label = False
 
+    def validate_study_post_date(self):
+        value = self.cleaned_data.get("dateTime")
+
+        curr_time = datetime.datetime.now()
+
+        if value < curr_time:
+            raise ValidationError("You cannot set the date to a time in the past")
     class Meta: 
         model = StudyPost
         fields = ('user_luther_class', "timeDate","location","groupUsers","description")
