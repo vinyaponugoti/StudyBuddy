@@ -20,6 +20,14 @@ def validate_year(value):
         raise ValidationError("Only current students are allowed")
     elif converted_value > 2026:
         raise ValidationError("Only current students are allowed")
+
+
+def validate_study_post_date(value):
+    curr_time = datetime.datetime.now()
+
+    if value < curr_time:
+        raise ValidationError("You cannot set the date to a time in the past")
+
 class LutherClass(models.Model):    
     DeptNnemonic = models.TextField()
     DeptName = models.TextField()
@@ -94,7 +102,7 @@ class StudyPost(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE,default=1)
     user_luther_class = models.ForeignKey(LutherClass, on_delete=models.CASCADE, default=1, related_name="user_luther_class")
     groupUsers = models.ManyToManyField(User, related_name="other_users_joining", blank=True)
-    timeDate = models.DateTimeField(default=timezone.now, blank=True)
+    timeDate = models.DateTimeField(default=timezone.now, blank=True, validators=[validate_study_post_date])
     location = models.CharField(max_length=200, blank=True)
     # studyClass = models.ManyToManyField(ScheduleClass,blank=True)
     requests = models.ManyToManyField(User, related_name = "users_want_to_join", blank=True)
