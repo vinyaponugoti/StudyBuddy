@@ -153,7 +153,7 @@
                                         </ul>-->
                                     </div>
                                     <span class="image object">
-                                        <img src="/static/images/priscilla-du-preez-XkKCui44iM0-unsplash.jpg" alt="" />
+                                        <img src="{% static 'images/priscilla-du-preez-XkKCui44iM0-unsplash.jpg' %}" alt="" />
                                     </span>
                                 </section>
                                <section>
@@ -164,18 +164,18 @@
 										<article>
                                             <!--#00d1ffcc-->
 											<span class="image object" >
-                                                <img style="padding-right: 20px;"src="/static/images/icons8-male-user-50.png" alt="" />
+                                                <img style="padding-right: 20px;"src="{% static 'images/icons8-male-user-50.png' %}" alt="" />
                                             </span>
 											<div class="content">
 												<h3>Profile</h3>
 												<p>First thing you want to do as a new user of StudyBuddy is create your profile! After building your profile start adding classes to your schedule to create study posts
                                                  and view study sessions for that particular class!</p>
-                                                <a href="{% url 'editprofile' %}" class="btn btn-outline-info" role="button" style="font-family:Poppins,sans-serif; font-weight: 300;">Create your profile</a>
+                                                <a href="{% url 'profile' %}" class="btn btn-outline-info" role="button" style="font-family:Poppins,sans-serif; font-weight: 300;">Create your profile</a>
 											</div>
 										</article>
 										<article>
-											<span class="image object" >
-                                                <img style="padding-right: 20px;"src="/static/images/icons8-what-i-do-50.png" alt="" />
+											<span class="image object" > 
+                                                <img style="padding-right: 20px;"src="{% static 'images/icons8-what-i-do-50.png' %}" alt="" />
                                             </span>
 											<div class="content">
 												<h3>Planner</h3>
@@ -184,8 +184,8 @@
 											</div>
 										</article>
 										<article>
-											<span class="image object" >
-                                                <img style="padding-right: 20px;"src="/static/images/icons8-reading-50.png" alt="" />
+											<span class="image object" > 
+                                                <img style="padding-right: 20px;"src="{% static 'images/icons8-reading-50.png' %}" alt="" />
                                             </span>
 											<div class="content">
 												<h3>Study Posts</h3>
@@ -194,8 +194,8 @@
 											</div>
 										</article>
 										<article>
-											<span class="image object" >
-                                                <img style="padding-right: 20px;"src="/static/images/icons8-communication-50.png" alt="" />
+											<span class="image object" > 
+                                                <img style="padding-right: 20px;"src="{% static 'images/icons8-communication-50.png' %}" alt="" />
                                             </span>
 											<div class="content">
 												<h3>Chat</h3>

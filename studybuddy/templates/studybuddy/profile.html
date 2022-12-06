@@ -308,7 +308,12 @@
                     
                                 {% if user.username == request.user.username %}
                                     {% if classes_num == 0 %}
-                                        <a href="{% url 'schedule' %}" style="text-decoration: none; font-family:Poppins,sans-serif; font-weight: 300;" class="btn btn-outline-success" role="button"> Add Classes</a>
+                                    <h4 align="left"> You have 0 Classes in Your Schedule Currently </h4>
+                                    <br>
+                                    <p align="left"> Click on Add Classes to add the classes that you are currently taking to your schedule! </p>
+                                    <p align="left"> You will be able to upload study posts once you have classes added to your schedule. </p>
+                                    <br>
+                                        <a href="{% url 'schedule' %}" style="text-decoration: none; font-family:Poppins,sans-serif; font-weight: 300;margin-right: 74%" class="btn btn-outline-success" role="button"> + Add Classes</a>
                                     {% else %}
                                         <a href="{% url 'schedule' %}" style="text-decoration: none; margin-right: 70%; font-family:Poppins,sans-serif; font-weight: 300;" class="btn btn-outline-success" role="button" style="font-family:Poppins,sans-serif; font-weight: 300;"> + Add Classes</a>
                                     {% endif %}
