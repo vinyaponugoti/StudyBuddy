@@ -111,7 +111,7 @@
         
                            <h3>Friends</h3>
                        <ul class="list-unstyled components">
-                            {% if friends_num == 0 %}
+                            {% if not user.profile.get_friends_list %}
                                 <li><a> No Friends </a></li>
                             {% endif %}
                            {%for f in user.profile.get_friends_list%}

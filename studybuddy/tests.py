@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.test import TestCase
 
 #Create your tests here.
- class LoginTestCase(TestCase):
+class LoginTestCase(TestCase):
     def test_login(self):
       user = User.objects.create(username='test_acc')
       user.set_password('12345')
@@ -15,7 +15,7 @@ from django.test import TestCase
 
       self.assertEqual(200, response.status_code, response.content)
       self.assertContains(response, 'This profile is already connected to another user account')
- class URLTestCases(TestCase):
+class URLTestCases(TestCase):
      #tests to see that all urls will not return an 404 error.
 
      def test_login(self):
