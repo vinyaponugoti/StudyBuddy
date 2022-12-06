@@ -2,7 +2,7 @@ from __future__ import absolute_import, unicode_literals
 import os, ssl
 from pathlib import Path
 from celery.schedules import crontab
-from .celery import app as celery_app
+import sys
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -116,6 +116,12 @@ DATABASES = {
         'PORT': '5432',
     }
 }
+
+if 'test' in sys.argv:
+    DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'test_database'
+    }
 
 
 # Password validation

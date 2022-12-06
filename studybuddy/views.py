@@ -641,6 +641,10 @@ def add_study_post(request):
 
 @login_required(login_url='loginrequired')
 def view_study_posts(request):
+    for p in StudyPost.objects.all().orderby("-id"):
+        if p.timeDate.date() < date.today():
+            p.delete()
+
     posts = StudyPost.objects.all().order_by("-id")
     # posts = StudyPost.objects.all().order_by("-timeDate")
     # posts = StudyPost.objects.all().order_by("user_luther_class")
