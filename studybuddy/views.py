@@ -602,7 +602,7 @@ def add_study_post(request):
             # form.instance.user_class = classes[0]
             form.save()
         else:
-            messages.error(request, "Error saving post")
+            messages.error(request, "Error uploading post: You cannot set the session date to a time in the past")
 
         # return redirect("uploadStudyPost")
         return redirect("studyposts")
