@@ -193,7 +193,7 @@
 
                             </div>
                             
-                        
+                            {% if p.session == False %}
                             <div>
                                 <ul>
                                 <form action= "{% url 'joinsession' %}" method="POST">
@@ -284,6 +284,7 @@
                                 </form>
                                 </ul>
                             </div>
+                            {% endif %}
 
                     </div>
                     </div>
