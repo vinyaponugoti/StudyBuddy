@@ -1,2 +1,2 @@
-# project-b-13
-project-b-13 created by GitHub Classroom
+# StudyBuddy
+Website that helps UVA students find Study Buddies for their classes!
